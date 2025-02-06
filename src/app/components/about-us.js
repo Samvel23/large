@@ -48,18 +48,30 @@ export const AboutPage = () => {
               </h1>
               <div className="columns">
                 <div className="column has-text-left">
-                  <p className="title is-size-5-mobile is-size-4-tablet">
+                  <p
+                    className="title is-size-5-mobile is-size-4-tablet"
+                    style={{ color: "white" }}
+                  >
                     Monday-Friday
                   </p>
-                  <p className="subtitle is-size-6-mobile is-size-5-tablet">
+                  <p
+                    className="subtitle is-size-6-mobile is-size-5-tablet"
+                    style={{ color: "white" }}
+                  >
                     09:00 - 23:00
                   </p>
                 </div>
                 <div className="column has-text-left">
-                  <p className="title is-size-5-mobile is-size-4-tablet">
+                  <p
+                    className="title is-size-5-mobile is-size-4-tablet"
+                    style={{ color: "white" }}
+                  >
                     Saturday-Sunday
                   </p>
-                  <p className="subtitle is-size-6-mobile is-size-5-tablet">
+                  <p
+                    className="subtitle is-size-6-mobile is-size-5-tablet"
+                    style={{ color: "white" }}
+                  >
                     10:00 - 19:00
                   </p>
                 </div>
@@ -111,7 +123,7 @@ export const AboutPage = () => {
                   onClick={() =>
                     handleCopyPhoneNumber("gor.demirkhanyan@gmail.com")
                   }
-                  style={{marginBottom: "1rem"}}
+                  style={{ marginBottom: "1rem" }}
                 >
                   <span className="contact-text">
                     gor.demirkhanyan@gmail.com
@@ -162,7 +174,12 @@ export const AboutPage = () => {
 
       <section className="section">
         <div className="container">
-          <h2 className="title is-4 has-text-centered">Visit Us</h2>
+          <h2
+            className="title is-4 has-text-centered"
+            style={{ color: "white" }}
+          >
+            Visit Us
+          </h2>
           <div className="columns is-centered">
             <div className="column is-10">
               <iframe
