@@ -9,6 +9,8 @@ import {
   faTelegram,
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
+import copy from "../icon/copy.png";
+import Image from "next/image";
 
 export const AboutPage = () => {
   const [showContactText, setShowContactText] = useState(false);
@@ -17,24 +19,20 @@ export const AboutPage = () => {
     setShowContactText(!showContactText);
   };
 
-  const handleCopyPhoneNumber = () => {
-    const phoneNumber = "+37491132400";
-    navigator.clipboard.writeText(phoneNumber);
-    alert(`Copied to clipboard: ${phoneNumber}`);
+  const handleCopyPhoneNumber = (text) => {
+    navigator.clipboard.writeText(text);
   };
 
   return (
     <div>
       <section className="hero is-warning">
-        <div className="hero-body">
-          <div className="container has-text-centered">
-            <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
-              About Us
-            </h1>
-            <p className="subtitle is-size-5-mobile is-size-4-tablet">
-              Learn more about our company and values
-            </p>
-          </div>
+        <div className="hero-body has-text-centered">
+          <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
+            About Us
+          </h1>
+          <p className="subtitle is-size-5-mobile is-size-4-tablet">
+            Learn more about our company and values
+          </p>
         </div>
       </section>
 
@@ -42,28 +40,40 @@ export const AboutPage = () => {
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-12-mobile is-10-tablet is-8-desktop">
-              <h1 className="title is-4 highlighted-text">Working Hours</h1>
+              <h1
+                className="title is-4 highlighted-text"
+                style={{ color: "orange" }}
+              >
+                Working Hours
+              </h1>
               <div className="columns">
-                <span className="column title is-size-4">
-                  Monday-Friday 09:00-23:00
-                </span>
-                <span className="column title is-size-4">
-                  Saturday-Sunday 10:00-19:00
-                </span>
+                <div className="column has-text-left">
+                  <p className="title is-size-5-mobile is-size-4-tablet">
+                    Monday-Friday
+                  </p>
+                  <p className="subtitle is-size-6-mobile is-size-5-tablet">
+                    09:00 - 23:00
+                  </p>
+                </div>
+                <div className="column has-text-left">
+                  <p className="title is-size-5-mobile is-size-4-tablet">
+                    Saturday-Sunday
+                  </p>
+                  <p className="subtitle is-size-6-mobile is-size-5-tablet">
+                    10:00 - 19:00
+                  </p>
+                </div>
               </div>
               <h1
                 className="title is-4 highlighted-text"
-                style={{ marginTop: "2rem" }}
+                style={{ marginTop: "2rem", color: "orange" }}
               >
                 About Large Art-Studio
               </h1>
-              <span
-                className="title is-size-4"
-                style={{ marginBottom: "1rem" }}
-              >
+              <p className="title is-size-5" style={{ color: "white" }}>
                 Gor Demirkhanyan PE
-              </span>
-              <p>
+              </p>
+              <p style={{ color: "white" }}>
                 Large Art-Studio was founded in 2012. We initially provided
                 video and photo filming, along with design services. In 2022, we
                 underwent a rebranding and proudly opened our own office in
@@ -74,27 +84,10 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="columns is-centered is-multiline">
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <button
-                className="button is-warning is-fullwidth"
-                onClick={toggleContactText}
-              >
-                Contact Information
-              </button>
-            </div>
-            <div className="column is-12-mobile is-6-tablet is-4-desktop">
-              <button
-                className="button is-fullwidth"
-                style={{ backgroundColor: "yellow", color: "black" }}
-              >
-                Learn More
-              </button>
-            </div>
-          </div>
-        </div>
+      <section className="section has-text-centered">
+        <button className="button is-warning" onClick={toggleContactText}>
+          Contact Information
+        </button>
       </section>
 
       <section
@@ -102,7 +95,36 @@ export const AboutPage = () => {
       >
         <div className="container">
           <div className="columns is-centered">
-            <div className="column is-12-mobile is-10-tablet is-8-desktop">
+            <div className="column is-12-mobile is-10-tablet is-8-desktop has-text-centered">
+              <div className="contact-info">
+                <p onClick={() => handleCopyPhoneNumber("+37491132400")}>
+                  <span className="contact-text">+37491132400</span>
+                  <Image
+                    src={copy}
+                    alt="copy"
+                    width={25}
+                    height={25}
+                    className="copy-icon"
+                  />
+                </p>
+                <p
+                  onClick={() =>
+                    handleCopyPhoneNumber("gor.demirkhanyan@gmail.com")
+                  }
+                  style={{marginBottom: "1rem"}}
+                >
+                  <span className="contact-text">
+                    gor.demirkhanyan@gmail.com
+                  </span>
+                  <Image
+                    src={copy}
+                    alt="copy"
+                    width={25}
+                    height={25}
+                    className="copy-icon"
+                  />
+                </p>
+              </div>
               <div className="social-buttons">
                 {[
                   {
@@ -126,24 +148,13 @@ export const AboutPage = () => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={href}
                   >
                     <button className="button is-large square-button">
-                      <FontAwesomeIcon
-                        icon={icon}
-                        size="2x"
-                        style={{ color: "black" }}
-                      />
+                      <FontAwesomeIcon icon={icon} className="icon" />
                     </button>
                   </a>
                 ))}
               </div>
-              <p style={{ cursor: "pointer" }} onClick={handleCopyPhoneNumber}>
-                +37491132400
-              </p>
-              <p style={{ cursor: "pointer" }} onClick={handleCopyPhoneNumber}>
-                gor.demirkhanyan@gmail.com
-              </p>
             </div>
           </div>
         </div>
@@ -151,9 +162,9 @@ export const AboutPage = () => {
 
       <section className="section">
         <div className="container">
-          <h2 className="title is-4">Visit Us</h2>
+          <h2 className="title is-4 has-text-centered">Visit Us</h2>
           <div className="columns is-centered">
-            <div className="column is-12-mobile is-10-tablet is-10-desktop">
+            <div className="column is-10">
               <iframe
                 title="Yandex Map"
                 width="100%"
@@ -169,100 +180,67 @@ export const AboutPage = () => {
 
       <style jsx global>{`
         .square-button {
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 8px;
-          padding: 0;
-          background-color: #e5e5e5;
-          transition: background-color 0.3s ease;
+          background-color: grey;
+          border: none;
+          transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
+        .square-button .icon {
+          font-size: 1.5rem;
+          color: black;
+          transition: color 0.3s ease;
+        }
         .square-button:hover {
-          background-color: #ccc;
+          background-color: black;
+          transform: scale(1.1);
         }
-
+        .square-button:hover .icon {
+          color: grey;
+        }
         .social-buttons {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
           gap: 1rem;
         }
-
-        @media (max-width: 768px) {
-          .social-buttons {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-      `}</style>
-
-      <style jsx>{`
-        .hero-body {
-          background-color: #ff8c00;
-          color: white;
-        }
-
-        .section {
-          margin-top: 2rem;
-          padding: 2rem 1rem;
-        }
-
-        .button {
-          margin-top: 1rem;
-        }
-
-        .columns {
-          margin-top: 1rem;
-        }
-
-        .highlighted-text {
+        .contact-info p {
           font-size: 1.5rem;
-          font-weight: bold;
-          color: #ffcc00;
+          cursor: pointer;
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-
+        .contact-text {
+          color: orange;
+        }
+        .copy-icon {
+          margin-left: 10px;
+          cursor: pointer;
+        }
         .contact-section {
-          overflow: hidden;
           max-height: 0;
           opacity: 0;
-          transition: max-height 1.5s ease, opacity 1.5s ease;
+          transition: max-height 1s ease, opacity 1s ease;
         }
-
         .contact-section.open {
-          max-height: 1500px;
+          max-height: 500px;
           opacity: 1;
         }
-
         @media (max-width: 768px) {
-          .hero-body {
-            padding: 2rem 1rem;
+          .square-button {
+            width: 50px;
+            height: 50px;
           }
-
-          .title {
-            font-size: 1.5rem;
+          .square-button .icon {
+            font-size: 1.2rem;
           }
-
-          .subtitle {
-            font-size: 1rem;
-          }
-
-          .highlighted-text {
-            font-size: 1.3rem;
-          }
-        }
-
-        @media (min-width: 769px) {
-          .title {
-            font-size: 2.5rem;
-          }
-
-          .subtitle {
-            font-size: 1.25rem;
-          }
-
-          .highlighted-text {
-            font-size: 1.7rem;
+          .contact-info p {
+            font-size: 1.2rem;
           }
         }
       `}</style>
