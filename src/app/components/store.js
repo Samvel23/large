@@ -59,11 +59,23 @@ export const StorePage = () => {
                 </figure>
               </div>
               <div className="card-content has-text-centered">
-                <p className="title is-5">{product.name}</p>
-                <p className="subtitle is-6">{product.description}</p>
-                <p className="price has-text-weight-bold">{product.price}</p>
+                <p className="title is-5" style={{ color: "white" }}>
+                  {product.name}
+                </p>
+                <p className="subtitle is-6" style={{ color: "white" }}>
+                  {product.description}
+                </p>
+                <p
+                  className="price has-text-weight-bold"
+                  style={{ color: "white" }}
+                >
+                  {product.price}
+                </p>
               </div>
-              <footer className="card-footer">
+              <footer
+                className="card-footer"
+                style={{ backgroundColor: "black" }}
+              >
                 <button
                   className="button is-warning card-footer-item"
                   onClick={() => handleAddToCart(product)}

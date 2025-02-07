@@ -17,7 +17,9 @@ export const Services = () => {
       </Head>
       <section className="section">
         <div className="container">
-          <h1 className="title has-text-centered">Our Services</h1>
+          <h1 className="title has-text-centered" style={{ color: "white" }}>
+            Our Services
+          </h1>
           <div className="columns is-multiline">
             {services.map((service, index) => (
               <div className="column is-one-third" key={index}>

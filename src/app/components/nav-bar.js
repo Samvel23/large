@@ -1,6 +1,6 @@
 "use client";
 import "bulma/css/bulma.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import icon from "../icon/large.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,14 @@ export const NavBar = () => {
     setIsActive(!isActive);
   };
   const router = useRouter();
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isActive]);
 
   return (
     <nav
@@ -47,13 +55,14 @@ export const NavBar = () => {
             href={router.asPath === "/" ? "#" : "/"}
             onClick={(e) => {
               e.preventDefault();
+              const scrollAmount = window.innerWidth <= 768 ? 400 : 600;
               if (router.asPath === "/") {
-                window.scrollTo({ top: 600, behavior: "smooth" }); // Scroll down by 600px if on home page
+                window.scrollTo({ top: scrollAmount, behavior: "smooth" });
               } else {
-                router.push("/"); // Navigate to home page using `router.push`
+                router.push("/");
                 setTimeout(() => {
-                  window.scrollTo({ top: 600, behavior: "smooth" }); // Scroll to 600px after navigation
-                }, 100); // Delay to allow for page navigation
+                  window.scrollTo({ top: scrollAmount, behavior: "smooth" });
+                }, 100);
               }
             }}
           >
@@ -88,23 +97,20 @@ export const NavBar = () => {
 };
 
 <style jsx>{`
-  /* Customizing navbar height and padding */
   .custom-navbar {
-    height: 80px; /* Adjust to your preferred height */
+    height: 80px;
     padding-left: 1rem;
     padding-right: 1rem;
   }
 
   .navbar-item {
-    padding: 0.5rem 1rem; /* Ensure better vertical padding */
+    padding: 0.5rem 1rem;
   }
 
-  /* Adjust navbar burger visibility */
   .navbar-burger {
     display: none;
   }
 
-  /* Make navbar-burger visible on mobile */
   @media (max-width: 768px) {
     .navbar-burger {
       display: block;
@@ -114,11 +120,16 @@ export const NavBar = () => {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      overflow-y: auto;
+      padding-top: 80px;
     }
-  }
 
-  /* Add custom styles for mobile */
-  @media (max-width: 768px) {
     .navbar-item {
       padding: 1rem;
       font-size: 1.2rem;
