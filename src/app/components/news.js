@@ -10,8 +10,9 @@ export const NewsPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      const scrollOffset = window.innerWidth <= 768 ? 300 : 600;
       window.scrollBy({
-        top: 600, // Scroll down by 300px
+        top: scrollOffset, // Scroll down by 300px or 600px
         behavior: "smooth", // Smooth scrolling effect
       });
     }, 5000);

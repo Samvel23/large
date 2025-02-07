@@ -147,13 +147,13 @@ export const AboutPage = () => {
                     href: "https://www.youtube.com/your-channel",
                     icon: faYoutube,
                   },
-                  { href: "https://wa.me/+37491132400", icon: faWhatsapp },
-                  { href: "https://viber.com/your-profile", icon: faViber },
-                  { href: "https://t.me/your-profile", icon: faTelegram },
                   {
                     href: "https://www.facebook.com/your-profile",
                     icon: faFacebook,
                   },
+                  { href: "https://t.me/your-profile", icon: faTelegram },
+                  { href: "https://wa.me/+37491132400", icon: faWhatsapp },
+                  { href: "https://viber.com/your-profile", icon: faViber },
                 ].map(({ href, icon }, index) => (
                   <a
                     key={index}
@@ -173,7 +173,7 @@ export const AboutPage = () => {
       </section>
 
       {/* <section className="section"> */}
-        <div className="container">
+        <div className="container" style={{padding: "20px"}}>
           <h2
             className="title is-4 has-text-centered"
             style={{ color: "white" }}

@@ -47,14 +47,14 @@ export const Services = () => {
         </div>
       </section>
       {clickedService && (
-        <div className="modal is-active">
+        <div className="modal is-active" style={{padding: "20px"}}>
           <div
             className="modal-background"
             onClick={() => setClickedService(null)}
           ></div>
           <div
             className="modal-card"
-            style={{ padding: "20px", backgroundColor: "black" }}
+            style={{ padding: "20px", backgroundColor: "black", border: "1px solid grey" }}
           >
             <header
               className="modal-card-head"

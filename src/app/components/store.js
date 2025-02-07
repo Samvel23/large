@@ -80,7 +80,7 @@ export const StorePage = () => {
               </div>
               <footer
                 className="card-footer"
-                style={{ backgroundColor: "black" }}
+                style={{ backgroundColor: "black", border: "none" }}
               >
                 <button
                   className="button is-warning card-footer-item hover-button"
