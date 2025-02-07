@@ -123,7 +123,7 @@ export const AboutPage = () => {
                   onClick={() =>
                     handleCopyPhoneNumber("gor.demirkhanyan@gmail.com")
                   }
-                  style={{ marginBottom: "1rem" }}
+                  style={{ marginBottom: 0 }}
                 >
                   <span className="contact-text">
                     gor.demirkhanyan@gmail.com
@@ -172,7 +172,7 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      <section className="section">
+      {/* <section className="section"> */}
         <div className="container">
           <h2
             className="title is-4 has-text-centered"
@@ -193,7 +193,7 @@ export const AboutPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      {/* </section> */}
 
       <style jsx global>{`
         .square-button {

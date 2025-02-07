@@ -15,10 +15,14 @@
     "@motionone/dom": "^10.18.0",
     "bulma": "^1.0.3",
     "framer-motion": "^12.0.6",
+    "i18next": "^24.2.2",
     "next": "15.1.6",
+    "next-i18next": "^15.4.2",
+    "next-intl": "^3.26.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-fontawesome": "^1.7.1"
+    "react-fontawesome": "^1.7.1",
+    "react-i18next": "^15.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

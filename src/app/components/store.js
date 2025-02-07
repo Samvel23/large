@@ -9,7 +9,7 @@ export const StorePage = () => {
 
   const handleAddToCart = (product) => {
     setCart([...cart, product]);
-    alert(`${product.name} added to cart!`);
+    alert("Your Product added To Cart");
   };
 
   return (
@@ -59,15 +59,21 @@ export const StorePage = () => {
                 </figure>
               </div>
               <div className="card-content has-text-centered">
-                <p className="title is-5" style={{ color: "white" }}>
+                <p
+                  className="title is-5"
+                  style={{ color: "white", wordBreak: "break-word" }}
+                >
                   {product.name}
                 </p>
-                <p className="subtitle is-6" style={{ color: "white" }}>
+                <p
+                  className="subtitle is-6"
+                  style={{ color: "white", wordBreak: "break-word" }}
+                >
                   {product.description}
                 </p>
                 <p
                   className="price has-text-weight-bold"
-                  style={{ color: "white" }}
+                  style={{ color: "white", wordBreak: "break-word" }}
                 >
                   {product.price}
                 </p>
@@ -87,7 +93,7 @@ export const StorePage = () => {
                   onClick={() => setSelectedProduct(product)}
                   style={{ backgroundColor: "white" }}
                 >
-                  View Details
+                  Details
                 </button>
               </footer>
             </div>
@@ -178,5 +184,3 @@ const products = [
     image: shoe,
   },
 ];
-
-export default StorePage;
