@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import shoe from "../icon/shoe.png";
+import shoe from "../icon/shoe.png"; // Replace with the actual path to your image
 
 export const StorePage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -83,17 +83,17 @@ export const StorePage = () => {
                 style={{ backgroundColor: "black" }}
               >
                 <button
-                  className="button is-warning card-footer-item"
+                  className="button is-warning card-footer-item hover-button"
                   onClick={() => handleAddToCart(product)}
                 >
-                  Add to Cart
+                  Place Order
                 </button>
                 <button
-                  className="button is-link has-text-black card-footer-item"
+                  className="button is-link has-text-black card-footer-item hover-button"
                   onClick={() => setSelectedProduct(product)}
                   style={{ backgroundColor: "white" }}
                 >
-                  Details
+                  View
                 </button>
               </footer>
             </div>
@@ -184,3 +184,25 @@ const products = [
     image: shoe,
   },
 ];
+
+<style jsx global>{`
+  .hover-button {
+    transition: background-color 0.3s ease, transform 0.2s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .hover-button:hover {
+    background-color: #ff9800; /* Slightly darker orange for hover */
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hover-button:focus {
+    outline: none;
+  }
+
+  .product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+`}</style>;
