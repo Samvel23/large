@@ -13,7 +13,10 @@ export const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.email === "test@example.com" && formData.password === "password123") {
+    if (
+      formData.email === "test@example.com" &&
+      formData.password === "password123"
+    ) {
       setLoggedIn(true);
       setError("");
       alert("Login successful!");
@@ -31,15 +34,26 @@ export const LoginPage = () => {
       <section className="section">
         <div className="container">
           <div className="column is-half is-offset-one-quarter">
-            <div className="box p-5">
-              <h1 className="title has-text-centered">Login to Your Account</h1>
+            <div className="box p-5" style={{ backgroundColor: "black" }}>
+              <h1
+                className="title has-text-centered"
+                style={{ color: "white" }}
+              >
+                Login to Your Account
+              </h1>
               {loggedIn ? (
-                <div className="notification is-success">Login successful! Welcome back!</div>
+                <div className="notification is-success">
+                  Login successful! Welcome back!
+                </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  {error && <div className="notification is-danger">{error}</div>}
+                  {error && (
+                    <div className="notification is-danger">{error}</div>
+                  )}
                   <div className="field">
-                    <label className="label">Email</label>
+                    <label className="label" style={{ color: "white" }}>
+                      Email
+                    </label>
                     <div className="control">
                       <input
                         className="input"
@@ -53,7 +67,9 @@ export const LoginPage = () => {
                     </div>
                   </div>
                   <div className="field">
-                    <label className="label">Password</label>
+                    <label className="label" style={{ color: "white" }}>
+                      Password
+                    </label>
                     <div className="control">
                       <input
                         className="input"
@@ -67,7 +83,9 @@ export const LoginPage = () => {
                     </div>
                   </div>
                   <div className="field">
-                    <button className="button is-primary is-fullwidth has-background-warning">Log In</button>
+                    <button className="button is-primary is-fullwidth has-background-warning">
+                      Log In
+                    </button>
                   </div>
                 </form>
               )}
@@ -77,4 +95,4 @@ export const LoginPage = () => {
       </section>
     </>
   );
-}
+};

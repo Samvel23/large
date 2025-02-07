@@ -65,25 +65,15 @@ export const NavBar = () => {
           <Link className="navbar-item" href="/store">
             Store
           </Link>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-            <div className="navbar-dropdown">
-              <Link className="navbar-item" href="/contact">
-                Contact
-              </Link>
-              <hr className="navbar-divider" />
-              <Link className="navbar-item" href="/faq">
-                FAQ
-              </Link>
-            </div>
-          </div>
         </div>
 
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link href="/signup" className="button is-primary has-background-warning">
+              <Link
+                href="/signup"
+                className="button is-primary has-background-warning"
+              >
                 <strong>Sign up</strong>
               </Link>
               <Link href="/login" className="button is-light">

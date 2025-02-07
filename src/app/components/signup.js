@@ -32,8 +32,13 @@ export const SignUpPage = () => {
       <section className="section">
         <div className="container">
           <div className="column is-half is-offset-one-quarter">
-            <div className="box p-5">
-              <h1 className="title has-text-centered">Create an Account</h1>
+            <div className="box p-5" style={{ backgroundColor: "black" }}>
+              <h1
+                className="title has-text-centered"
+                style={{ color: "white" }}
+              >
+                Create an Account
+              </h1>
               {submitted ? (
                 <div className="notification is-success">
                   Signup successful! Welcome, {formData.name}!
@@ -41,7 +46,9 @@ export const SignUpPage = () => {
               ) : (
                 <form onSubmit={handleSubmit}>
                   <div className="field">
-                    <label className="label">Name</label>
+                    <label className="label" style={{ color: "white" }}>
+                      Name
+                    </label>
                     <div className="control">
                       <input
                         className="input"
@@ -55,7 +62,9 @@ export const SignUpPage = () => {
                     </div>
                   </div>
                   <div className="field">
-                    <label className="label">Email</label>
+                    <label className="label" style={{ color: "white" }}>
+                      Email
+                    </label>
                     <div className="control">
                       <input
                         className="input"
@@ -69,7 +78,9 @@ export const SignUpPage = () => {
                     </div>
                   </div>
                   <div className="field">
-                    <label className="label">Password</label>
+                    <label className="label" style={{ color: "white" }}>
+                      Password
+                    </label>
                     <div className="control">
                       <input
                         className="input"
@@ -95,4 +106,4 @@ export const SignUpPage = () => {
       </section>
     </>
   );
-}
+};

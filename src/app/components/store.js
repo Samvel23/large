@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import shoe from "../icon/shoe.png";
 
-
 export const StorePage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
@@ -14,9 +13,14 @@ export const StorePage = () => {
   };
 
   return (
-    <div className="store-page container">
-      <h1 className="title has-text-centered is-size-3-mobile">Welcome to Our Store</h1>
-      <div className="columns is-multiline is-mobile">
+    <div className="container p-4">
+      <h1
+        className="title has-text-centered is-size-3-mobile is-size-2-tablet"
+        style={{ color: "white" }}
+      >
+        Welcome to Our Store
+      </h1>
+      <div className="columns is-multiline is-centered">
         {products.map((product) => (
           <div
             key={product.id}
@@ -25,9 +29,8 @@ export const StorePage = () => {
             <div
               className="card product-card"
               style={{
-                position: "relative",
-                overflow: "hidden",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                backgroundColor: "black",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "scale(1.05)";
@@ -39,47 +42,38 @@ export const StorePage = () => {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              {/* Card Image with Text Overlay */}
-              <div className="card-image" style={{ position: "relative" }}>
-                <Image
-                  src={product.image || "/default-image.jpg"}
-                  alt={product.name}
-                  width={300}
-                  height={225}
-                  objectFit="cover"
-                  className="product-image"
-                  style={{ width: "100%", height: "auto" }}
-                />
-                <div
-                  className="overlay"
-                  style={{
-                    position: "absolute",
-                    bottom: "0",
-                    width: "100%",
-                    background: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
-                    color: "white",
-                    textAlign: "center",
-                    padding: "10px",
-                  }}
-                >
-                  <p className="title is-5 is-size-6-mobile">{product.name}</p>
-                  <p className="subtitle is-6 is-size-7-mobile">{product.description}</p>
-                  <p className="price has-text-weight-bold is-size-6-mobile">{product.price}</p>
-                </div>
+              <div className="card-image">
+                <figure className="image is-4by3">
+                  <Image
+                    src={product.image || "/default-image.jpg"}
+                    alt={product.name}
+                    width={300}
+                    height={225}
+                    className="product-image"
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </figure>
               </div>
-
-              {/* Buttons */}
+              <div className="card-content has-text-centered">
+                <p className="title is-5">{product.name}</p>
+                <p className="subtitle is-6">{product.description}</p>
+                <p className="price has-text-weight-bold">{product.price}</p>
+              </div>
               <footer className="card-footer">
                 <button
-                  className="button is-primary card-footer-item is-size-7-mobile has-background-warning"
+                  className="button is-warning card-footer-item"
                   onClick={() => handleAddToCart(product)}
                 >
                   Add to Cart
                 </button>
                 <button
-                  className="button is-link has-text-black card-footer-item is-size-7-mobile"
-                  style={{backgroundColor: "yellow"}}
+                  className="button is-link has-text-black card-footer-item"
                   onClick={() => setSelectedProduct(product)}
+                  style={{ backgroundColor: "white" }}
                 >
                   View Details
                 </button>
@@ -89,30 +83,47 @@ export const StorePage = () => {
         ))}
       </div>
 
-      {/* Modal for Product Details */}
+      {/* Product Details Modal */}
       {selectedProduct && (
         <div className="modal is-active">
           <div
             className="modal-background"
             onClick={() => setSelectedProduct(null)}
           ></div>
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title is-size-5-mobile">{selectedProduct.name}</p>
+          <div
+            className="modal-card"
+            style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}
+          >
+            <header
+              className="modal-card-head"
+              style={{ backgroundColor: "black", padding: "15px" }}
+            >
+              <p className="modal-card-title" style={{ color: "white" }}>
+                {selectedProduct.name}
+              </p>
               <button
                 className="delete"
                 onClick={() => setSelectedProduct(null)}
               ></button>
             </header>
-            <section className="modal-card-body">
-              <p className="is-size-6-mobile">{selectedProduct.description}</p>
-              <p className="price has-text-weight-bold is-size-6-mobile">
+            <section
+              className="modal-card-body"
+              style={{ backgroundColor: "black", padding: "20px" }}
+            >
+              <p style={{ color: "white" }}>{selectedProduct.description}</p>
+              <p
+                className="price has-text-weight-bold"
+                style={{ color: "white" }}
+              >
                 {selectedProduct.price}
               </p>
             </section>
-            <footer className="modal-card-foot">
+            <footer
+              className="modal-card-foot"
+              style={{ backgroundColor: "black", padding: "15px" }}
+            >
               <button
-                className="button is-size-7-mobile"
+                className="button"
                 onClick={() => setSelectedProduct(null)}
               >
                 Close
