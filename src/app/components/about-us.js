@@ -123,7 +123,7 @@ export const AboutPage = () => {
                   onClick={() =>
                     handleCopyPhoneNumber("gor.demirkhanyan@gmail.com")
                   }
-                  style={{ marginBottom: 0 }}
+                  style={{ marginBottom: "40px" }}
                 >
                   <span className="contact-text">
                     gor.demirkhanyan@gmail.com
@@ -140,15 +140,15 @@ export const AboutPage = () => {
               <div className="social-buttons">
                 {[
                   {
-                    href: "https://www.instagram.com/your-profile",
+                    href: "https://www.instagram.com/large.art.studio/",
                     icon: faInstagram,
                   },
                   {
-                    href: "https://www.youtube.com/your-channel",
+                    href: "https://www.youtube.com/@largeart-studio7134",
                     icon: faYoutube,
                   },
                   {
-                    href: "https://www.facebook.com/your-profile",
+                    href: "https://www.facebook.com/largeartstudio2012",
                     icon: faFacebook,
                   },
                   { href: "https://t.me/your-profile", icon: faTelegram },
@@ -173,26 +173,23 @@ export const AboutPage = () => {
       </section>
 
       {/* <section className="section"> */}
-        <div className="container" style={{padding: "20px"}}>
-          <h2
-            className="title is-4 has-text-centered"
-            style={{ color: "white" }}
-          >
-            Visit Us
-          </h2>
-          <div className="columns is-centered">
-            <div className="column is-10">
-              <iframe
-                title="Yandex Map"
-                width="100%"
-                height="400"
-                src="https://yandex.ru/map-widget/v1/-/CDHVnOIN?z=17"
-                allowFullScreen
-                loading="lazy"
-              ></iframe>
-            </div>
+      <div className="container" style={{ padding: "20px" }}>
+        <h2 className="title is-4 has-text-centered" style={{ color: "white" }}>
+          Visit Us
+        </h2>
+        <div className="columns is-centered">
+          <div className="column is-10">
+            <iframe
+              title="Yandex Map"
+              width="100%"
+              height="400"
+              src="https://yandex.ru/map-widget/v1/-/CDHVnOIN?z=17"
+              allowFullScreen
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
+      </div>
       {/* </section> */}
 
       <style jsx global>{`

@@ -39,6 +39,8 @@ export const SignUpPage = () => {
               >
                 Create an Account
               </h1>
+              <p>This page is for only viewing</p>
+
               {submitted ? (
                 <div className="notification is-success">
                   Signup successful! Welcome, {formData.name}!

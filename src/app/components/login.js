@@ -41,6 +41,7 @@ export const LoginPage = () => {
               >
                 Login to Your Account
               </h1>
+              <p>This page is for only viewing</p>
               {loggedIn ? (
                 <div className="notification is-success">
                   Login successful! Welcome back!

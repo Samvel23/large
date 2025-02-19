@@ -8,8 +8,7 @@ export const StorePage = () => {
   const [cart, setCart] = useState([]);
 
   const handleAddToCart = (product) => {
-    setCart([...cart, product]);
-    alert("Your Product added To Cart");
+    alert("The store is currently unavailable. You can only view products.");
   };
 
   return (
@@ -20,6 +19,9 @@ export const StorePage = () => {
       >
         Welcome to Our Store
       </h1>
+      <p className="has-text-centered has-text-white">
+        The store is currently unavailable. You can only view products.
+      </p>
       <div className="columns is-multiline is-centered">
         {products.map((product) => (
           <div
@@ -184,25 +186,3 @@ const products = [
     image: shoe,
   },
 ];
-
-<style jsx global>{`
-  .hover-button {
-    transition: background-color 0.3s ease, transform 0.2s ease,
-      box-shadow 0.3s ease;
-  }
-
-  .hover-button:hover {
-    background-color: #ff9800; /* Slightly darker orange for hover */
-    transform: scale(1.05);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  .hover-button:focus {
-    outline: none;
-  }
-
-  .product-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  }
-`}</style>;
