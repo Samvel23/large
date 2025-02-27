@@ -1,26 +1,17 @@
 "use client";
 import "bulma/css/bulma.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import icon from "../icon/large.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
-export const NavBar = () => {
+export const NavBar = ({ lang, setLang }) => {
   const [isActive, setIsActive] = useState(false);
 
+  // Toggle the navbar burger menu
   const handleClick = () => {
     setIsActive(!isActive);
   };
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isActive) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [isActive]);
 
   return (
     <nav
@@ -30,7 +21,7 @@ export const NavBar = () => {
     >
       <div className="navbar-brand">
         <Link className="navbar-item" href="/">
-          <Image src={icon} alt="Logo" width="30" height="40" />
+          <Image src={icon} alt="Logo" width={30} height={40} />
           <span className="ml-2 has-text-weight-bold">Large Art</span>
         </Link>
 
@@ -48,31 +39,20 @@ export const NavBar = () => {
 
       <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
         <div className="navbar-start">
-          <Link
-            className={`navbar-item ${
-              router.asPath !== "/" ? "" : "is-hidden"
-            }`}
-            href={router.asPath === "/" ? "#" : "/"}
-            onClick={(e) => {
-              e.preventDefault();
-              const scrollAmount = window.innerWidth <= 768 ? 400 : 600;
-              if (router.asPath === "/") {
-                window.scrollTo({ top: scrollAmount, behavior: "smooth" });
-              } else {
-                router.push("/");
-                setTimeout(() => {
-                  window.scrollTo({ top: scrollAmount, behavior: "smooth" });
-                }, 100);
-              }
-            }}
-          >
-            About Us
+          <Link className="navbar-item" href="/about">
+            {lang === "eng" ? "About Us" : " "}
+            {lang === "arm" ? "Մեր մասին" : " "}
+            {lang === "ru" ? "О нас" : " "}
           </Link>
           <Link className="navbar-item" href="/services">
-            Services
+            {lang === "eng" ? "Services" : " "}
+            {lang === "arm" ? "Ծառայություններ" : " "}
+            {lang === "ru" ? "Услуги" : " "}
           </Link>
           <Link className="navbar-item" href="/store">
-            Store
+            {lang === "eng" ? "Store" : " "}
+            {lang === "arm" ? "Պահեստ" : " "}
+            {lang === "ru" ? "Магазин" : " "}
           </Link>
         </div>
 
@@ -83,11 +63,30 @@ export const NavBar = () => {
                 href="/signup"
                 className="button is-primary has-background-warning"
               >
-                <strong>Sign up</strong>
+                {lang === "eng" ? "Sign up" : " "}
+                {lang === "arm" ? "Գրանցում" : " "}
+                {lang === "ru" ? "Зарегистрироваться" : " "}
               </Link>
               <Link href="/login" className="button is-light">
-                Log in
+                {lang === "eng" ? "Log in" : " "}
+                {lang === "arm" ? "Գրանցվել" : " "}
+                {lang === "ru" ? "Войти" : " "}
               </Link>
+            </div>
+          </div>
+
+          {/* Language Switcher */}
+          <div className="navbar-item">
+            <div className="buttons">
+              <button className="button" onClick={() => setLang("ru")}>
+                RU
+              </button>
+              <button className="button" onClick={() => setLang("arm")}>
+                ARM
+              </button>
+              <button className="button" onClick={() => setLang("eng")}>
+                ENG
+              </button>
             </div>
           </div>
         </div>
@@ -95,55 +94,3 @@ export const NavBar = () => {
     </nav>
   );
 };
-
-<style jsx>{`
-  .custom-navbar {
-    height: 80px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .navbar-item {
-    padding: 0.5rem 1rem;
-  }
-
-  .navbar-burger {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    .navbar-burger {
-      display: block;
-    }
-
-    .navbar-menu.is-active {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
-      overflow-y: auto;
-      padding-top: 80px;
-    }
-
-    .navbar-item {
-      padding: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .navbar-brand {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
-`}</style>;

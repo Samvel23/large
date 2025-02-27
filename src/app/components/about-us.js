@@ -12,7 +12,7 @@ import {
 import copy from "../icon/copy.png";
 import Image from "next/image";
 
-export const AboutPage = () => {
+export const AboutPage = ({ lang, setLang }) => {
   const [showContactText, setShowContactText] = useState(false);
 
   const toggleContactText = () => {
@@ -28,10 +28,18 @@ export const AboutPage = () => {
       <section className="hero is-warning">
         <div className="hero-body has-text-centered">
           <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
-            About Us
+            {lang === "eng"
+              ? "About Us"
+              : lang === "arm"
+              ? "Մեր Մասին"
+              : "О нас"}
           </h1>
           <p className="subtitle is-size-5-mobile is-size-4-tablet">
-            Learn more about our company and values
+            {lang === "eng"
+              ? "Learn more about our company and values"
+              : lang === "arm"
+              ? "Իմացեք ավելին մեր ընկերության և արժեքների մասին"
+              : "Узнайте больше о нашей компании и ценностях"}
           </p>
         </div>
       </section>
@@ -44,7 +52,11 @@ export const AboutPage = () => {
                 className="title is-4 highlighted-text"
                 style={{ color: "orange" }}
               >
-                Working Hours
+                {lang === "eng"
+                  ? "Working Hours"
+                  : lang === "arm"
+                  ? "Աշխատանքային Ժամեր"
+                  : "Рабочие часы"}
               </h1>
               <div className="columns">
                 <div className="column has-text-left">
@@ -52,7 +64,11 @@ export const AboutPage = () => {
                     className="title is-size-5-mobile is-size-4-tablet"
                     style={{ color: "white" }}
                   >
-                    Monday-Friday
+                    {lang === "eng"
+                      ? "Monday-Friday"
+                      : lang === "arm"
+                      ? "Երկուշաբթի-Ուրբաթ"
+                      : "Понедельник-Пятница"}
                   </p>
                   <p
                     className="subtitle is-size-6-mobile is-size-5-tablet"
@@ -66,7 +82,11 @@ export const AboutPage = () => {
                     className="title is-size-5-mobile is-size-4-tablet"
                     style={{ color: "white" }}
                   >
-                    Saturday-Sunday
+                    {lang === "eng"
+                      ? "Saturday-Sunday"
+                      : lang === "arm"
+                      ? "Շաբաթ-Կիրակի"
+                      : "Суббота-Воскресенье"}
                   </p>
                   <p
                     className="subtitle is-size-6-mobile is-size-5-tablet"
@@ -80,16 +100,21 @@ export const AboutPage = () => {
                 className="title is-4 highlighted-text"
                 style={{ marginTop: "2rem", color: "orange" }}
               >
-                About Large Art-Studio
+                {lang === "eng"
+                  ? "About Large Art-Studio"
+                  : lang === "arm"
+                  ? "Large Art-Studio-ի մասին"
+                  : "О Large Art-Studio"}
               </h1>
               <p className="title is-size-5" style={{ color: "white" }}>
                 Gor Demirkhanyan PE
               </p>
               <p style={{ color: "white" }}>
-                Large Art-Studio was founded in 2012. We initially provided
-                video and photo filming, along with design services. In 2022, we
-                underwent a rebranding and proudly opened our own office in
-                2023.
+                {lang === "eng"
+                  ? "Large Art-Studio was founded in 2012. We initially provided video and photo filming, along with design services. In 2022, we underwent a rebranding and proudly opened our own office in 2023."
+                  : lang === "arm"
+                  ? "Large Art-Studio-ը հիմնադրվել է 2012 թվականին: Մենք սկզբնականում մատուցել ենք վիդեո և ֆոտո նկարահանում, ինչպես նաև դիզայներական ծառայություններ: 2022 թվականին մենք վերակազմակերպվել ենք և հպարտորեն բացել մեր սեփական գրասենյակը 2023 թվականին:"
+                  : "Large Art-Studio был основан в 2012 году: изначально мы предоставляли услуги видео и фото съемки, а также дизайнерские услуги. В 2022 году мы прошли реорганизацию и с гордостью открыли свой офис в 2023 году."}
               </p>
             </div>
           </div>
@@ -98,7 +123,11 @@ export const AboutPage = () => {
 
       <section className="section has-text-centered">
         <button className="button is-warning" onClick={toggleContactText}>
-          Contact Information
+          {lang === "eng"
+            ? "Contact Information"
+            : lang === "arm"
+            ? "Կապի տվյալներ"
+            : "Контактная информация"}
         </button>
       </section>
 
@@ -175,7 +204,13 @@ export const AboutPage = () => {
       {/* <section className="section"> */}
       <div className="container" style={{ padding: "20px" }}>
         <h2 className="title is-4 has-text-centered" style={{ color: "white" }}>
-          Visit Us
+          {lang === "eng"
+            ? "Visit Us"
+            : lang === "arm"
+            ? "Այցելեք մեզ"
+            : lang === "ru"
+            ? " Посетите нас"
+            : ""}
         </h2>
         <div className="columns is-centered">
           <div className="column is-10">

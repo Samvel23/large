@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import shoe from "../icon/shoe.png"; // Replace with the actual path to your image
-
-export const StorePage = () => {
+import zbaxmunq from "../icon/zbaxmunq.png";
+export const StorePage = ({ lang, setLang }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
 
@@ -162,7 +162,7 @@ const products = [
     name: "Product 1",
     description: "This is a great product.",
     price: "$19.99",
-    image: shoe,
+    image: zbaxmunq,
   },
   {
     id: 2,
