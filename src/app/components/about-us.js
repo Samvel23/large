@@ -11,10 +11,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import copy from "../icon/copy.png";
 import Image from "next/image";
+import { useLanguage } from "../context/LanguageContext";
 
-export const AboutPage = ({ lang, setLang }) => {
+export const AboutPage = () => {
   const [showContactText, setShowContactText] = useState(false);
-
+  const { lang } = useLanguage();
   const toggleContactText = () => {
     setShowContactText(!showContactText);
   };
@@ -107,7 +108,11 @@ export const AboutPage = ({ lang, setLang }) => {
                   : "О Large Art-Studio"}
               </h1>
               <p className="title is-size-5" style={{ color: "white" }}>
-                Gor Demirkhanyan PE
+              {lang === "eng"
+                  ? "Gor Demirkhanyan PE"
+                  : lang === "arm"
+                  ? "Գոռ Դեմիրխանյան ԱՁ"
+                  : "Гор Демирханян ЧП"}
               </p>
               <p style={{ color: "white" }}>
                 {lang === "eng"

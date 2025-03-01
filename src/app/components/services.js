@@ -2,6 +2,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
 
 export const Services = () => {
   const [clickedService, setClickedService] = useState(null);
@@ -10,7 +11,97 @@ export const Services = () => {
     email: "",
     message: "",
   });
+  const { lang } = useLanguage();
+  const services = [
+    {
+      title: lang === "eng" ? "Design" : lang === "ru" ? "Дизайн" : "Դիզայն",
+      description:
+        lang === "eng"
+          ? "Create beautiful and functional designes for your home"
+          : lang === "ru"
+          ? "Создавайте красивые и функциональные проекты для вашего дома"
+          : "Ստեղծեք գեղեցիկ և ֆունկցիոնալ դիզայն ձեր տան համար",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
+    {
+      title:
+        lang === "eng" ? "Print" : lang === "ru" ? "Печать" : "Տպագրություն",
+      description:
+        lang === "eng"
+          ? "High-quality print solutions for your business."
+          : lang === "ru"
+          ? "Высококачественные решения для печати для вашего бизнеса."
+          : "Բարձրորակ տպագրական լուծումներ ձեր բիզնեսի համար:",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
 
+    {
+      title:
+        lang === "eng"
+          ? "Graphic Design"
+          : lang === "ru"
+          ? "Графический дизайн"
+          : "Գրաֆիկական դիզայն",
+      description:
+        lang === "eng"
+          ? "High-quality design solutions for your brand."
+          : lang === "ru"
+          ? "Высококачественные решения для вашего бренда."
+          : "Բարձրորակ դիզայն լուծումներ ձեր բրենդի համար:",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
+    {
+      title:
+        lang === "eng"
+          ? "Studio Store"
+          : lang === "ru"
+          ? "Магазин студии"
+          : "Ստուդիայի խանութ",
+      description:
+        lang === "eng"
+          ? "Discover our curated selection of design assets."
+          : lang === "ru"
+          ? "Откройте для себя наш отобранный выбор дизайнерских активов."
+          : "Հայտնաբերեք մեր ընտրյալ դիզայն ակտիվները:",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
+    {
+      title:
+        lang === "eng"
+          ? "Web Development"
+          : lang === "ru"
+          ? "Веб-разработка"
+          : "Վեբ-զարգացում",
+      description:
+        lang === "eng"
+          ? "Custom web applications tailored to your needs."
+          : lang === "ru"
+          ? "Индивидуальные веб-приложения, разработанные под ваши потребности."
+          : "Ձեր կարիքներին համապատասխան վեբ-հավելվածներ:",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
+    {
+      title:
+        lang === "eng"
+          ? "Digital Marketing"
+          : lang === "ru"
+          ? "Цифровой маркетинг"
+          : "Թվային մարկետինգ",
+      description:
+        lang === "eng"
+          ? "Expert advice to help your business grow online."
+          : lang === "ru"
+          ? "Экспертные консультации, чтобы помочь вашему бизнесу развиваться в интернете."
+          : "Էքսպերտ խորհրդատվություններ ձեր բիզնեսի աճի համար օնլայն:",
+      image:
+        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+    },
+  ];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setOrderDetails((prev) => ({ ...prev, [name]: value }));
@@ -50,7 +141,13 @@ export const Services = () => {
       <section className="section">
         <div className="container">
           <h1 className="title has-text-centered" style={{ color: "white" }}>
-            Our Services
+            {lang === "eng"
+              ? "Our Services"
+              : lang === "ru"
+              ? "Наши услуги"
+              : lang === "arm"
+              ? "Մեր ծառայությունները"
+              : " "}
           </h1>
           <div className="columns is-multiline">
             {services.map((service, index) => (
@@ -113,114 +210,10 @@ export const Services = () => {
               style={{ color: "white", backgroundColor: "black" }}
             >
               <p>{clickedService.description}</p>
-              <hr style={{ backgroundColor: "grey" }} />
-              <h2 style={{ color: "white" }}>Order this service</h2>
-              <form onSubmit={handleOrderSubmit}>
-                <div className="field">
-                  <label className="label" style={{ color: "white" }}>
-                    Name
-                  </label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      name="name"
-                      value={orderDetails.name}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label" style={{ color: "white" }}>
-                    Email
-                  </label>
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="email"
-                      name="email"
-                      value={orderDetails.email}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="field">
-                  <label className="label" style={{ color: "white" }}>
-                    Message
-                  </label>
-                  <div className="control">
-                    <textarea
-                      className="textarea"
-                      name="message"
-                      value={orderDetails.message}
-                      onChange={handleInputChange}
-                    ></textarea>
-                  </div>
-                </div>
-                <button
-                  type="submit"
-                  className="button is-primary"
-                  style={{ marginTop: "10px" }}
-                >
-                  Submit Order
-                </button>
-              </form>
             </section>
-            <footer
-              className="modal-card-foot"
-              style={{ backgroundColor: "black" }}
-            >
-              <button
-                className="button"
-                onClick={() => setClickedService(null)}
-              >
-                Close
-              </button>
-            </footer>
           </div>
         </div>
       )}
     </>
   );
 };
-
-const services = [
-  {
-    title: "Interior Design",
-    description: "Create beautiful and functional spaces for your home",
-    image:
-      "https://images.unsplash.com/photo-1615529182904-14819c35db37?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGl2aW5nJTIwcm9vbSUyMGludGVyaW9yJTIwZGVzaWdufGVufDB8fDB8fHww",
-  },
-  {
-    title: "Print",
-    description: "High-quality print solutions for your business.",
-    image:
-      "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
-  },
-  {
-    title: "Graphic Design",
-    description: "High-quality design solutions for your brand.",
-    image:
-      "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
-  },
-  {
-    title: "Studio Store",
-    description: "Discover our curated selection of design assets",
-    image:
-      "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
-  },
-  {
-    title: "Web Development",
-    description: "Custom web applications tailored to your needs.",
-    image:
-      "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
-  },
-  {
-    title: "Digital Marketing",
-    description: "Expert advice to help your business grow online.",
-    image:
-      "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
-  },
-];
