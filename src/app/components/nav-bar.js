@@ -82,7 +82,7 @@ export const NavBar = () => {
               : "Услуги"}
           </Link>
           <Link className="navbar-item" href="/store">
-            {lang === "eng" ? "Store" : lang === "arm" ? "Պահեստ" : "Магазин"}
+            {lang === "eng" ? "Store" : lang === "arm" ? "Խանութ" : "Магазин"}
           </Link>
         </div>
 
@@ -130,7 +130,6 @@ export const NavBar = () => {
               </Link>
             </div>
           </div>
-
         </div>
       </div>
     </nav>

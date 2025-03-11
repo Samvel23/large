@@ -1,221 +1,261 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import shoe from "../icon/shoe.png"; // Replace with the actual path to your image
 import zbaxmunq from "../icon/zbaxmunq.png";
+import zbaxmunq3 from "../icon/zbaxmunq3.png";
+import zbaxmunq4 from "../icon/zbaxmunq4.png";
+import origami from "../icon/origami1.png";
+import origami2 from "../icon/origami2.png";
+import sqeyj from "../icon/sqeyj.png";
+import sqeyj1 from "../icon/sqeyj1.png";
+import uno from "../icon/uno.png";
+import chess from "../icon/chess.png";
 import { useLanguage } from "../context/LanguageContext";
+
 export const StorePage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [cart, setCart] = useState([]);
   const { lang } = useLanguage();
+  const imagesPrices = {
+    [uno]: "800",
+    [chess]: "2000",
+  };
+  const handelOrder = () => {
+    alert(
+      lang === "eng"
+        ? "This Page is for only viewing, you can't order"
+        : lang === "ru"
+        ? "Эта страница только для просмотра, вы не можете заказать"
+        : "Այս էջը միայն դիտելու համար է, դուք չեք կարող պատվիրել"
+    );
+  };
   const products = [
     {
       id: 1,
       name:
         lang === "eng"
-          ? "Zbaxmunq"
+          ? "«Zbaxmunq»"
           : lang === "ru"
-          ? "Занятие"
-          : lang === "arm"
-          ? "Զբաղմունք"
-          : " ",
+          ? "«Занятие»"
+          : "«Զբաղմունք»",
       description:
         lang === "eng"
-          ? "This is a great product."
+          ? "Game to learn Artsakh dialect with 1000 words."
           : lang === "ru"
-          ? "Это отличный продукт."
-          : lang === "arm"
-          ? "Այս մեծ ապրանք է."
-          : " ",
-      price: "$19.99",
-      image: zbaxmunq,
+          ? "Игра для изучения арцахского диалекта."
+          : "Խաղ Արցախի բարբառը սովորելու համար:",
+      price: "4600֏",
+      images: [zbaxmunq, zbaxmunq3, zbaxmunq4],
+      details: { creator: "Dee Games", players: "4+", age: "8+" },
     },
     {
       id: 2,
       name:
         lang === "eng"
-          ? "Product 2"
+          ? "«Origami»"
           : lang === "ru"
-          ? "Товар 2"
-          : lang === "arm"
-          ? "Ապրանք 2"
-          : " ",
+          ? "«Оригами»"
+          : "«Օրիգամի»",
       description:
         lang === "eng"
-          ? "This is another great product."
+          ? "Origami. Requires creativity & precision."
           : lang === "ru"
-          ? "Это еще один отличный продукт."
-          : lang === "arm"
-          ? "Սա մեծ այլ ապրանք է."
-          : " ",
-      price: "$29.99",
-      image: shoe,
+          ? "Оригами. Требует креативности и точности."
+          : "Օրգամի, զարգացնում է ձեռքի շնորհը",
+      price: "3500֏",
+      images: [origami, origami2],
+      details: { players: "1+", age: "5+" },
     },
     {
       id: 3,
       name:
-        lang === "eng"
-          ? "Product 3"
-          : lang === "ru"
-          ? "Товар 3"
-          : lang === "arm"
-          ? "Ապրանք 3"
-          : " ",
+        lang === "eng" ? "«Sqeyjd»" : lang === "ru" ? "«Скейдж»" : "«Սքեյջ»",
       description:
         lang === "eng"
-          ? "The best product in our store."
+          ? "Sqeydj strategy game."
           : lang === "ru"
-          ? "Лучший продукт в нашем магазине."
-          : lang === "arm"
-          ? "Մեր խանութում լավագույն ապրանքն է."
-          : " ",
-      price: "$39.99",
-      image: shoe,
+          ? "Скейдж — стратегическая игра."
+          : "Սքեյջ՝ ռազմավարական խաղ։",
+      price: "2900֏",
+      images: [sqeyj, sqeyj1],
+      details: {
+        creator:
+          lang === "eng" ? "De Games" : lang === "ru" ? "Де Гейм" : "Դը Գեյմ",
+        players: "3-6",
+        age: "12+",
+      },
     },
     {
       id: 4,
       name:
         lang === "eng"
-          ? "Product 4"
+          ? "Other Products"
           : lang === "ru"
-          ? "Товар 4"
-          : lang === "arm"
-          ? "Ապրանք 4"
-          : " ",
+          ? "Другие продукты"
+          : "Ուրիշ ապրանքներ",
       description:
         lang === "eng"
-          ? "A must-have item!"
+          ? "Other products for you"
           : lang === "ru"
-          ? "Обязательный товар!"
-          : lang === "arm"
-          ? "Պարտադիր ապրանք!"
-          : " ",
-      price: "$49.99",
-      image: shoe,
+          ? "Другие продукты для вас"
+          : "Ուրիշ ապրանքներ ձեր համար",
+      images: [uno, chess],
+      price: "",
+      details: { players: "6+", age: "8+" },
     },
   ];
 
-  const handleAddToCart = (product) => {
-    alert("The store is currently unavailable. You can only view products.");
+  const [currentImages, setCurrentImages] = useState(
+    products.reduce((acc, product) => {
+      acc[product.id] = 0;
+      return acc;
+    }, {})
+  );
+
+  const handleThumbnailClick = (id, index) => {
+    setCurrentImages((prev) => ({ ...prev, [id]: index }));
   };
 
   return (
     <div className="container p-4">
-      <h1
-        className="title has-text-centered is-size-3-mobile is-size-2-tablet"
-        style={{ color: "white" }}
-      >
+      <h1 className="title has-text-centered" style={{ color: "white" }}>
         {lang === "eng"
           ? "Welcome to Our Store"
           : lang === "ru"
-          ? "Добро пожаловать в наш магазин"
-          : lang === "arm"
-          ? "Բարի գալուս մեր խանութ"
-          : " "}
+          ? "Добро пожаловать"
+          : "Բարի գալուս"}
       </h1>
-      <p className="has-text-centered has-text-white">
-        {lang === "eng"
-          ? "The store is currently unavailable. You can only view products."
-          : lang === "ru"
-          ? "Магазин в данный момент недоступен. Вы можете только просматривать товары."
-          : lang === "arm"
-          ? "Խանութն այս պահին անհասանելի է։ Դուք կարող եք դիտել միայն ապրանքները:"
-          : " "}
-      </p>
       <div className="columns is-multiline is-centered">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="column is-12-mobile is-6-tablet is-4-desktop"
-          >
+          <div key={product.id} className="column is-4">
             <div
               className="card product-card"
               style={{
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 backgroundColor: "white",
+                animation: "fadeIn 0.5s forwards",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "scale(1.05)";
                 e.currentTarget.style.boxShadow =
-                  "0px 10px 20px rgba(0, 0, 0, 0.2)";
+                  "0 4px 8px rgba(0, 0, 0, 0.2)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "scale(1)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <div className="card-image">
+              <div
+                className="card-image"
+                style={{
+                  cursor: "pointer",
+                  animation: "moveForward 0.5s forwards",
+                }}
+              >
                 <figure className="image is-4by3">
                   <Image
-                    src={product.image || "/default-image.jpg"}
+                    src={product.images[currentImages[product.id]]}
                     alt={product.name}
                     width={300}
                     height={225}
                     className="product-image"
                     style={{
-                      objectFit: "contain",
-                      width: "100%",
-                      height: "100%",
+                      transition: "opacity 0.5s ease-in-out",
+                      opacity: 0,
+                      animation: "fadeIn 0.5s forwards",
                     }}
                   />
                 </figure>
               </div>
-              <div className="card-content has-text-centered">
-                <p
-                  className="title is-5"
-                  style={{ color: "black", wordBreak: "break-word" }}
-                >
+
+              <style jsx>{`
+                @keyframes fadeIn {
+                  0% {
+                    opacity: 0;
+                  }
+                  100% {
+                    opacity: 1;
+                  }
+                }
+                @keyframes moveForward {
+                  0% {
+                    transform: translateX(-20px);
+                  }
+                  100% {
+                    transform: translateX(0);
+                  }
+                }
+              `}</style>
+              <div
+                className="thumbnails"
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                  animation: "fadeIn 0.5s forwards, moveForward 0.5s forwards",
+                }}
+              >
+                {product.images.map((img, index) => (
+                  <Image
+                    key={index}
+                    src={img}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={50}
+                    height={50}
+                    className="thumbnail"
+                    style={{
+                      cursor: "pointer",
+                      border:
+                        currentImages[product.id] === index
+                          ? "2px solid white"
+                          : "none",
+                    }}
+                    onClick={() => handleThumbnailClick(product.id, index)}
+                  />
+                ))}
+              </div>
+              <div
+                className="card-content has-text-centered"
+                style={{ animation: "moveForward 0.5s forwards" }}
+              >
+                <p className="title is-5" style={{ color: "black" }}>
                   {product.name}
                 </p>
-                <p
-                  className="subtitle is-6"
-                  style={{ color: "black", wordBreak: "break-word" }}
-                >
+                <p className="subtitle is-6" style={{ color: "black" }}>
                   {product.description}
                 </p>
                 <p
                   className="price has-text-weight-bold"
-                  style={{ color: "black", wordBreak: "break-word" }}
+                  style={{ color: "black" }}
                 >
                   {product.price}
                 </p>
               </div>
               <footer
                 className="card-footer"
-                style={{ backgroundColor: "white", border: "none" }}
+                style={{
+                  border: "none",
+                  animation: "moveForward 0.5s forwards",
+                }}
               >
                 <button
-                  className="button is-warning card-footer-item hover-button"
-                  onClick={() => handleAddToCart(product)}
+                  className="button is-warning card-footer-item"
+                  onClick={() => handelOrder()}
                 >
-                  {lang === "eng"
-                    ? "Place order"
-                    : lang === "ru"
-                    ? "Разместить заказ"
-                    : lang === "arm"
-                    ? "Տեղադրել պատվեր"
-                    : " "}
+                  Place Order
                 </button>
                 <button
-                  className="button is-link has-text-white card-footer-item hover-button"
-                  onClick={() => setSelectedProduct(product)}
+                  className="button is-link card-footer-item"
                   style={{ backgroundColor: "black", color: "white" }}
+                  onClick={() => setSelectedProduct(product)}
                 >
-                  {lang === "eng"
-                    ? "View"
-                    : lang === "ru"
-                    ? "Смотреть"
-                    : lang === "arm"
-                    ? "Նայել"
-                    : " "}
+                  View
                 </button>
               </footer>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Product Details Modal */}
       {selectedProduct && (
         <div className="modal is-active">
           <div
@@ -223,51 +263,121 @@ export const StorePage = () => {
             onClick={() => setSelectedProduct(null)}
           ></div>
           <div
-            className="modal-card"
-            style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}
+            className="modal-content"
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "10px",
+            }}
           >
-            <header
-              className="modal-card-head"
-              style={{ backgroundColor: "black", padding: "15px" }}
-            >
-              <p className="modal-card-title" style={{ color: "white" }}>
-                {selectedProduct.name}
-              </p>
-              <button
-                className="delete"
-                onClick={() => setSelectedProduct(null)}
-              ></button>
-            </header>
-            <section
-              className="modal-card-body"
-              style={{ backgroundColor: "black", padding: "20px" }}
-            >
-              <p style={{ color: "white" }}>{selectedProduct.description}</p>
-              <p
-                className="price has-text-weight-bold"
-                style={{ color: "white" }}
-              >
-                {selectedProduct.price}
-              </p>
-            </section>
-            <footer
-              className="modal-card-foot"
-              style={{ backgroundColor: "black", padding: "15px" }}
-            >
-              <button
-                className="button"
-                onClick={() => setSelectedProduct(null)}
-              >
-                {lang === "eng"
-                  ? "Close"
-                  : lang === "ru"
-                  ? "Закрыть"
-                  : lang === "arm"
-                  ? "Փակել"
-                  : " "}
-              </button>
-            </footer>
+            {selectedProduct.id === 4 && (
+              <>
+                <h2 className="title" style={{ color: "black" }}>
+                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
+                  uno ? (
+                    <span>
+                      {selectedProduct.name === "UNO" ? "UNO" : "UNO"}
+                    </span>
+                  ) : (
+                    <span>
+                      {selectedProduct.name === "Chess" ? "Chess" : "Chess"}
+                    </span>
+                  )}
+                </h2>
+                <p style={{ color: "black" }}>
+                  {lang === "eng"
+                    ? "Players:"
+                    : lang === "ru"
+                    ? "Игроки:"
+                    : "Խաղացողներ:"}{" "}
+                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
+                  uno ? (
+                    <span>
+                      {selectedProduct.details.players === "UNO" ? "6+" : "6+"}
+                    </span>
+                  ) : (
+                    <span>
+                      {selectedProduct.details.players === "Chess" ? "2" : "2"}
+                    </span>
+                  )}
+                </p>
+                <p style={{ color: "black" }}>
+                  {lang === "eng"
+                    ? "Required Age:"
+                    : lang === "ru"
+                    ? "Возраст:"
+                    : "Պահանջվող Տարիք:"}{" "}
+                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
+                  uno ? (
+                    <span>
+                      {selectedProduct.details.age === "UNO" ? "7+" : "7+"}
+                    </span>
+                  ) : (
+                    <span>
+                      {selectedProduct.details.age === "Chess" ? "6+" : "6+"}
+                    </span>
+                  )}
+                </p>
+                <p style={{ color: "black" }}>
+                  {lang === "eng" ? "Price:" : lang === "ru" ? "Цена:" : "Գին:"}{" "}
+                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
+                  uno ? (
+                    <span>
+                      {selectedProduct.details.price === "UNO"
+                        ? "800֏"
+                        : "800֏"}
+                    </span>
+                  ) : (
+                    <span>
+                      {selectedProduct.details.age === "Chess"
+                        ? "2000֏"
+                        : "2000֏"}
+                    </span>
+                  )}
+                </p>
+              </>
+            )}
+            {selectedProduct.id != 4 && (
+              <>
+                <h2 className="title" style={{ color: "black" }}>
+                  {selectedProduct.name}
+                </h2>
+                <p style={{ color: "black" }}>
+                  {(selectedProduct.name !== "«Origami»" &&
+                    selectedProduct.name !== "«Օրիգամի»" &&
+                    selectedProduct.name !== "«Оригами»") && (
+                    lang === "eng"
+                      ? "Creator:"
+                      : lang === "ru"
+                      ? "Создатель:"
+                      : "Ստեղծող:"
+                  )}{" "}
+                  {selectedProduct.details.creator}
+                </p>
+                <p style={{ color: "black" }}>
+                  {lang === "eng"
+                    ? "Players:"
+                    : lang === "ru"
+                    ? "Игроки:"
+                    : "Խաղացողներ:"}{" "}
+                  {selectedProduct.details.players}
+                </p>
+                <p style={{ color: "black" }}>
+                  {lang === "eng"
+                    ? "Required Age:"
+                    : lang === "ru"
+                    ? "Возраст:"
+                    : "Պահանջվող Տարիք:"}{" "}
+                  {selectedProduct.details.age}
+                </p>
+              </>
+            )}
           </div>
+          <button
+            className="modal-close is-large"
+            aria-label="close"
+            onClick={() => setSelectedProduct(null)}
+          ></button>
         </div>
       )}
     </div>

@@ -3,7 +3,13 @@ import Head from "next/head";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
-
+import td from "../icon/3d.jpeg";
+import design from "../icon/design.jpg";
+import Image from "next/image";
+import print from "../icon/print.jpg";
+import store from "../icon/store.jpg";
+import creating from "../icon/creating.jpg";
+import gift from "../icon/gift.jpg";
 export const Services = () => {
   const [clickedService, setClickedService] = useState(null);
   const [orderDetails, setOrderDetails] = useState({
@@ -14,27 +20,30 @@ export const Services = () => {
   const { lang } = useLanguage();
   const services = [
     {
-      title: lang === "eng" ? "Design" : lang === "ru" ? "Дизайн" : "Դիզայն",
+      title:
+        lang === "eng"
+          ? "3D Design"
+          : lang === "ru"
+          ? "3Д Дизайн"
+          : "3Դ Դիզայն",
       description:
         lang === "eng"
-          ? "Create beautiful and functional designes for your home"
+          ? "Beautiful designs for your home"
           : lang === "ru"
-          ? "Создавайте красивые и функциональные проекты для вашего дома"
-          : "Ստեղծեք գեղեցիկ և ֆունկցիոնալ դիզայն ձեր տան համար",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Красивые и функциональные проекты для дома"
+          : "Ստեղծեք գեղեցիկ դիզայն ձեր տան համար",
+      image: td,
     },
     {
       title:
         lang === "eng" ? "Print" : lang === "ru" ? "Печать" : "Տպագրություն",
       description:
         lang === "eng"
-          ? "High-quality print solutions for your business."
+          ? "High-quality printing solutions."
           : lang === "ru"
-          ? "Высококачественные решения для печати для вашего бизнеса."
-          : "Բարձրորակ տպագրական լուծումներ ձեր բիզնեսի համար:",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Качественная печать для вашего бизнеса."
+          : "Բարձրորակ տպագրում ձեր բիզնեսի համար:",
+      image: print,
     },
 
     {
@@ -48,10 +57,9 @@ export const Services = () => {
         lang === "eng"
           ? "High-quality design solutions for your brand."
           : lang === "ru"
-          ? "Высококачественные решения для вашего бренда."
-          : "Բարձրորակ դիզայն լուծումներ ձեր բրենդի համար:",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Высококачественные решения для бренда."
+          : "Բարձրորակ դիզայն լուծումներ ձեր համար:",
+      image: design,
     },
     {
       title:
@@ -62,44 +70,37 @@ export const Services = () => {
           : "Ստուդիայի խանութ",
       description:
         lang === "eng"
-          ? "Discover our curated selection of design assets."
+          ? "Explore our curated design assets."
           : lang === "ru"
-          ? "Откройте для себя наш отобранный выбор дизайнерских активов."
-          : "Հայտնաբերեք մեր ընտրյալ դիզայն ակտիվները:",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Откройте наш выбор дизайнерских активов."
+          : "Մեր ակտիվները ու մեր դիզայն պահեստները:",
+      image: store,
     },
     {
       title:
         lang === "eng"
-          ? "Web Development"
+          ? "Content Createing"
           : lang === "ru"
-          ? "Веб-разработка"
-          : "Վեբ-զարգացում",
+          ? "Создание контента"
+          : "Կոնտենտ Ստեղծում",
       description:
         lang === "eng"
-          ? "Custom web applications tailored to your needs."
+          ? "Create content that resonates."
           : lang === "ru"
-          ? "Индивидуальные веб-приложения, разработанные под ваши потребности."
-          : "Ձեր կարիքներին համապատասխան վեբ-հավելվածներ:",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Создайте контент, который резонирует."
+          : "Կոնտենտ, որը համապատասխանում է ձեզ։",
+      image: creating,
     },
     {
       title:
-        lang === "eng"
-          ? "Digital Marketing"
-          : lang === "ru"
-          ? "Цифровой маркетинг"
-          : "Թվային մարկետինգ",
+        lang === "eng" ? "Giftboxes" : lang === "ru" ? "Гифтбокс" : "Գիֆտբոքս",
       description:
         lang === "eng"
-          ? "Expert advice to help your business grow online."
+          ? "Customized gift boxes for any occasion."
           : lang === "ru"
-          ? "Экспертные консультации, чтобы помочь вашему бизнесу развиваться в интернете."
-          : "Էքսպերտ խորհրդատվություններ ձեր բիզնեսի աճի համար օնլայն:",
-      image:
-        "https://cdn.prod.website-files.com/65130e79c72ae8812db3412e/6718fbb85d1152665bfafec4_Untitled%20design%20(14).jpg",
+          ? "Индивидуальные гифтбоксы для любого события."
+          : "Գիֆտբոքսեր ցանկացած առիթի համար:",
+      image: gift,
     },
   ];
   const handleInputChange = (e) => {
@@ -169,7 +170,12 @@ export const Services = () => {
                       {service.description}
                     </p>
                     <figure className="image">
-                      <img src={service.image} alt={service.title} />
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        width={300}
+                        height={300}
+                      />
                     </figure>
                   </div>
                 </motion.div>
