@@ -27,7 +27,7 @@ export const AboutPage = () => {
   return (
     <div>
       <section className="hero is-warning">
-        <div className="hero-body has-text-centered">
+        <div className="hero-body has-text-centered" style={{ width: "100vw" }}>
           <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop">
             {lang === "eng"
               ? "About Us"
