@@ -52,7 +52,7 @@ export const NavBar = () => {
         </Link>
 
         <button
-          className={`navbar-burger ${isActive ? "is-active" : ""}`}
+          className={`navbar-burger ${isActive ? "is-active" : ""} has-text-warning`}
           aria-label="menu"
           aria-expanded={isActive}
           onClick={handleClick}
