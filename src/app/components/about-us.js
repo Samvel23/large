@@ -229,6 +229,9 @@ export const AboutPage = () => {
             ></iframe>
           </div>
         </div>
+        <div className="has-text-centered">
+          <h2>Copyright © 2025 Large art-studio. All Rights Resirved. Made by Large art-studio</h2>
+        </div>
       </div>
       {/* </section> */}
 
