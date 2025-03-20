@@ -23,7 +23,7 @@ export const NavBar = () => {
     e.preventDefault();
 
     // ✅ Determine scroll distance based on screen width
-    const scrollAmount = window.innerWidth <= 768 ? 300 : 500;
+    const scrollAmount = window.innerWidth <= 768 ? 300 : 570;
 
     if (pathname === "/") {
       // ✅ If already on home, scroll smoothly

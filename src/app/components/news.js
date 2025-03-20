@@ -1,12 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import Image from "next/image";
-import smm1 from "../icon/SMM1.jpg";
-import smm2 from "../icon/SMM2.jpg";
-import smm3 from "../icon/SMM3.jpg";
+
+import web from "../icon/web.jpg";
 import shop from "../icon/shop1.jpg";
 export const NewsPage = () => {
-  const imgArr = [smm1, smm2, smm3];
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,18 +21,16 @@ export const NewsPage = () => {
   return (
     <div>
       <div className="image-container">
-        {imgArr.map((image, index) => (
-          <div key={index} className="image-wrapper">
-            <Image
-              src={image}
-              alt={`Slide ${index + 1}`}
-              className="carousel-item"
-              width={570}
-              height={570}
-              style={{ maxWidth: "100vw", maxHeight: "100vh" }}
-            />
-          </div>
-        ))}
+        <div>
+          <Image
+            src={web}
+            alt={"Services"}
+            width={570}
+            height={570}
+            style={{ minWidth: "100vw", maxHeight: "100vh" }}
+          />
+        </div>
+
         <Image src={shop} alt="Shop" width="100vw" height="100vh" />
       </div>
 

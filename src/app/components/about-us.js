@@ -108,7 +108,7 @@ export const AboutPage = () => {
                   : "О Large Art-Studio"}
               </h1>
               <p className="title is-size-5" style={{ color: "white" }}>
-              {lang === "eng"
+                {lang === "eng"
                   ? "Gor Demirkhanyan PE"
                   : lang === "arm"
                   ? "Գոռ Դեմիրխանյան ԱՁ"
@@ -185,9 +185,12 @@ export const AboutPage = () => {
                     href: "https://www.facebook.com/largeartstudio2012",
                     icon: faFacebook,
                   },
-                  { href: "https://t.me/your-profile", icon: faTelegram },
+                  {
+                    href: "https://web.telegram.org/k/#950775250",
+                    icon: faTelegram,
+                  },
                   { href: "https://wa.me/+37491132400", icon: faWhatsapp },
-                  { href: "https://viber.com/your-profile", icon: faViber },
+                  // { href: "https://viber.com/your-profile", icon: faViber },
                 ].map(({ href, icon }, index) => (
                   <a
                     key={index}
@@ -230,7 +233,10 @@ export const AboutPage = () => {
           </div>
         </div>
         <div className="has-text-centered">
-          <h2>Copyright © 2025 Large art-studio. All Rights Resirved. Made by Large art-studio</h2>
+          <h2>
+            Copyright © 2025 Large art-studio. All Rights Resirved. Made by
+            Large art-studio
+          </h2>
         </div>
       </div>
       {/* </section> */}
