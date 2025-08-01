@@ -3,180 +3,111 @@ import Head from "next/head";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
+import Image from "next/image";
 import td from "../icon/3d.jpeg";
 import design from "../icon/design.jpg";
-import Image from "next/image";
 import print from "../icon/print.jpg";
 import store from "../icon/store.jpg";
 import creating from "../icon/creating.jpg";
 import gift from "../icon/gift.jpg";
+
+const serviceImages = { td, design, print, store, creating, gift };
+
 export const Services = () => {
-  const [clickedService, setClickedService] = useState(null);
-  const [orderDetails, setOrderDetails] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
   const { lang } = useLanguage();
-  const services = [
-    {
-      title:
-        lang === "eng"
-          ? "3D Design"
-          : lang === "ru"
-          ? "3Д Дизайн"
-          : "3Դ Դիզայն",
-      description:
-        lang === "eng"
-          ? "Beautiful designs for your home"
-          : lang === "ru"
-          ? "Красивые и функциональные проекты для дома"
-          : "Ստեղծեք գեղեցիկ դիզայն ձեր տան համար",
-      image: td,
-    },
-    {
-      title:
-        lang === "eng" ? "Print" : lang === "ru" ? "Печать" : "Տպագրություն",
-      description:
-        lang === "eng"
-          ? "High-quality printing solutions."
-          : lang === "ru"
-          ? "Качественная печать для вашего бизнеса."
-          : "Բարձրորակ տպագրում ձեր բիզնեսի համար:",
-      image: print,
-    },
+  const [clickedService, setClickedService] = useState(null);
 
-    {
-      title:
-        lang === "eng"
-          ? "Graphic Design"
-          : lang === "ru"
-          ? "Графический дизайн"
-          : "Գրաֆիկական դիզայն",
-      description:
-        lang === "eng"
-          ? "High-quality design solutions for your brand."
-          : lang === "ru"
-          ? "Высококачественные решения для бренда."
-          : "Բարձրորակ դիզայն լուծումներ ձեր համար:",
-      image: design,
+  const t = {
+    eng: {
+      pageTitle: "Services",
+      pageDescription: "Explore our creative services",
+      services: [
+        ["3D Design", "Beautiful designs for your home", "td"],
+        ["Print", "High-quality printing solutions", "print"],
+        ["Graphic Design", "Design solutions for your brand", "design"],
+        ["Studio Store", "Curated design assets", "store"],
+        ["Content Creating", "Resonant content creation", "creating"],
+        ["Giftboxes", "Custom gift boxes", "gift"],
+      ],
     },
-    {
-      title:
-        lang === "eng"
-          ? "Studio Store"
-          : lang === "ru"
-          ? "Магазин студии"
-          : "Ստուդիայի խանութ",
-      description:
-        lang === "eng"
-          ? "Explore our curated design assets."
-          : lang === "ru"
-          ? "Откройте наш выбор дизайнерских активов."
-          : "Մեր ակտիվները ու մեր դիզայն պահեստները:",
-      image: store,
+    ru: {
+      pageTitle: "Услуги",
+      pageDescription: "Ознакомьтесь с нашими услугами",
+      services: [
+        ["3Д Дизайн", "Красивые проекты для дома", "td"],
+        ["Печать", "Качественная печать", "print"],
+        ["Графический дизайн", "Решения для бренда", "design"],
+        ["Магазин студии", "Дизайнерские активы", "store"],
+        ["Создание контента", "Создание контента", "creating"],
+        ["Гифтбоксы", "Индивидуальные гифтбоксы", "gift"],
+      ],
     },
-    {
-      title:
-        lang === "eng"
-          ? "Content Createing"
-          : lang === "ru"
-          ? "Создание контента"
-          : "Կոնտենտ Ստեղծում",
-      description:
-        lang === "eng"
-          ? "Create content that resonates."
-          : lang === "ru"
-          ? "Создайте контент, который резонирует."
-          : "Կոնտենտ, որը համապատասխանում է ձեզ։",
-      image: creating,
+    hy: {
+      pageTitle: "Ծառայություններ",
+      pageDescription: "Բացահայտեք մեր ծառայությունները",
+      services: [
+        ["3Դ Դիզայն", "Գեղեցիկ դիզայն Ձեր տան համար", "td"],
+        ["Տպագրություն", "Բարձրորակ տպագրություն", "print"],
+        ["Գրաֆիկական դիզայն", "Դիզայն Ձեր բրենդի համար", "design"],
+        ["Ստուդիայի խանութ", "Դիզայնի ակտիվներ", "store"],
+        ["Կոնտենտի ստեղծում", "Համապատասխան կոնտենտ", "creating"],
+        ["Նվերների տուփեր", "Հատուկ նվերների տուփեր", "gift"],
+      ],
     },
-    {
-      title:
-        lang === "eng" ? "Giftboxes" : lang === "ru" ? "Гифтбокс" : "Գիֆտբոքս",
-      description:
-        lang === "eng"
-          ? "Customized gift boxes for any occasion."
-          : lang === "ru"
-          ? "Индивидуальные гифтбоксы для любого события."
-          : "Գիֆտբոքսեր ցանկացած առիթի համար:",
-      image: gift,
-    },
-  ];
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setOrderDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleOrderSubmit = async (e) => {
-    e.preventDefault();
-
-    // Simulate sending email (replace with real service)
-    const response = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        service: clickedService.title,
-        ...orderDetails,
-      }),
-    });
-
-    if (response.ok) {
-      alert("Your order has been placed!");
-      setClickedService(null);
-      setOrderDetails({ name: "", email: "", message: "" });
-    } else {
-      alert("There was an error placing your order.");
-    }
-  };
+  const { pageTitle, pageDescription, services } = t[lang] || t.eng;
 
   return (
     <>
       <Head>
-        <title style={{ color: "white" }}>Our Services</title>
-        <meta
-          name="description"
-          content="Discover our wide range of services tailored to your needs."
-        />
+        <title>{pageTitle} | Large Art-Studio</title>
+        <meta name="description" content={pageDescription} />
       </Head>
-      <section className="section">
-        <div className="container">
-          <h1 className="title has-text-centered" style={{ color: "white" }}>
-            {lang === "eng"
-              ? "Our Services"
-              : lang === "ru"
-              ? "Наши услуги"
-              : lang === "arm"
-              ? "Մեր ծառայությունները"
-              : " "}
+
+      <section className="hero is-warning">
+        <div className="hero-body has-text-centered">
+          <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
+            {pageTitle}
           </h1>
-          <div className="columns is-multiline">
-            {services.map((service, index) => (
-              <div className="column is-one-third" key={index}>
+        </div>
+      </section>
+
+      <section className="section py-4">
+        <div className="container">
+          <div className="columns is-multiline is-centered">
+            {services.map(([title, description, key], index) => (
+              <div
+                key={index}
+                className="column is-12-mobile is-6-tablet is-4-desktop animate-slide-up"
+              >
                 <motion.div
-                  className="card"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setClickedService(service)}
+                  className="card service-card"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                  onClick={() =>
+                    setClickedService({
+                      title,
+                      description,
+                      image: serviceImages[key],
+                    })
+                  }
                 >
-                  <div
-                    className="card-content"
-                    style={{ backgroundColor: "black" }}
-                  >
-                    <p className="title is-4" style={{ color: "white" }}>
-                      {service.title}
-                    </p>
-                    <p className="subtitle is-6" style={{ color: "white" }}>
-                      {service.description}
-                    </p>
-                    <figure className="image">
+                  <div className="card-image">
+                    <figure className="image is-1by1">
                       <Image
-                        src={service.image}
-                        alt={service.title}
+                        src={serviceImages[key]}
+                        alt={title}
                         width={300}
                         height={300}
+                        className="service-image"
+                        loading="lazy"
+                        style={{ objectFit: "cover" }}
                       />
                     </figure>
+                  </div>
+                  <div className="card-content has-text-centered">
+                    <p className="title is-5 service-title">{title}</p>
                   </div>
                 </motion.div>
               </div>
@@ -184,42 +115,143 @@ export const Services = () => {
           </div>
         </div>
       </section>
+
+      {/* Modal */}
       {clickedService && (
-        <div className="modal is-active" style={{ padding: "20px" }}>
+        <div className="modal is-active">
           <div
             className="modal-background"
             onClick={() => setClickedService(null)}
           ></div>
-          <div
-            className="modal-card"
-            style={{
-              padding: "20px",
-              backgroundColor: "black",
-              border: "1px solid grey",
-            }}
-          >
-            <header
-              className="modal-card-head"
-              style={{ backgroundColor: "black" }}
-            >
-              <p className="modal-card-title" style={{ color: "white" }}>
+          <div className="modal-card animate-fade-in">
+            <header className="modal-card-head">
+              <p className="modal-card-title service-title">
                 {clickedService.title}
               </p>
               <button
                 className="delete"
+                aria-label="close"
                 onClick={() => setClickedService(null)}
-                style={{ color: "white" }}
               ></button>
             </header>
-            <section
-              className="modal-card-body"
-              style={{ color: "white", backgroundColor: "black" }}
-            >
-              <p>{clickedService.description}</p>
+            <section className="modal-card-body has-text-centered">
+              <figure
+                className="image is-1by1 mb-4 mx-auto"
+                style={{ maxWidth: "250px" }}
+              >
+                <Image
+                  src={clickedService.image}
+                  alt={clickedService.title}
+                  width={250}
+                  height={250}
+                  className="modal-image"
+                  style={{ objectFit: "contain" }}
+                  loading="lazy"
+                />
+              </figure>
+              <p className="service-description">
+                {clickedService.description}
+              </p>
             </section>
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        .hero {
+          background-color: #2a2a2a;
+        }
+
+        .service-card {
+          background-color: #2a2a2a;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          cursor: pointer;
+          overflow: hidden;
+          transition: box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+        }
+
+        .service-title {
+          color: #e0e0e0;
+          font-weight: 600;
+        }
+
+        .service-description {
+          color: #d0d0d0;
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+
+        .modal-card,
+        .modal-card-head,
+        .modal-card-body {
+          background-color: #2a2a2a;
+        }
+
+        .modal-card {
+          border-radius: 10px;
+          max-width: 450px;
+          margin: auto;
+        }
+
+        .modal-image,
+        .service-image {
+          border-radius: 10px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .animate-slide-up {
+          animation: slideUp 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .modal-card {
+            width: 90%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .modal-card {
+            width: 95%;
+          }
+
+          .service-description {
+            font-size: 0.95rem;
+          }
+        }
+      `}</style>
     </>
   );
 };
+
+

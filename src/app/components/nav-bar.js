@@ -52,7 +52,9 @@ export const NavBar = () => {
         </Link>
 
         <button
-          className={`navbar-burger ${isActive ? "is-active" : ""} has-text-warning`}
+          className={`navbar-burger ${
+            isActive ? "is-active" : ""
+          } has-text-warning`}
           aria-label="menu"
           aria-expanded={isActive}
           onClick={handleClick}
@@ -90,19 +92,19 @@ export const NavBar = () => {
           <div className="navbar-item">
             <div className="buttons">
               <button
-                className="button is-small is-rounded is-outlined"
+                className="button is-small is-rounded  has-text-white is-outlined"
                 onClick={() => setLang("ru")}
               >
                 RU
               </button>
               <button
-                className="button is-small is-rounded is-outlined"
+                className="button is-small is-rounded is-outlined has-text-white"
                 onClick={() => setLang("arm")}
               >
                 ARM
               </button>
               <button
-                className="button is-small is-rounded is-outlined"
+                className="button is-small is-rounded is-outlined has-text-white"
                 onClick={() => setLang("eng")}
               >
                 ENG

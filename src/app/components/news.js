@@ -5,19 +5,6 @@ import Image from "next/image";
 import web from "../icon/web.jpg";
 import shop from "../icon/shop1.jpg";
 export const NewsPage = () => {
-
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const scrollOffset = window.innerWidth <= 768 ? 1160 : 570;
-      window.scrollBy({
-        top: scrollOffset, // Scroll down by 300px or 600px
-        behavior: "smooth", // Smooth scrolling effect
-      });
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div>
       <div className="image-container">

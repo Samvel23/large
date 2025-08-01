@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { NavBar } from "./components/nav-bar";
 import { NewsPage } from "./components/news";
 import { AboutPage } from "./components/about-us";
-import { useState } from "react";
+
 
 export default function Home() {
 
