@@ -127,7 +127,7 @@ export const NavBar = () => {
                 {lang === "eng"
                   ? "Log in"
                   : lang === "arm"
-                  ? "Գրանցվել"
+                  ? "Մուտք"
                   : "Войти"}
               </Link>
             </div>

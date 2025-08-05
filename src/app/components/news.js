@@ -1,62 +1,106 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import web from "../icon/web.jpg";
 import shop from "../icon/shop1.jpg";
+
+import smm1 from "../icon/SMM1.jpg";
+import smm2 from "../icon/SMM2.jpg";
+import smm3 from "../icon/SMM3.jpg";
+
 export const NewsPage = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    // Detect screen width on client side
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 769);
+    };
+
+    checkMobile();
+    setHydrated(true);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (!hydrated) return null; // Prevent rendering until client-side
+
   return (
     <div>
-      <div className="image-container">
-        <div>
-          <Image
-            src={web}
-            alt={"Services"}
-            width={570}
-            height={570}
-            style={{ minWidth: "100vw", maxHeight: "100vh" }}
-          />
+      {/* Mobile View Only */}
+      {isMobile && (
+        <div className="mobile-layout">
+          <div>
+            <Image
+              src={web}
+              alt="Services"
+              width={570}
+              height={570}
+              style={{ minWidth: "100vw", maxHeight: "100vh" }}
+            />
+          </div>
+          <Image src={shop} alt="Shop" width="100vw" height="100vh" />
         </div>
+      )}
 
-        <Image src={shop} alt="Shop" width="100vw" height="100vh" />
-      </div>
+      {/* Desktop View Only */}
+      {!isMobile && (
+        <div className="desktop-layout">
+          <div className="smm-gallery">
+            <div className="smm-image image-1">
+              <Image src={smm1} alt="SMM1" width={300} height={300} />
+            </div>
+            <div className="smm-image image-2">
+              <Image src={smm2} alt="SMM2" width={300} height={300} />
+            </div>
+            <div className="smm-image image-3">
+              <Image src={smm3} alt="SMM3" width={300} height={300} />
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
-        .image-container {
+        .smm-gallery {
           display: flex;
-          flex-direction: row;
-          align-items: center;
           justify-content: center;
+          align-items: center;
+          gap: 1rem;
           flex-wrap: wrap;
+          padding: 2rem;
         }
 
-        .image-wrapper {
-          margin-bottom: 1rem;
+        .smm-image {
+          opacity: 0;
+          transform: translateX(-100px);
+          animation: slideInLeft 0.8s forwards ease-out;
         }
 
-        .carousel-item {
-          width: 100%; /* Make images responsive */
-          height: auto;
-          object-fit: cover; /* Maintain aspect ratio */
+        .image-1 {
+          animation-delay: 0.1s;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-          .image-wrapper {
-            margin-bottom: 0.5rem;
+        .image-2 {
+          animation-delay: 0.3s;
+        }
+
+        .image-3 {
+          animation-delay: 0.5s;
+        }
+
+        @keyframes slideInLeft {
+          to {
+            opacity: 1;
+            transform: translateX(0);
           }
-
-          .carousel-item {
-            max-width: 33.33%; /* Make images smaller on smaller screens */
-            height: auto;
-          }
         }
 
-        @media (max-width: 480px) {
-          .carousel-item {
-            max-width: 50%; /* Make images even smaller on very small devices */
-            height: auto;
-          }
+        .smm-gallery :global(img) {
+          object-fit: cover;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
       `}</style>
     </div>

@@ -343,15 +343,14 @@ export const StorePage = () => {
                   {selectedProduct.name}
                 </h2>
                 <p style={{ color: "black" }}>
-                  {(selectedProduct.name !== "«Origami»" &&
+                  {selectedProduct.name !== "«Origami»" &&
                     selectedProduct.name !== "«Օրիգամի»" &&
-                    selectedProduct.name !== "«Оригами»") && (
-                    lang === "eng"
+                    selectedProduct.name !== "«Оригами»" &&
+                    (lang === "eng"
                       ? "Creator:"
                       : lang === "ru"
                       ? "Создатель:"
-                      : "Ստեղծող:"
-                  )}{" "}
+                      : "Ստեղծող:")}{" "}
                   {selectedProduct.details.creator}
                 </p>
                 <p style={{ color: "black" }}>

@@ -7,10 +7,9 @@ import {
   faYoutube,
   faTelegram,
   faFacebook,
-  faMailchimp,
 } from "@fortawesome/free-brands-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export const AboutPage = () => {
   const { lang } = useLanguage();
@@ -24,15 +23,22 @@ export const AboutPage = () => {
 
   return (
     <div className="hero is-fullheight">
-      {/* Hero Section */}
-      <section className="hero is-warning">
+      {/* Hero Section - Fixed Full Width */}
+      <section
+        className="hero is-warning"
+        style={{
+          width: "100vw",
+          marginLeft: "calc(-50vw + 50%)",
+          padding: 0,
+        }}
+      >
         <div className="hero-body has-text-centered">
           <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
             {lang === "eng"
-              ? "About Us"
+              ? "Contact Us"
               : lang === "arm"
-              ? "Մեր Մասին"
-              : "О нас"}
+              ? "Կապնվեք Մեր Հետ"
+              : "Свяжитесь с Нами"}
           </h1>
         </div>
       </section>
@@ -68,7 +74,9 @@ export const AboutPage = () => {
                     className="subtitle is-size-6-mobile is-size-5-tablet"
                     style={{ color: "white" }}
                   >
-                    09:00 - 23:00
+                    10:00 - 19:00
+                    ,
+                    21:00 - 23:00
                   </p>
                 </div>
                 <div className="column has-text-left animate-slide-up-delay">
@@ -123,7 +131,7 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* Contact & Social Media Section */}
+      {/* Contact Section */}
       <section className="section">
         <div className="container">
           <div className="columns is-centered">
@@ -165,11 +173,11 @@ export const AboutPage = () => {
                     icon: faFacebook,
                   },
                   {
-                    href: "https://web.telegram.org/k/#950775250",
+                    href: "https://t.me/+37444533133",
                     icon: faTelegram,
                   },
-                  { href: "https://wa.me/+37444533133", icon: faWhatsapp },,
-                  {href: "mailto:info@largeart.org", icon: faEnvelope}
+                  { href: "https://wa.me/+37444533133", icon: faWhatsapp },
+                  { href: "mailto:info@largeart.org", icon: faEnvelope },
                 ].map(({ href, icon }, index) => (
                   <a
                     key={index}
@@ -187,7 +195,7 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* Map & Footer Section */}
+      {/* Map Section */}
       <section className="section">
         <div className="container">
           <h2
@@ -222,6 +230,7 @@ export const AboutPage = () => {
         </div>
       </section>
 
+      {/* Global Styles */}
       <style jsx global>{`
         .square-button {
           width: 60px;
@@ -268,7 +277,6 @@ export const AboutPage = () => {
         .contact-text:hover {
           color: #ff8c00;
         }
-
 
         .map-iframe {
           border-radius: 8px;
