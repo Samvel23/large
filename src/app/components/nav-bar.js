@@ -70,10 +70,10 @@ export const NavBar = () => {
           {/* ✅ About Us button always visible */}
           <Link className="navbar-item" onClick={handleAboutClick} href="/">
             {lang === "eng"
-              ? "About Us"
+              ? "Contact Us"
               : lang === "arm"
-              ? "Մեր մասին"
-              : "О нас"}
+              ? "Կապ մեզ հետ"
+              : "Связаться с нами"}
           </Link>
 
           <Link className="navbar-item" href="/services">
