@@ -117,7 +117,7 @@ export const Services = () => {
                         src={serviceImages[key]}
                         alt={title}
                         width={600} // increased from 300
-                        height={6§00} // increased from 300
+                        height={600} // increased from 300
                         className="service-image"
                         loading="lazy"
                         style={{ objectFit: "cover" }}
