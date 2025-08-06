@@ -35,103 +35,117 @@ export const AboutPage = () => {
         <div className="hero-body has-text-centered">
           <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
             {lang === "eng"
-              ? "Contact Us"
+              ? "About Us"
               : lang === "arm"
-              ? "Կապնվեք Մեր Հետ"
-              : "Свяжитесь с Нами"}
+              ? "Մեր մասին"
+              : "О нас"}
           </h1>
         </div>
       </section>
 
-      {/* Working Hours & About Section */}
-      <section className="section">
-        <div className="container">
-          <div className="columns is-centered">
-            <div className="column is-12-mobile is-10-tablet is-8-desktop">
-              <h2
-                className="title is-4 highlighted-text animate-slide-up"
-                style={{ color: "orange" }}
-              >
-                {lang === "eng"
-                  ? "Working Hours"
-                  : lang === "arm"
-                  ? "Աշխատանքային Ժամեր"
-                  : "Рабочие часы"}
-              </h2>
-              <div className="columns">
-                <div className="column has-text-left animate-slide-up-delay">
-                  <p
-                    className="title is-size-5-mobile is-size-4-tablet"
-                    style={{ color: "white" }}
-                  >
-                    {lang === "eng"
-                      ? "Monday-Friday"
-                      : lang === "arm"
-                      ? "Երկուշաբթի-Ուրբաթ"
-                      : "Понедельник-Пятница"}
-                  </p>
-                  <p
-                    className="subtitle is-size-6-mobile is-size-5-tablet"
-                    style={{ color: "white" }}
-                  >
-                    10:00 - 19:00
-                    ,
-                    21:00 - 23:00
-                  </p>
-                </div>
-                <div className="column has-text-left animate-slide-up-delay">
-                  <p
-                    className="title is-size-5-mobile is-size-4-tablet"
-                    style={{ color: "white" }}
-                  >
-                    {lang === "eng"
-                      ? "Saturday-Sunday"
-                      : lang === "arm"
-                      ? "Շաբաթ-Կիրակի"
-                      : "Суббота-Воскресенье"}
-                  </p>
-                  <p
-                    className="subtitle is-size-6-mobile is-size-5-tablet"
-                    style={{ color: "white" }}
-                  >
-                    10:00 - 19:00
-                  </p>
-                </div>
-              </div>
 
-              <h2
-                className="title is-4 highlighted-text animate-slide-up"
-                style={{ marginTop: "2rem", color: "orange" }}
-              >
-                {lang === "eng"
-                  ? "About Large Art-Studio"
-                  : lang === "arm"
-                  ? "Large Art-Studio-ի մասին"
-                  : "О Large Art-Studio"}
-              </h2>
-              <p
-                className="title is-size-5 animate-slide-up-delay"
-                style={{ color: "white" }}
-              >
-                {lang === "eng"
-                  ? "Gor Demirkhanyan PE"
-                  : lang === "arm"
-                  ? "Գոռ Դեմիրխանյան ԱՁ"
-                  : "Гор Демирханян ЧП"}
-              </p>
-              <p className="animate-slide-up-delay" style={{ color: "white" }}>
-                {lang === "eng"
-                  ? "Large Art-Studio was founded in 2012. We initially provided video and photo filming, along with design services. In 2022, we underwent a rebranding and proudly opened our own office in 2023."
-                  : lang === "arm"
-                  ? "Large Art-Studio-ը հիմնադրվել է 2012 թվականին: Մենք սկզբնականում մատուցել ենք վիդեո և ֆոտո նկարահանում, ինչպես նաև դիզայներական ծառայություններ: 2022 թվականին մենք վերակազմակերպվել ենք և հպարտորեն բացել մեր սեփական գրասենյակը 2023 թվականին:"
-                  : "Large Art-Studio был основан в 2012 году. Изначально мы предоставляли услуги видео- и фотосъемки, а также дизайнерские услуги. В 2022 году мы прошли реорганизацию и с гордостью открыли свой офис в 2023 году."}
-              </p>
+        <section className="section">
+          <div className="container">
+            <div className="columns is-centered">
+          <div className="column is-12-mobile is-10-tablet is-8-desktop">
+            <h2
+              className="title is-4 highlighted-text animate-slide-up"
+              style={{ marginTop: "2rem", color: "orange" }}
+            >
+              {lang === "eng"
+            ? "About Large Art-Studio"
+            : lang === "arm"
+            ? "Large Art-Studio-ի մասին"
+            : "О Large Art-Studio"}
+            </h2>
+            <p
+              className="title is-size-5 animate-slide-up-delay"
+              style={{ color: "white" }}
+            >
+              {lang === "eng"
+            ? "Gor Demirkhanyan PE"
+            : lang === "arm"
+            ? "Գոռ Դեմիրխանյան ԱՁ"
+            : "Гор Демирханян ЧП"}
+            </p>
+            <p className="animate-slide-up-delay" style={{ color: "white" }}>
+              {lang === "eng"
+            ? "Large Art-Studio was founded in 2012. We initially provided video and photo filming, along with design services. In 2022, we underwent a rebranding and proudly opened our own office in 2023."
+            : lang === "arm"
+            ? "Large Art-Studio-ը հիմնադրվել է 2012 թվականին: Մենք սկզբնականում մատուցել ենք վիդեո և ֆոտո նկարահանում, ինչպես նաև դիզայներական ծառայություններ: 2022 թվականին մենք վերակազմակերպվել ենք և հպարտորեն բացել մեր սեփական գրասենյակը 2023 թվականին:"
+            : "Large Art-Studio был основан в 2012 году. Изначально мы предоставляли услуги видео- и фотосъемки, а также дизайнерские услуги. В 2022 году мы прошли реорганизацию и с гордостью открыли свой офис в 2023 году."}
+            </p>
+            <h2
+              className="title is-4 highlighted-text animate-slide-up"
+              style={{ color: "orange", marginTop: "2rem" }}
+            >
+              {lang === "eng"
+            ? "Working Hours"
+            : lang === "arm"
+            ? "Աշխատանքային Ժամեր"
+            : "Рабочие часы"}
+            </h2>
+            <div className="columns">
+              <div className="column has-text-left animate-slide-up-delay">
+            <p
+              className="title is-size-5-mobile is-size-4-tablet"
+              style={{ color: "white" }}
+            >
+              {lang === "eng"
+                ? "Monday-Friday"
+                : lang === "arm"
+                ? "Երկուշաբթի-Ուրբաթ"
+                : "Понедельник-Пятница"}
+            </p>
+            <p
+              className="subtitle is-size-6-mobile is-size-5-tablet"
+              style={{ color: "white" }}
+            >
+              10:00 - 19:00 , 21:00 - 23:00
+            </p>
+              </div>
+              <div className="column has-text-left animate-slide-up-delay">
+            <p
+              className="title is-size-5-mobile is-size-4-tablet"
+              style={{ color: "white" }}
+            >
+              {lang === "eng"
+                ? "Saturday-Sunday"
+                : lang === "arm"
+                ? "Շաբաթ-Կիրակի"
+                : "Суббота-Воскресенье"}
+            </p>
+            <p
+              className="subtitle is-size-6-mobile is-size-5-tablet"
+              style={{ color: "white" }}
+            >
+              10:00 - 19:00
+            </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
+            </div>
+          </div>
+        </section>
+        <section
+          className="hero is-warning"
+          style={{
+            width: "100vw",
+            marginLeft: "calc(-50vw + 50%)",
+            padding: 0,
+          }}
+        >
+          <div className="hero-body has-text-centered">
+            <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
+          {lang === "eng"
+            ? "Contact Us"
+            : lang === "arm"
+            ? "Կապ մեզ հետ"
+            : "Связаться с нами"}
+            </h1>
+          </div>
+        </section>
+        {/* Contact Section */}
       <section className="section">
         <div className="container">
           <div className="columns is-centered">
