@@ -47,7 +47,7 @@ export const NavBar = () => {
     >
       <div className="navbar-brand">
         <Link className="navbar-item" href="/">
-          <Image src={icon} alt="Logo" width={30} height={40} />
+          <Image src={icon} alt="Logo" width={20} height={40} />
           <span className="ml-2 has-text-weight-bold">Large Art</span>
         </Link>
 
@@ -69,11 +69,7 @@ export const NavBar = () => {
         <div className="navbar-start">
           {/* ✅ About Us button always visible */}
           <Link className="navbar-item" onClick={handleAboutClick} href="/">
-            {lang === "eng"
-              ? "About Us"
-              : lang === "arm"
-              ? "Մեր մասին"
-              : "О нас"}
+            {lang === "eng" ? "Contacts" : lang === "arm" ? "Կոնտակտներ" : "Контакты"}
           </Link>
 
           <Link className="navbar-item" href="/services">
@@ -84,19 +80,13 @@ export const NavBar = () => {
               : "Услуги"}
           </Link>
           <Link className="navbar-item" href="/store">
-            {lang === "eng" ? "Store" : lang === "arm" ? "Խանութ" : "Магазин"}
+            {lang === "eng" ? "Store" : lang === "arm" ? "Գրախանութ" : "Магазин"}
           </Link>
         </div>
 
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button
-                className="button is-small is-rounded  has-text-white is-outlined"
-                onClick={() => setLang("ru")}
-              >
-                RU
-              </button>
               <button
                 className="button is-small is-rounded is-outlined has-text-white"
                 onClick={() => setLang("arm")}
@@ -108,6 +98,12 @@ export const NavBar = () => {
                 onClick={() => setLang("eng")}
               >
                 ENG
+              </button>
+              <button
+                className="button is-small is-rounded  has-text-white is-outlined"
+                onClick={() => setLang("ru")}
+              >
+                RU
               </button>
             </div>
           </div>
@@ -124,11 +120,7 @@ export const NavBar = () => {
                   : "Зарегистрироваться"}
               </Link>
               <Link href="/login" className="button is-light">
-                {lang === "eng"
-                  ? "Log in"
-                  : lang === "arm"
-                  ? "Մուտք"
-                  : "Войти"}
+                {lang === "eng" ? "Log in" : lang === "arm" ? "Մուտք" : "Войти"}
               </Link>
             </div>
           </div>

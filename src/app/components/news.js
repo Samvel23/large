@@ -8,6 +8,7 @@ import shop from "../icon/shop1.jpg";
 import smm1 from "../icon/SMM1.jpg";
 import smm2 from "../icon/SMM2.jpg";
 import smm3 from "../icon/SMM3.jpg";
+import Link from "next/link";
 
 export const NewsPage = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -49,14 +50,26 @@ export const NewsPage = () => {
       {!isMobile && (
         <div className="desktop-layout">
           <div className="smm-gallery">
-            <div className="smm-image image-1">
-              <Image src={smm1} alt="SMM1" width={300} height={300} />
+            <div className="smm-image image-1 pop-up">
+              <Link href="/construction">
+                <Image src={smm1} alt="SMM1" width={300} height={300} />
+              </Link>
             </div>
-            <div className="smm-image image-2">
-              <Image src={smm2} alt="SMM2" width={300} height={300} />
+            <div className="smm-image image-2 pop-up">
+              <Link href="/construction">
+                <Image
+                  src={smm2}
+                  alt="SMM2"
+                  width={300}
+                  height={300}
+                  href="/design"
+                />
+              </Link>
             </div>
-            <div className="smm-image image-3">
-              <Image src={smm3} alt="SMM3" width={300} height={300} />
+            <div className="smm-image image-3 pop-up">
+              <Link href="/store">
+                <Image src={smm3} alt="SMM3" width={300} height={300} />
+              </Link>
             </div>
           </div>
         </div>
@@ -76,6 +89,10 @@ export const NewsPage = () => {
           opacity: 0;
           transform: translateX(-100px);
           animation: slideInLeft 0.8s forwards ease-out;
+        }
+
+        .pop-up:hover {
+          cursor: pointer;
         }
 
         .image-1 {

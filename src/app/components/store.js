@@ -10,33 +10,18 @@ import sqeyj from "../icon/sqeyj.png";
 import sqeyj1 from "../icon/sqeyj1.png";
 import uno from "../icon/uno.png";
 import chess from "../icon/chess.png";
+import storePic from "../icon/storePic.jpg";
 import { useLanguage } from "../context/LanguageContext";
 
 export const StorePage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { lang } = useLanguage();
-  const imagesPrices = {
-    [uno]: "800",
-    [chess]: "2000",
-  };
-  const handelOrder = () => {
-    alert(
-      lang === "eng"
-        ? "This Page is for only viewing, you can't order"
-        : lang === "ru"
-        ? "Эта страница только для просмотра, вы не можете заказать"
-        : "Այս էջը միայն դիտելու համար է, դուք չեք կարող պատվիրել"
-    );
-  };
+
   const products = [
     {
       id: 1,
       name:
-        lang === "eng"
-          ? "«Zbaxmunq»"
-          : lang === "ru"
-          ? "«Занятие»"
-          : "«Զբաղմունք»",
+        lang === "eng" ? "Zbaxmunq" : lang === "ru" ? "Занятие" : "Զբաղմունք",
       description:
         lang === "eng"
           ? "Game to learn Artsakh dialect with 1000 words."
@@ -49,12 +34,7 @@ export const StorePage = () => {
     },
     {
       id: 2,
-      name:
-        lang === "eng"
-          ? "«Origami»"
-          : lang === "ru"
-          ? "«Оригами»"
-          : "«Օրիգամի»",
+      name: lang === "eng" ? "Origami" : lang === "ru" ? "Оригами" : "Օրիգամի",
       description:
         lang === "eng"
           ? "Origami. Requires creativity & precision."
@@ -67,8 +47,7 @@ export const StorePage = () => {
     },
     {
       id: 3,
-      name:
-        lang === "eng" ? "«Sqeyjd»" : lang === "ru" ? "«Скейдж»" : "«Սքեյջ»",
+      name: lang === "eng" ? "Sqeyjd" : lang === "ru" ? "Скейдж" : "Սքեյջ",
       description:
         lang === "eng"
           ? "Sqeydj strategy game."
@@ -122,20 +101,57 @@ export const StorePage = () => {
           ? "Welcome to Our Store"
           : lang === "ru"
           ? "Добро пожаловать"
-          : "Բարի գալուս"}
+          : "Բարի գալուստ"}
       </h1>
-      <div className="columns is-multiline is-centered">
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "24px",
+        }}
+      >
+        <Image
+          src={storePic}
+          alt="Store"
+          width={600}
+          height={300}
+          style={{
+            borderRadius: "12px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+          }}
+        />
+      </div>
+
+      <h2
+        className="title is-4 has-text-centered"
+        style={{ color: "white", marginBottom: "1.5rem" }}
+      >
+        {lang === "eng"
+          ? "Our Products"
+          : lang === "ru"
+          ? "Наши продукты"
+          : "Մեր Ապրանքները"}
+      </h2>
+
+      <div
+        className="columns is-multiline is-centered"
+        style={{ justifyContent: "center" }}
+      >
         {products.map((product) => (
-          <div key={product.id} className="column is-4">
+          <div key={product.id} className="column is-3">
             <div
               className="card product-card"
               style={{
                 backgroundColor: "white",
-                animation: "fadeIn 0.5s forwards",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.transform = "scale(1.03)";
                 e.currentTarget.style.boxShadow =
                   "0 4px 8px rgba(0, 0, 0, 0.2)";
               }}
@@ -144,47 +160,20 @@ export const StorePage = () => {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <div
-                className="card-image"
-                style={{
-                  cursor: "pointer",
-                  animation: "moveForward 0.5s forwards",
-                }}
-              >
+              <div className="card-image">
                 <figure className="image is-4by3">
-                  <Image
-                    src={product.images[currentImages[product.id]]}
-                    alt={product.name}
-                    width={300}
-                    height={225}
-                    className="product-image"
-                    style={{
-                      transition: "opacity 0.5s ease-in-out",
-                      opacity: 0,
-                      animation: "fadeIn 0.5s forwards",
-                    }}
-                  />
+                  {product.images[currentImages[product.id]] && (
+                    <Image
+                      src={product.images[currentImages[product.id]]}
+                      alt={product.name}
+                      width={300}
+                      height={225}
+                      style={{ objectFit: "fit", borderRadius: "4px",  }}
+                    />
+                  )}
                 </figure>
               </div>
 
-              <style jsx>{`
-                @keyframes fadeIn {
-                  0% {
-                    opacity: 0;
-                  }
-                  100% {
-                    opacity: 1;
-                  }
-                }
-                @keyframes moveForward {
-                  0% {
-                    transform: translateX(-20px);
-                  }
-                  100% {
-                    transform: translateX(0);
-                  }
-                }
-              `}</style>
               <div
                 className="thumbnails"
                 style={{
@@ -192,32 +181,31 @@ export const StorePage = () => {
                   gap: "5px",
                   justifyContent: "center",
                   marginTop: "10px",
-                  animation: "fadeIn 0.5s forwards, moveForward 0.5s forwards",
                 }}
               >
-                {product.images.map((img, index) => (
-                  <Image
-                    key={index}
-                    src={img}
-                    alt={`Thumbnail ${index + 1}`}
-                    width={50}
-                    height={50}
-                    className="thumbnail"
-                    style={{
-                      cursor: "pointer",
-                      border:
-                        currentImages[product.id] === index
-                          ? "2px solid white"
-                          : "none",
-                    }}
-                    onClick={() => handleThumbnailClick(product.id, index)}
-                  />
-                ))}
+                {product.images.map(
+                  (img, index) =>
+                    img && (
+                      <Image
+                        key={index}
+                        src={img}
+                        alt={`Thumbnail ${index + 1}`}
+                        width={40}
+                        height={40}
+                        style={{
+                          cursor: "pointer",
+                          border:
+                            currentImages[product.id] === index
+                              ? "2px solid black"
+                              : "1px solid #ccc",
+                        }}
+                        onClick={() => handleThumbnailClick(product.id, index)}
+                      />
+                    )
+                )}
               </div>
-              <div
-                className="card-content has-text-centered"
-                style={{ animation: "moveForward 0.5s forwards" }}
-              >
+
+              <div className="card-content has-text-centered">
                 <p className="title is-5" style={{ color: "black" }}>
                   {product.name}
                 </p>
@@ -231,16 +219,19 @@ export const StorePage = () => {
                   {product.price}
                 </p>
               </div>
-              <footer
-                className="card-footer"
-                style={{
-                  border: "none",
-                  animation: "moveForward 0.5s forwards",
-                }}
-              >
+
+              <footer className="card-footer">
                 <button
                   className="button is-warning card-footer-item"
-                  onClick={() => handelOrder()}
+                  onClick={() =>
+                    alert(
+                      lang === "eng"
+                        ? "This Page is for only viewing, you can't order"
+                        : lang === "ru"
+                        ? "Эта страница только для просмотра, вы не можете заказать"
+                        : "Այս էջը միայն դիտելու համար է, դուք չեք կարող պատվիրել"
+                    )
+                  }
                 >
                   Place Order
                 </button>
@@ -256,6 +247,7 @@ export const StorePage = () => {
           </div>
         ))}
       </div>
+
       {selectedProduct && (
         <div className="modal is-active">
           <div
@@ -268,108 +260,44 @@ export const StorePage = () => {
               backgroundColor: "white",
               padding: "20px",
               borderRadius: "10px",
+              maxWidth: "500px",
+              margin: "auto",
             }}
           >
-            {selectedProduct.id === 4 && (
-              <>
-                <h2 className="title" style={{ color: "black" }}>
-                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
-                  uno ? (
-                    <span>
-                      {selectedProduct.name === "UNO" ? "UNO" : "UNO"}
-                    </span>
-                  ) : (
-                    <span>
-                      {selectedProduct.name === "Chess" ? "Chess" : "Chess"}
-                    </span>
-                  )}
-                </h2>
-                <p style={{ color: "black" }}>
-                  {lang === "eng"
-                    ? "Players:"
-                    : lang === "ru"
-                    ? "Игроки:"
-                    : "Խաղացողներ:"}{" "}
-                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
-                  uno ? (
-                    <span>
-                      {selectedProduct.details.players === "UNO" ? "6+" : "6+"}
-                    </span>
-                  ) : (
-                    <span>
-                      {selectedProduct.details.players === "Chess" ? "2" : "2"}
-                    </span>
-                  )}
-                </p>
-                <p style={{ color: "black" }}>
-                  {lang === "eng"
-                    ? "Required Age:"
-                    : lang === "ru"
-                    ? "Возраст:"
-                    : "Պահանջվող Տարիք:"}{" "}
-                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
-                  uno ? (
-                    <span>
-                      {selectedProduct.details.age === "UNO" ? "7+" : "7+"}
-                    </span>
-                  ) : (
-                    <span>
-                      {selectedProduct.details.age === "Chess" ? "6+" : "6+"}
-                    </span>
-                  )}
-                </p>
-                <p style={{ color: "black" }}>
-                  {lang === "eng" ? "Price:" : lang === "ru" ? "Цена:" : "Գին:"}{" "}
-                  {selectedProduct.images[currentImages[selectedProduct.id]] ===
-                  uno ? (
-                    <span>
-                      {selectedProduct.details.price === "UNO"
-                        ? "800֏"
-                        : "800֏"}
-                    </span>
-                  ) : (
-                    <span>
-                      {selectedProduct.details.age === "Chess"
-                        ? "2000֏"
-                        : "2000֏"}
-                    </span>
-                  )}
-                </p>
-              </>
+            <h2 className="title" style={{ color: "black" }}>
+              {selectedProduct.name}
+            </h2>
+            {selectedProduct.details.creator && (
+              <p style={{ color: "black" }}>
+                {lang === "eng"
+                  ? "Creator:"
+                  : lang === "ru"
+                  ? "Создатель:"
+                  : "Ստեղծող:"}{" "}
+                {selectedProduct.details.creator}
+              </p>
             )}
-            {selectedProduct.id != 4 && (
-              <>
-                <h2 className="title" style={{ color: "black" }}>
-                  {selectedProduct.name}
-                </h2>
-                <p style={{ color: "black" }}>
-                  {selectedProduct.name !== "«Origami»" &&
-                    selectedProduct.name !== "«Օրիգամի»" &&
-                    selectedProduct.name !== "«Оригами»" &&
-                    (lang === "eng"
-                      ? "Creator:"
-                      : lang === "ru"
-                      ? "Создатель:"
-                      : "Ստեղծող:")}{" "}
-                  {selectedProduct.details.creator}
-                </p>
-                <p style={{ color: "black" }}>
-                  {lang === "eng"
-                    ? "Players:"
-                    : lang === "ru"
-                    ? "Игроки:"
-                    : "Խաղացողներ:"}{" "}
-                  {selectedProduct.details.players}
-                </p>
-                <p style={{ color: "black" }}>
-                  {lang === "eng"
-                    ? "Required Age:"
-                    : lang === "ru"
-                    ? "Возраст:"
-                    : "Պահանջվող Տարիք:"}{" "}
-                  {selectedProduct.details.age}
-                </p>
-              </>
+            <p style={{ color: "black" }}>
+              {lang === "eng"
+                ? "Players:"
+                : lang === "ru"
+                ? "Игроки:"
+                : "Խաղացողներ:"}{" "}
+              {selectedProduct.details.players}
+            </p>
+            <p style={{ color: "black" }}>
+              {lang === "eng"
+                ? "Required Age:"
+                : lang === "ru"
+                ? "Возраст:"
+                : "Պահանջվող Տարիք:"}{" "}
+              {selectedProduct.details.age}
+            </p>
+            {selectedProduct.price && (
+              <p style={{ color: "black" }}>
+                {lang === "eng" ? "Price:" : lang === "ru" ? "Цена:" : "Գին:"}{" "}
+                {selectedProduct.price}
+              </p>
             )}
           </div>
           <button
