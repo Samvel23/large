@@ -114,7 +114,7 @@ export const StorePage = () => {
         <Image
           src={storePic}
           alt="Store"
-          width={600}
+          width={800}
           height={300}
           style={{
             borderRadius: "12px",

@@ -24,13 +24,12 @@ export const AboutPage = () => {
   return (
     <div className="hero is-fullheight">
       {/* ABOUT */}
-
-      <section className="section">
+      <section className="section py-5">
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-12-mobile is-10-tablet is-8-desktop">
               <h2
-                className="title is-4 highlighted-text animate-slide-up"
+                className="title is-4 highlighted-text animate-slide-up mb-4"
                 style={{ color: "orange" }}
               >
                 {lang === "eng"
@@ -40,7 +39,7 @@ export const AboutPage = () => {
                   : "Large Art-Studio"}
               </h2>
               <p
-                className="title is-size-5 animate-slide-up-delay"
+                className="title is-size-5 animate-slide-up-delay mb-3"
                 style={{ color: "white" }}
               >
                 {lang === "eng"
@@ -49,7 +48,10 @@ export const AboutPage = () => {
                   ? "Գոռ Դեմիրխանյան ԱՁ"
                   : "Гор Демирханян ЧП"}
               </p>
-              <p className="animate-slide-up-delay" style={{ color: "white" }}>
+              <p
+                className="animate-slide-up-delay mb-4"
+                style={{ color: "white" }}
+              >
                 {lang === "eng"
                   ? "Large Art-Studio was founded in 2012. We initially provided video and photo filming, along with design services. In 2022, we underwent a rebranding and proudly opened our own office in 2023."
                   : lang === "arm"
@@ -57,8 +59,8 @@ export const AboutPage = () => {
                   : "Large Art-Studio был основан в 2012 году. Изначально мы предоставляли услуги видео- и фотосъемки, а также дизайнерские услуги. В 2022 году мы прошли реорганизацию и с гордостью открыли свой офис в 2023 году."}
               </p>
               <h2
-                className="title is-4 highlighted-text animate-slide-up"
-                style={{ color: "orange", marginTop: "2rem" }}
+                className="title is-4 highlighted-text animate-slide-up mb-4"
+                style={{ color: "orange" }}
               >
                 {lang === "eng"
                   ? "Working Hours"
@@ -69,7 +71,7 @@ export const AboutPage = () => {
               <div className="columns">
                 <div className="column has-text-left animate-slide-up-delay">
                   <p
-                    className="title is-size-5-mobile is-size-4-tablet"
+                    className="title is-size-5-mobile is-size-4-tablet mb-2"
                     style={{ color: "white" }}
                   >
                     {lang === "eng"
@@ -79,7 +81,7 @@ export const AboutPage = () => {
                       : "Понедельник-Пятница"}
                   </p>
                   <p
-                    className="subtitle is-size-6-mobile is-size-5-tablet"
+                    className="subtitle is-size-6-mobile is-size-5-tablet mb-2"
                     style={{ color: "white" }}
                   >
                     10:00 - 19:00 , 21:00 - 23:00
@@ -87,7 +89,7 @@ export const AboutPage = () => {
                 </div>
                 <div className="column has-text-left animate-slide-up-delay">
                   <p
-                    className="title is-size-5-mobile is-size-4-tablet"
+                    className="title is-size-5-mobile is-size-4-tablet mb-2"
                     style={{ color: "white" }}
                   >
                     {lang === "eng"
@@ -97,7 +99,7 @@ export const AboutPage = () => {
                       : "Суббота-Воскресенье"}
                   </p>
                   <p
-                    className="subtitle is-size-6-mobile is-size-5-tablet"
+                    className="subtitle is-size-6-mobile is-size-5-tablet mb-2"
                     style={{ color: "white" }}
                   >
                     10:00 - 19:00
@@ -116,21 +118,25 @@ export const AboutPage = () => {
           padding: 0,
         }}
       >
-        <div className="hero-body has-text-centered">
+        <div className="hero-body has-text-centered contact-hero py-5">
           <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
-            {lang === "eng" ? "Contacts" : lang === "arm" ? "Կոնտակտներ" : "Контакты"}
+            {lang === "eng"
+              ? "Contacts"
+              : lang === "arm"
+              ? "Կոնտակտներ"
+              : "Контакты"}
           </h1>
         </div>
       </section>
       {/* Contact Section */}
-      <section className="section">
+      <section className="section py-5">
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-12-mobile is-10-tablet is-8-desktop has-text-centered">
-              <div className="contact-info mb-6 animate-fade-in">
+              <div className="contact-info mb-5 animate-fade-in">
                 <p
                   onClick={() => handleCopyPhoneNumber("+37444533133")}
-                  className="contact-text is-size-4-mobile is-size-3-tablet"
+                  className="contact-text is-size-4-mobile is-size-3-tablet mb-3"
                   style={{ cursor: "pointer", color: "orange" }}
                 >
                   +37444533133
@@ -187,10 +193,10 @@ export const AboutPage = () => {
       </section>
 
       {/* Map Section */}
-      <section className="section">
+      <section className="section py-5">
         <div className="container">
           <h2
-            className="title is-4 has-text-centered animate-slide-up"
+            className="title is-4 has-text-centered animate-slide-up mb-4"
             style={{ color: "white" }}
           >
             {lang === "eng"
@@ -212,7 +218,7 @@ export const AboutPage = () => {
               ></iframe>
             </div>
           </div>
-          <div className="has-text-centered mt-6 animate-fade-in-delay">
+          <div className="has-text-centered mt-5 animate-fade-in-delay">
             <p style={{ color: "white" }}>
               Copyright © 2025 Large Art-Studio. All Rights Reserved. Made by
               Large Art-Studio
@@ -223,9 +229,15 @@ export const AboutPage = () => {
 
       {/* Global Styles */}
       <style jsx global>{`
+        .contact-hero {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+        }
         .square-button {
-          width: 60px;
-          height: 60px;
+          width: 50px;
+          height: 50px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -236,7 +248,7 @@ export const AboutPage = () => {
         }
 
         .square-button .icon {
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           color: #000000;
           transition: color 0.3s ease;
         }
@@ -255,7 +267,7 @@ export const AboutPage = () => {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 1rem;
+          gap: 0.75rem;
         }
 
         .contact-info p {
@@ -314,16 +326,16 @@ export const AboutPage = () => {
 
         @media (max-width: 768px) {
           .square-button {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
           }
 
           .square-button .icon {
-            font-size: 1.2rem;
+            font-size: 1rem;
           }
 
           .contact-info p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
           }
         }
       `}</style>
