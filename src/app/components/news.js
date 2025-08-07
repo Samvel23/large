@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
-import web from "../icon/web.jpg";
-import shop from "../icon/shop1.jpg";
-
-import smm1 from "../icon/SMM1.jpg";
-import smm2 from "../icon/SMM2.jpg";
-import smm3 from "../icon/SMM3.jpg";
 import Link from "next/link";
 
 export const NewsPage = () => {
@@ -15,7 +8,6 @@ export const NewsPage = () => {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    // Detect screen width on client side
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 769);
     };
@@ -26,49 +18,91 @@ export const NewsPage = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  if (!hydrated) return null; // Prevent rendering until client-side
+  if (!hydrated) return null;
 
   return (
     <div>
-      {/* Mobile View Only */}
+      {/* Mobile View */}
       {isMobile && (
         <div className="mobile-layout">
-          <div>
-            <Image
-              src={web}
-              alt="Services"
-              width={570}
-              height={570}
-              style={{ minWidth: "100vw", maxHeight: "100vh" }}
-            />
-          </div>
-          <Image src={shop} alt="Shop" width="100vw" height="100vh" />
-        </div>
-      )}
-
-      {/* Desktop View Only */}
-      {!isMobile && (
-        <div className="desktop-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
               <Link href="/construction">
-                <Image src={smm1} alt="SMM1" width={300} height={300} />
+                <Image
+                  src="/photos/SMM1.jpg"
+                  alt="SMM1"
+                  width={150}
+                  height={150}
+                />
               </Link>
             </div>
             <div className="smm-image image-2 pop-up">
-              <Link href="/construction">
+              <Link href="/design">
                 <Image
-                  src={smm2}
+                  src="/photos/SMM2.jpg"
                   alt="SMM2"
-                  width={300}
-                  height={300}
-                  href="/design"
+                  width={150}
+                  height={150}
                 />
               </Link>
             </div>
             <div className="smm-image image-3 pop-up">
               <Link href="/store">
-                <Image src={smm3} alt="SMM3" width={300} height={300} />
+                <Image
+                  src="/photos/SMM3.jpg"
+                  alt="SMM3"
+                  width={150}
+                  height={150}
+                />
+              </Link>
+            </div>
+          </div>
+          <Image
+            src="/photos/shop1.jpg"
+            alt="Shop"
+            width={570}
+            height={570}
+            style={{
+              minWidth: "100vw",
+              maxHeight: "100vh",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
+      {/* Desktop View */}
+      {!isMobile && (
+        <div className="desktop-layout">
+          <div className="smm-gallery">
+            <div className="smm-image image-1 pop-up">
+              <Link href="/construction">
+                <Image
+                  src="/photos/SMM1.jpg"
+                  alt="SMM1"
+                  width={300}
+                  height={300}
+                />
+              </Link>
+            </div>
+            <div className="smm-image image-2 pop-up">
+              <Link href="/design">
+                <Image
+                  src="/photos/SMM2.jpg"
+                  alt="SMM2"
+                  width={300}
+                  height={300}
+                />
+              </Link>
+            </div>
+            <div className="smm-image image-3 pop-up">
+              <Link href="/store">
+                <Image
+                  src="/photos/SMM3.jpg"
+                  alt="SMM3"
+                  width={300}
+                  height={300}
+                />
               </Link>
             </div>
           </div>
@@ -118,6 +152,17 @@ export const NewsPage = () => {
           object-fit: cover;
           border-radius: 8px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+          .smm-gallery {
+            padding: 1rem;
+            gap: 0.5rem;
+          }
+          .smm-gallery :global(img) {
+            width: 100px !important;
+            height: 100px !important;
+          }
         }
       `}</style>
     </div>

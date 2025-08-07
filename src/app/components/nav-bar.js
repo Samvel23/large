@@ -1,11 +1,11 @@
 "use client";
 import "bulma/css/bulma.css";
 import { useState, useEffect } from "react";
-import icon from "../icon/large.png";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "../context/LanguageContext";
+
 
 export const NavBar = () => {
   const [isActive, setIsActive] = useState(false);
@@ -47,7 +47,7 @@ export const NavBar = () => {
     >
       <div className="navbar-brand">
         <Link className="navbar-item" href="/">
-          <Image src={icon} alt="Logo" width={20} height={40} />
+          <Image src="/photos/large.png" alt="Logo" width={20} height={40} />
           <span className="ml-2 has-text-weight-bold">Large Art</span>
         </Link>
 
@@ -69,18 +69,33 @@ export const NavBar = () => {
         <div className="navbar-start">
           {/* ✅ About Us button always visible */}
           <Link className="navbar-item" onClick={handleAboutClick} href="/">
-            {lang === "eng" ? "Contacts" : lang === "arm" ? "Կոնտակտներ" : "Контакты"}
+            {lang === "eng"
+              ? "Contacts"
+              : lang === "arm"
+              ? "Կոնտակտներ"
+              : "Контакты"}
           </Link>
 
-          <Link className="navbar-item" href="/services">
+          <Link className="navbar-item" href="/design">
             {lang === "eng"
-              ? "Services"
+              ? "Design"
               : lang === "arm"
-              ? "Ծառայություններ"
-              : "Услуги"}
+              ? "Դիզայն"
+              : "Дизайн"}
           </Link>
           <Link className="navbar-item" href="/store">
-            {lang === "eng" ? "Store" : lang === "arm" ? "Գրախանութ" : "Магазин"}
+            {lang === "eng"
+              ? "Store"
+              : lang === "arm"
+              ? "Գրախանութ"
+              : "Магазин"}
+          </Link>
+          <Link
+            className="navbar-item"
+            href="/telmekh"
+            style={{ color: "#ffdd57" }}
+          >
+            TelMekh
           </Link>
         </div>
 

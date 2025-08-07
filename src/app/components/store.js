@@ -1,21 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import zbaxmunq from "../icon/zbaxmunq.png";
-import zbaxmunq3 from "../icon/zbaxmunq3.png";
-import zbaxmunq4 from "../icon/zbaxmunq4.png";
-import origami from "../icon/origami1.png";
-import origami2 from "../icon/origami2.png";
-import sqeyj from "../icon/sqeyj.png";
-import sqeyj1 from "../icon/sqeyj1.png";
-import uno from "../icon/uno.png";
-import chess from "../icon/chess.png";
-import storePic from "../icon/storePic.jpg";
 import { useLanguage } from "../context/LanguageContext";
 
+// Image paths
+const zbaxmunq = "/photos/zbaxmunq.png";
+const zbaxmunq3 = "/photos/zbaxmunq3.png";
+const zbaxmunq4 = "/photos/zbaxmunq4.png";
+const origami = "/photos/origami1.png";
+const origami2 = "/photos/origami2.png";
+const sqeyj = "/photos/sqeyj.png";
+const sqeyj1 = "/photos/sqeyj1.png";
+const uno = "/photos/uno.png";
+const chess = "/photos/chess.png";
+const storePic = "/photos/storePic.jpg";
+
 export const StorePage = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const { lang } = useLanguage();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const products = [
     {
@@ -90,12 +92,61 @@ export const StorePage = () => {
     }, {})
   );
 
+  // Automatic slow image slider
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImages((prev) => {
+        const updated = { ...prev };
+        products.forEach((product) => {
+          const nextIndex = (prev[product.id] + 1) % product.images.length;
+          updated[product.id] = nextIndex;
+        });
+        return updated;
+      });
+    }, 5000); // Slow: every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
   const handleThumbnailClick = (id, index) => {
     setCurrentImages((prev) => ({ ...prev, [id]: index }));
   };
 
   return (
     <div className="container p-4">
+      <style jsx>{`
+        .custom-button {
+          padding: 0.6rem 1.2rem;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          flex: 1;
+          margin: 0 5px;
+        }
+
+        .custom-button.warning {
+          background-color: #ffcc33;
+          color: #000;
+        }
+
+        .custom-button.warning:hover {
+          background-color: #f5b700;
+          transform: scale(1.05);
+        }
+
+        .custom-button.dark {
+          background-color: #000;
+          color: #fff;
+        }
+
+        .custom-button.dark:hover {
+          background-color: #333;
+          transform: scale(1.05);
+        }
+      `}</style>
+
       <h1 className="title has-text-centered" style={{ color: "white" }}>
         {lang === "eng"
           ? "Welcome to Our Store"
@@ -162,15 +213,13 @@ export const StorePage = () => {
             >
               <div className="card-image">
                 <figure className="image is-4by3">
-                  {product.images[currentImages[product.id]] && (
-                    <Image
-                      src={product.images[currentImages[product.id]]}
-                      alt={product.name}
-                      width={300}
-                      height={225}
-                      style={{ objectFit: "fit", borderRadius: "4px",  }}
-                    />
-                  )}
+                  <Image
+                    src={product.images[currentImages[product.id]]}
+                    alt={product.name}
+                    width={300}
+                    height={225}
+                    style={{ objectFit: "fit", borderRadius: "4px" }}
+                  />
                 </figure>
               </div>
 
@@ -183,26 +232,23 @@ export const StorePage = () => {
                   marginTop: "10px",
                 }}
               >
-                {product.images.map(
-                  (img, index) =>
-                    img && (
-                      <Image
-                        key={index}
-                        src={img}
-                        alt={`Thumbnail ${index + 1}`}
-                        width={40}
-                        height={40}
-                        style={{
-                          cursor: "pointer",
-                          border:
-                            currentImages[product.id] === index
-                              ? "2px solid black"
-                              : "1px solid #ccc",
-                        }}
-                        onClick={() => handleThumbnailClick(product.id, index)}
-                      />
-                    )
-                )}
+                {product.images.map((img, index) => (
+                  <Image
+                    key={index}
+                    src={img}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={40}
+                    height={40}
+                    style={{
+                      cursor: "pointer",
+                      border:
+                        currentImages[product.id] === index
+                          ? "2px solid black"
+                          : "1px solid #ccc",
+                    }}
+                    onClick={() => handleThumbnailClick(product.id, index)}
+                  />
+                ))}
               </div>
 
               <div className="card-content has-text-centered">
@@ -220,9 +266,18 @@ export const StorePage = () => {
                 </p>
               </div>
 
-              <footer className="card-footer">
+              <footer
+                className="card-footer"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "1rem",
+                  borderTop: "1px solid #eee",
+                  backgroundColor: "#fafafa",
+                }}
+              >
                 <button
-                  className="button is-warning card-footer-item"
+                  className="custom-button warning"
                   onClick={() =>
                     alert(
                       lang === "eng"
@@ -236,8 +291,7 @@ export const StorePage = () => {
                   Place Order
                 </button>
                 <button
-                  className="button is-link card-footer-item"
-                  style={{ backgroundColor: "black", color: "white" }}
+                  className="custom-button dark"
                   onClick={() => setSelectedProduct(product)}
                 >
                   View
