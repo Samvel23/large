@@ -7,6 +7,8 @@ import {
   faYoutube,
   faTelegram,
   faFacebook,
+  faBehance,
+  faViber,
 } from "@fortawesome/free-brands-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -141,7 +143,7 @@ export const AboutPage = () => {
                 >
                   +37444533133
                   {isCopied && (
-                    <span className="has-text-success ml-2">Copied!</span>
+                    <span className="is-warning ml-2" style={{ textDecoration: "underline"}}>Copied!</span>
                   )}
                 </p>
               </div>
@@ -169,11 +171,13 @@ export const AboutPage = () => {
                     href: "https://www.facebook.com/largeartstudio2012",
                     icon: faFacebook,
                   },
+                  { href: "www.behance.net/gordemirkhanyan", icon: faBehance },
                   {
                     href: "https://t.me/+37444533133",
                     icon: faTelegram,
                   },
                   { href: "https://wa.me/+37444533133", icon: faWhatsapp },
+                  { href: "viber://chat?number=37444533133", icon: faViber },
                   { href: "mailto:info@largeart.org", icon: faEnvelope },
                 ].map(({ href, icon }, index) => (
                   <a

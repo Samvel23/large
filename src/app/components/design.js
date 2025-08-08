@@ -1,11 +1,10 @@
 "use client";
-import Head from "next/head";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 import Image from "next/image";
+import Link from "next/link";
 
-// Define public image paths instead of importing them
 const serviceImages = {
   td: "/photos/3d.jpeg",
   design: "/photos/design.jpg",
@@ -49,18 +48,11 @@ const cardVariants = {
 
 export const Design = () => {
   const { lang } = useLanguage();
-  const [selected, setSelected] = useState(null);
 
-  const { pageTitle, pageDescription, services } =
-    translations[lang] || translations.eng;
+  const { pageTitle, services } = translations[lang] || translations.eng;
 
   return (
     <>
-      <Head>
-        <title>{pageTitle} | Large Art-Studio</title>
-        <meta name="description" content={pageDescription} />
-      </Head>
-
       <section className="hero is-warning">
         <div className="hero-body has-text-centered">
           <h1
@@ -90,29 +82,24 @@ export const Design = () => {
                     boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
                   }}
                   transition={{ type: "spring", stiffness: 250 }}
-                  onClick={() =>
-                    setSelected({
-                      title,
-                      description,
-                      image: serviceImages[key],
-                    })
-                  }
                   tabIndex={0}
                   role="button"
                   aria-label={title}
                 >
                   <div className="card-image">
-                    <figure className="image is-1by1">
-                      <Image
-                        src={serviceImages[key]}
-                        alt={title}
-                        width={600}
-                        height={600}
-                        className="service-image"
-                        loading="lazy"
-                        style={{ objectFit: "cover" }}
-                      />
-                    </figure>
+                    <Link href="/construction">
+                      <figure className="image is-1by1">
+                        <Image
+                          src={serviceImages[key]}
+                          alt={title}
+                          width={600}
+                          height={600}
+                          className="service-image"
+                          loading="lazy"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </figure>
+                    </Link>
                   </div>
                   <div className="card-content has-text-centered">
                     <p className="title is-5 service-title">{title}</p>
@@ -124,58 +111,6 @@ export const Design = () => {
           </div>
         </div>
       </section>
-
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            className="modal is-active"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div
-              className="modal-background"
-              onClick={() => setSelected(null)}
-            ></div>
-            <motion.div
-              className="modal-card animate-fade-in"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <header className="modal-card-head">
-                <p className="modal-card-title service-title">
-                  {selected.title}
-                </p>
-                <button
-                  className="delete"
-                  aria-label="close"
-                  onClick={() => setSelected(null)}
-                ></button>
-              </header>
-              <section className="modal-card-body has-text-centered">
-                <figure
-                  className="image is-1by1 mb-4 mx-auto"
-                  style={{ maxWidth: "250px" }}
-                >
-                  <Image
-                    src={selected.image}
-                    alt={selected.title}
-                    width={250}
-                    height={250}
-                    className="modal-image"
-                    style={{ objectFit: "contain" }}
-                    loading="lazy"
-                  />
-                </figure>
-                <p className="service-description">{selected.description}</p>
-              </section>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <style jsx global>{`
         .service-card {
@@ -200,22 +135,6 @@ export const Design = () => {
           font-size: 0.95rem;
           margin-top: 0.25em;
         }
-        .service-description {
-          color: #e0e0e0;
-          font-size: 1.08rem;
-          line-height: 1.7;
-        }
-        .modal-card,
-        .modal-card-head,
-        .modal-card-body {
-          background: #232323;
-        }
-        .modal-card {
-          border-radius: 14px;
-          max-width: 440px;
-          margin: auto;
-        }
-        .modal-image,
         .service-image {
           border-radius: 12px;
           width: 100%;
@@ -231,19 +150,6 @@ export const Design = () => {
           }
           to {
             opacity: 1;
-          }
-        }
-        @media (max-width: 768px) {
-          .modal-card {
-            width: 92%;
-          }
-        }
-        @media (max-width: 480px) {
-          .modal-card {
-            width: 98%;
-          }
-          .service-description {
-            font-size: 0.97rem;
           }
         }
       `}</style>

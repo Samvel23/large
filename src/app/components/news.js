@@ -27,7 +27,7 @@ export const NewsPage = () => {
         <div className="mobile-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
-              <Link href="/construction">
+              <Link href="/content">
                 <Image
                   src="/photos/SMM1.jpg"
                   alt="SMM1"
@@ -76,7 +76,7 @@ export const NewsPage = () => {
         <div className="desktop-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
-              <Link href="/construction">
+              <Link href="/content">
                 <Image
                   src="/photos/SMM1.jpg"
                   alt="SMM1"

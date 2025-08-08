@@ -68,20 +68,20 @@ export const NavBar = () => {
       <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
         <div className="navbar-start">
           {/* ✅ About Us button always visible */}
-          <Link className="navbar-item" onClick={handleAboutClick} href="/">
+          <Link className="navbar-item" href="/content">
             {lang === "eng"
-              ? "Contacts"
+              ? "Content"
               : lang === "arm"
-              ? "Կոնտակտներ"
-              : "Контакты"}
+              ? "Կոնտենտ"
+              : "Контент"}
           </Link>
 
           <Link className="navbar-item" href="/design">
             {lang === "eng"
-              ? "Design"
+              ? "Design/Print"
               : lang === "arm"
-              ? "Դիզայն"
-              : "Дизайн"}
+              ? "Դիզայն/Տպագրություն"
+              : "Дизайн/Печать"}
           </Link>
           <Link className="navbar-item" href="/store">
             {lang === "eng"
@@ -89,6 +89,13 @@ export const NavBar = () => {
               : lang === "arm"
               ? "Գրախանութ"
               : "Магазин"}
+          </Link>
+          <Link className="navbar-item" onClick={handleAboutClick} href="/">
+            {lang === "eng"
+              ? "Contacts"
+              : lang === "arm"
+              ? "Կոնտակտներ"
+              : "Контакты"}
           </Link>
           <Link
             className="navbar-item"
