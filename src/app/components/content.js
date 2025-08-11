@@ -46,7 +46,7 @@ export const Content = () => {
       <div className="content-sections">
         {/* Video Section */}
         <div className="content-box">
-          <h2 className="section-title"> 
+          <h2 className="section-title">
             {lang === "eng"
               ? "Video Production and Montage"
               : lang === "ru"
@@ -155,6 +155,9 @@ export const Content = () => {
       </div>
 
       <style jsx>{`
+        * {
+          font-family: "Noto Sans Armenian", sans-serif;
+        }
         .content-wrapper {
           padding: 2rem 1rem;
           max-width: 1400px;

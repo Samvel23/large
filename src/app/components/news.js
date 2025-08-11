@@ -110,6 +110,9 @@ export const NewsPage = () => {
       )}
 
       <style jsx>{`
+        * {
+          font-family: "Noto Sans Armenian", sans-serif;
+        }
         .smm-gallery {
           display: flex;
           justify-content: center;

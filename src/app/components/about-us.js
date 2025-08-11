@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export const AboutPage = () => {
   const { lang } = useLanguage();
@@ -33,18 +34,12 @@ export const AboutPage = () => {
               <h2
                 className="title is-4 highlighted-text animate-slide-up mb-4"
                 style={{ color: "orange" }}
-                lang="arm"
               >
-                {lang === "eng"
-                  ? "Large Art-Studio"
-                  : lang === "arm"
-                  ? "Large Art-Studio"
-                  : "Large Art-Studio"}
+                Large Art-Studio
               </h2>
               <p
                 className="title is-size-5 animate-slide-up-delay mb-3"
                 style={{ color: "white" }}
-                lang="arm"
               >
                 {lang === "eng"
                   ? "Gor Demirkhanyan PE"
@@ -264,29 +259,47 @@ export const AboutPage = () => {
                     href: "https://www.facebook.com/largeartstudio2012",
                     icon: faFacebook,
                   },
-                  { href: "www.behance.net/gordemirkhanyan", icon: faBehance },
-                  { href: "https://t.me/+37444533133", icon: faTelegram },
-                  { href: "https://wa.me/+37444533133", icon: faWhatsapp },
-                  { href: "viber://chat?number=37444533133", icon: faViber },
-                  { href: "mailto:info@largeart.org", icon: faEnvelope },
-                ].map(({ href, icon }, index) => (
-                  <a
+                  {
+                    href: "https://www.behance.net/gordemirkhanyan", // <-- add https:// here
+                    icon: faBehance,
+                    },
+                    { href: "https://t.me/+37444533133", icon: faTelegram },
+                    { href: "https://wa.me/+37444533133", icon: faWhatsapp },
+                    { href: "viber://chat?number=37444533133", icon: faViber },
+                    // Custom handler for mail icon
+                    {
+                    href: "mailto:info@largeart.org",
+                    icon: faEnvelope,
+                    onClick: (e) => {
+                      e.preventDefault();
+                      navigator.clipboard.writeText("info@largeart.org");
+                      alert(
+                        lang === "eng"
+                          ? "Email copied to clipboard!"
+                          : lang === "ru"
+                          ? "Электронная почта скопирована в буфер обмена!"
+                          : "Էլ. փոստը պատճենվել է!"
+                      );
+                      setTimeout(() => setIsCopied(false), 2000);
+                    },
+                    },
+                  ].map(({ href, icon, onClick }, index) => (
+                    <a
                     key={index}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="button is-large square-button mx-2"
-                  >
+                    onClick={onClick}
+                    >
                     <FontAwesomeIcon icon={icon} className="icon" />
-                  </a>
-                ))}
+                    </a>
+                  ))}
+                  </div>
+                </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partners Section */}
+              </section>
       <section className="section py-5">
         <div className="container">
           <h2
@@ -304,6 +317,7 @@ export const AboutPage = () => {
               {
                 name: "emark",
                 logo: "/photos/logo1.png",
+                href: "https://www.e-mark.am/hy/prints#",
                 description:
                   lang === "eng"
                     ? "Official Partner"
@@ -314,6 +328,7 @@ export const AboutPage = () => {
               {
                 name: "Yerevan City",
                 logo: "/photos/logo2.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 1 year"
@@ -324,6 +339,7 @@ export const AboutPage = () => {
               {
                 name: "Viridian",
                 logo: "/photos/logo3.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 1 year"
@@ -334,6 +350,7 @@ export const AboutPage = () => {
               {
                 name: "YereVibe",
                 logo: "/photos/logo4.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 1 year"
@@ -344,6 +361,7 @@ export const AboutPage = () => {
               {
                 name: "Rozelita-Eltaroz",
                 logo: "/photos/logo5.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 13 years"
@@ -354,6 +372,7 @@ export const AboutPage = () => {
               {
                 name: "Velvet",
                 logo: "/photos/logo6.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 7 years"
@@ -364,6 +383,7 @@ export const AboutPage = () => {
               {
                 name: "Murzilka",
                 logo: "/photos/logo7.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 4 years"
@@ -374,6 +394,7 @@ export const AboutPage = () => {
               {
                 name: "Sparapet",
                 logo: "/photos/logo8.png",
+                href: "",
                 description:
                   lang === "eng"
                     ? "Partners almost 1 year"
@@ -388,7 +409,7 @@ export const AboutPage = () => {
               >
                 <div className="partner-card">
                   <div className="card">
-                    <div className="card-image">
+                    <Link className="card-image" href={partner.href}>
                       <figure className="image is-4by3">
                         <img
                           src={partner.logo}
@@ -401,7 +422,7 @@ export const AboutPage = () => {
                           }}
                         />
                       </figure>
-                    </div>
+                    </Link>
                     <div className="card-content">
                       <p className="title is-6" style={{ color: "white" }}>
                         {partner.name}
@@ -455,6 +476,9 @@ export const AboutPage = () => {
 
       {/* Global Styles */}
       <style jsx global>{`
+        * {
+          font-family: "Noto Sans Armenian", sans-serif;
+        }
         .contact-hero {
           display: flex;
           align-items: center;

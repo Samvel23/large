@@ -40,114 +40,121 @@ export const NavBar = () => {
   };
 
   return (
-    <nav
-      className="navbar is-dark is-fixed-top custom-navbar"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div className="navbar-brand">
-        <Link className="navbar-item" href="/">
-          <Image src="/photos/large.png" alt="Logo" width={20} height={40} />
-          <span className="ml-2 has-text-weight-bold">Large Art</span>
-        </Link>
-
-        <button
-          className={`navbar-burger ${
-            isActive ? "is-active" : ""
-          } has-text-warning`}
-          aria-label="menu"
-          aria-expanded={isActive}
-          onClick={handleClick}
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
-      </div>
-
-      <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
-        <div className="navbar-start">
-          {/* ✅ About Us button always visible */}
-          <Link className="navbar-item" href="/content">
-            {lang === "eng"
-              ? "Content"
-              : lang === "arm"
-              ? "Կոնտենտ"
-              : "Контент"}
+    <>
+      <nav
+        className="navbar is-dark is-fixed-top custom-navbar"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className="navbar-brand">
+          <Link className="navbar-item" href="/">
+            <Image src="/photos/large.png" alt="Logo" width={20} height={40} />
+            <span className="ml-2 has-text-weight-bold">Large Art</span>
           </Link>
 
-          <Link className="navbar-item" href="/design">
-            {lang === "eng"
-              ? "Design/Print"
-              : lang === "arm"
-              ? "Դիզայն/Տպագրություն"
-              : "Дизайн/Печать"}
-          </Link>
-          <Link className="navbar-item" href="/store">
-            {lang === "eng"
-              ? "Store"
-              : lang === "arm"
-              ? "Գրախանութ"
-              : "Магазин"}
-          </Link>
-          <Link className="navbar-item" onClick={handleAboutClick} href="/">
-            {lang === "eng"
-              ? "Contacts"
-              : lang === "arm"
-              ? "Կոնտակտներ"
-              : "Контакты"}
-          </Link>
-          <Link
-            className="navbar-item"
-            href="/telmekh"
-            style={{ color: "#ffdd57" }}
+          <button
+            className={`navbar-burger ${
+              isActive ? "is-active" : ""
+            } has-text-warning`}
+            aria-label="menu"
+            aria-expanded={isActive}
+            onClick={handleClick}
           >
-            TelMekh
-          </Link>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
         </div>
 
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <button
-                className="button is-small is-rounded is-outlined has-text-white"
-                onClick={() => setLang("arm")}
-              >
-                ARM
-              </button>
-              <button
-                className="button is-small is-rounded is-outlined has-text-white"
-                onClick={() => setLang("eng")}
-              >
-                ENG
-              </button>
-              <button
-                className="button is-small is-rounded  has-text-white is-outlined"
-                onClick={() => setLang("ru")}
-              >
-                RU
-              </button>
-            </div>
+        <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
+          <div className="navbar-start">
+            {/* ✅ About Us button always visible */}
+            <Link className="navbar-item" href="/content">
+              {lang === "eng"
+                ? "Content"
+                : lang === "arm"
+                ? "Կոնտենտ"
+                : "Контент"}
+            </Link>
+
+            <Link className="navbar-item" href="/design">
+              {lang === "eng"
+                ? "Design/Print"
+                : lang === "arm"
+                ? "Դիզայն/Տպագրություն"
+                : "Дизайн/Печать"}
+            </Link>
+            <Link className="navbar-item" href="/store">
+              {lang === "eng"
+                ? "Store"
+                : lang === "arm"
+                ? "Գրախանութ"
+                : "Магазин"}
+            </Link>
+            <Link className="navbar-item" onClick={handleAboutClick} href="/">
+              {lang === "eng"
+                ? "Contacts"
+                : lang === "arm"
+                ? "Կոնտակտներ"
+                : "Контакты"}
+            </Link>
+            <Link
+              className="navbar-item"
+              href="/telmekh"
+              style={{ color: "#ffdd57" }}
+            >
+              TelMekh
+            </Link>
           </div>
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link
-                href="/signup"
-                className="button is-primary has-background-warning"
-              >
-                {lang === "eng"
-                  ? "Sign up"
-                  : lang === "arm"
-                  ? "Գրանցում"
-                  : "Зарегистрироваться"}
-              </Link>
-              <Link href="/login" className="button is-light">
-                {lang === "eng" ? "Log in" : lang === "arm" ? "Մուտք" : "Войти"}
-              </Link>
+
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
+                <button
+                  className="button is-small is-rounded is-outlined has-text-white"
+                  onClick={() => setLang("arm")}
+                >
+                  ARM
+                </button>
+                <button
+                  className="button is-small is-rounded is-outlined has-text-white"
+                  onClick={() => setLang("eng")}
+                >
+                  ENG
+                </button>
+                <button
+                  className="button is-small is-rounded  has-text-white is-outlined"
+                  onClick={() => setLang("ru")}
+                >
+                  RU
+                </button>
+              </div>
+            </div>
+            <div className="navbar-item">
+              <div className="buttons">
+                <Link
+                  href="/signup"
+                  className="button is-primary has-background-warning"
+                >
+                  {lang === "eng"
+                    ? "Sign up"
+                    : lang === "arm"
+                    ? "Գրանցում"
+                    : "Зарегистрироваться"}
+                </Link>
+                <Link href="/login" className="button is-light">
+                  {lang === "eng" ? "Log in" : lang === "arm" ? "Մուտք" : "Войти"}
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <style jsx>{`
+        *{
+        font-family: "Noto Sans Armenian", sans-serif;
+        }
+      `}</style>
+    </>
   );
 };

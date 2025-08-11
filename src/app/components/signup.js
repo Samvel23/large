@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import Head from "next/head";
@@ -33,7 +32,11 @@ export const SignUpPage = () => {
     <>
       <Head>
         <title>
-          {lang === "eng" ? "Sign Up" : lang === "ru" ? "Регистрация" : "Գրանցում"}
+          {lang === "eng"
+            ? "Sign Up"
+            : lang === "ru"
+            ? "Регистрация"
+            : "Գրանցում"}
         </title>
         <meta
           name="description"
@@ -51,7 +54,11 @@ export const SignUpPage = () => {
         <section className="hero is-warning">
           <div className="hero-body has-text-centered">
             <h1 className="title is-size-3-mobile is-size-2-tablet is-size-1-desktop animate-fade-in">
-              {lang === "eng" ? "Sign Up" : lang === "ru" ? "Регистрация" : "Գրանցում"}
+              {lang === "eng"
+                ? "Sign Up"
+                : lang === "ru"
+                ? "Регистрация"
+                : "Գրանցում"}
             </h1>
           </div>
         </section>
@@ -62,7 +69,10 @@ export const SignUpPage = () => {
             <div className="columns is-centered">
               <div className="column is-12-mobile is-8-tablet is-6-desktop animate-slide-up">
                 <div className="box p-5">
-                  <p className="has-text-centered mb-4" style={{ color: "#e0e0e0" }}>
+                  <p
+                    className="has-text-centered mb-4"
+                    style={{ color: "#e0e0e0" }}
+                  >
                     {lang === "eng"
                       ? "This page is for viewing only"
                       : lang === "ru"
@@ -83,7 +93,11 @@ export const SignUpPage = () => {
                     <form onSubmit={handleSubmit}>
                       <div className="field">
                         <label className="label" style={{ color: "#e0e0e0" }}>
-                          {lang === "eng" ? "Name" : lang === "ru" ? "Имя" : "Անուն"}
+                          {lang === "eng"
+                            ? "Name"
+                            : lang === "ru"
+                            ? "Имя"
+                            : "Անուն"}
                         </label>
                         <div className="control">
                           <input
@@ -91,7 +105,11 @@ export const SignUpPage = () => {
                             type="text"
                             name="name"
                             placeholder={
-                              lang === "eng" ? "Your Name" : lang === "ru" ? "Ваше имя" : "Ձեր անունը"
+                              lang === "eng"
+                                ? "Your Name"
+                                : lang === "ru"
+                                ? "Ваше имя"
+                                : "Ձեր անունը"
                             }
                             value={formData.name}
                             onChange={handleChange}
@@ -101,7 +119,11 @@ export const SignUpPage = () => {
                       </div>
                       <div className="field">
                         <label className="label" style={{ color: "#e0e0e0" }}>
-                          {lang === "eng" ? "Email" : lang === "ru" ? "Почта" : "Էլ. հասցե"}
+                          {lang === "eng"
+                            ? "Email"
+                            : lang === "ru"
+                            ? "Почта"
+                            : "Էլ. հասցե"}
                         </label>
                         <div className="control">
                           <input
@@ -109,7 +131,11 @@ export const SignUpPage = () => {
                             type="email"
                             name="email"
                             placeholder={
-                              lang === "eng" ? "Your Email" : lang === "ru" ? "Ваша почта" : "Ձեր էլ. հասցեն"
+                              lang === "eng"
+                                ? "Your Email"
+                                : lang === "ru"
+                                ? "Ваша почта"
+                                : "Ձեր էլ. հասցեն"
                             }
                             value={formData.email}
                             onChange={handleChange}
@@ -119,7 +145,11 @@ export const SignUpPage = () => {
                       </div>
                       <div className="field">
                         <label className="label" style={{ color: "#e0e0e0" }}>
-                          {lang === "eng" ? "Password" : lang === "ru" ? "Пароль" : "Գաղտնաբառ"}
+                          {lang === "eng"
+                            ? "Password"
+                            : lang === "ru"
+                            ? "Пароль"
+                            : "Գաղտնաբառ"}
                         </label>
                         <div className="control">
                           <input
@@ -127,7 +157,11 @@ export const SignUpPage = () => {
                             type="password"
                             name="password"
                             placeholder={
-                              lang === "eng" ? "Your Password" : lang === "ru" ? "Ваш пароль" : "Ձեր գաղտնաբառը"
+                              lang === "eng"
+                                ? "Your Password"
+                                : lang === "ru"
+                                ? "Ваш пароль"
+                                : "Ձեր գաղտնաբառը"
                             }
                             value={formData.password}
                             onChange={handleChange}
@@ -137,7 +171,11 @@ export const SignUpPage = () => {
                       </div>
                       <div className="field">
                         <button className="button is-warning is-fullwidth">
-                          {lang === "eng" ? "Sign Up" : lang === "ru" ? "Зарегистрироваться" : "Գրանցվել"}
+                          {lang === "eng"
+                            ? "Sign Up"
+                            : lang === "ru"
+                            ? "Зарегистрироваться"
+                            : "Գրանցվել"}
                         </button>
                       </div>
                     </form>
@@ -150,6 +188,9 @@ export const SignUpPage = () => {
       </div>
 
       <style jsx global>{`
+        * {
+          font-family: "Noto Sans Armenian", sans-serif;
+        }
         .hero {
           background-color: #2a2a2a;
         }
@@ -204,7 +245,7 @@ export const SignUpPage = () => {
             opacity: 0;
           }
           to {
-            transform:-translateY(0);
+            transform: -translateY(0);
             opacity: 1;
           }
         }
