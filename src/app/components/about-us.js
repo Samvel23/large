@@ -33,6 +33,7 @@ export const AboutPage = () => {
               <h2
                 className="title is-4 highlighted-text animate-slide-up mb-4"
                 style={{ color: "orange" }}
+                lang="arm"
               >
                 {lang === "eng"
                   ? "Large Art-Studio"
@@ -43,6 +44,7 @@ export const AboutPage = () => {
               <p
                 className="title is-size-5 animate-slide-up-delay mb-3"
                 style={{ color: "white" }}
+                lang="arm"
               >
                 {lang === "eng"
                   ? "Gor Demirkhanyan PE"
