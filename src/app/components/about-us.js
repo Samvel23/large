@@ -224,7 +224,7 @@ export const AboutPage = () => {
                   className="contact-text is-size-4-mobile is-size-3-tablet mb-3"
                   style={{ cursor: "pointer", color: "orange" }}
                 >
-                  +37444533133
+                  +374 44 533 133
                   {isCopied && (
                     <span
                       className="is-warning ml-2"
@@ -262,12 +262,12 @@ export const AboutPage = () => {
                   {
                     href: "https://www.behance.net/gordemirkhanyan", // <-- add https:// here
                     icon: faBehance,
-                    },
-                    { href: "https://t.me/+37444533133", icon: faTelegram },
-                    { href: "https://wa.me/+37444533133", icon: faWhatsapp },
-                    { href: "viber://chat?number=37444533133", icon: faViber },
-                    // Custom handler for mail icon
-                    {
+                  },
+                  { href: "https://t.me/+37444533133", icon: faTelegram },
+                  { href: "https://wa.me/+37444533133", icon: faWhatsapp },
+                  { href: "viber://chat?number=37444533133", icon: faViber },
+                  // Custom handler for mail icon
+                  {
                     href: "mailto:info@largeart.org",
                     icon: faEnvelope,
                     onClick: (e) => {
@@ -282,24 +282,24 @@ export const AboutPage = () => {
                       );
                       setTimeout(() => setIsCopied(false), 2000);
                     },
-                    },
-                  ].map(({ href, icon, onClick }, index) => (
-                    <a
+                  },
+                ].map(({ href, icon, onClick }, index) => (
+                  <a
                     key={index}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="button is-large square-button mx-2"
                     onClick={onClick}
-                    >
+                  >
                     <FontAwesomeIcon icon={icon} className="icon" />
-                    </a>
-                  ))}
-                  </div>
-                </div>
-                </div>
+                  </a>
+                ))}
               </div>
-              </section>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="section py-5">
         <div className="container">
           <h2
@@ -348,17 +348,6 @@ export const AboutPage = () => {
                     : "Գործընկերներ գրեթե 1 տարի",
               },
               {
-                name: "YereVibe",
-                logo: "/photos/logo4.png",
-                href: "",
-                description:
-                  lang === "eng"
-                    ? "Partners almost 1 year"
-                    : lang === "ru"
-                    ? "Партнеры почти 1 год"
-                    : "Գործընկերներ գրեթե 1 տարի",
-              },
-              {
                 name: "Rozelita-Eltaroz",
                 logo: "/photos/logo5.png",
                 href: "",
@@ -379,6 +368,17 @@ export const AboutPage = () => {
                     : lang === "ru"
                     ? "Партнеры почти 7 лет"
                     : "Գործընկերներ գրեթե 7 տարի",
+              },
+              {
+                name: "YereVibe",
+                logo: "/photos/logo4.png",
+                href: "",
+                description:
+                  lang === "eng"
+                    ? "Partners almost 1 year"
+                    : lang === "ru"
+                    ? "Партнеры почти 1 год"
+                    : "Գործընկերներ գրեթե 1 տարի",
               },
               {
                 name: "Murzilka",
@@ -429,6 +429,7 @@ export const AboutPage = () => {
                       </p>
                       <p className="subtitle is-7" style={{ color: "#ccc" }}>
                         {partner.description}
+
                       </p>
                     </div>
                   </div>
