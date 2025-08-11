@@ -46,9 +46,9 @@ export const Content = () => {
       <div className="content-sections">
         {/* Video Section */}
         <div className="content-box">
-          <h2 className="section-title">
+          <h2 className="section-title"> 
             {lang === "eng"
-              ? "Video Production and Editing"
+              ? "Video Production and Montage"
               : lang === "ru"
               ? "Видеопроизводство и монтаж"
               : "Տեսանյութերի արտադրություն և մոնտաժ"}
@@ -78,7 +78,7 @@ export const Content = () => {
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
-          <p>
+          <p style={{ color: "#fff" }}>
             {lang === "eng"
               ? "Professional video production and editing services for events, commercials, and more."
               : lang === "ru"
@@ -93,7 +93,7 @@ export const Content = () => {
               ? "Price List"
               : lang === "ru"
               ? "Прайс-лист"
-              : "Գների ցանկ"}
+              : "Գնացուցակ"}
           </button>
         </div>
 
@@ -134,7 +134,7 @@ export const Content = () => {
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
-          <p>
+          <p style={{ color: "#fff" }}>
             {lang === "eng"
               ? "Professional photography for products, events, and portraits, enhanced with expert editing and retouching."
               : lang === "ru"
@@ -149,7 +149,7 @@ export const Content = () => {
               ? "Price List"
               : lang === "ru"
               ? "Прайс-лист"
-              : "Գների ցանկ"}
+              : "Գնացուցակ"}
           </button>
         </div>
       </div>
@@ -186,6 +186,7 @@ export const Content = () => {
           font-size: 1.8rem;
           color: #fff;
           margin: 0;
+          font-weight: 600;
         }
 
         /* Divider line */

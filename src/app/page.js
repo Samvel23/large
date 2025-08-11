@@ -6,12 +6,27 @@ import { NewsPage } from "./components/news";
 import { AboutPage } from "./components/about-us";
 
 export default function Home() {
-  const [isModalActive, setIsModalActive] = useState(true); // show on page load
+  const [isModalActive, setIsModalActive] = useState(false);
 
-  // Optional: close modal with Escape key
+  useEffect(() => {
+    // Check if the modal was shown before
+    const hasSeenModal = localStorage.getItem("hasSeenExpoModal");
+
+    if (!hasSeenModal) {
+      setIsModalActive(true);
+    }
+  }, []);
+
+  const closeModal = () => {
+    setIsModalActive(false);
+    // Save flag so it doesn't show again
+    localStorage.setItem("hasSeenExpoModal", "true");
+  };
+
+  // Close modal with Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") setIsModalActive(false);
+      if (e.key === "Escape") closeModal();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -21,10 +36,7 @@ export default function Home() {
     <div className={styles.page}>
       {/* Modal */}
       <div className={`modal ${isModalActive ? "is-active" : ""}`}>
-        <div
-          className="modal-background"
-          onClick={() => setIsModalActive(false)}
-        ></div>
+        <div className="modal-background" onClick={closeModal}></div>
         <div
           className="modal-content"
           style={{ maxWidth: "90%", maxHeight: "90%" }}
@@ -36,7 +48,7 @@ export default function Home() {
         <button
           className="modal-close is-large"
           aria-label="close"
-          onClick={() => setIsModalActive(false)}
+          onClick={closeModal}
         ></button>
       </div>
 
@@ -47,7 +59,6 @@ export default function Home() {
       <AboutPage />
 
       <style>{`
-        /* Optional: adjust modal image for better responsiveness */
         .modal-content img {
           max-height: 80vh;
           object-fit: contain;
