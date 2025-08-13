@@ -166,7 +166,7 @@ export const AboutPage = () => {
                     className="subtitle is-size-6-mobile is-size-5-tablet mb-2"
                     style={{ color: "white" }}
                   >
-                    10:00 - 19:00, 21:00 - 23:00
+                    10:00 - 19:00 {lang === "eng" ? "and" : lang === "ru" ? "и" : "և"} 21:00 - 23:00
                   </p>
                 </div>
                 <div className="column has-text-left animate-slide-up-delay">
