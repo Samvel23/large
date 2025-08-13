@@ -49,7 +49,7 @@ export const StorePage = () => {
     },
     {
       id: 3,
-      name: lang === "eng" ? "Sqeyjd" : lang === "ru" ? "Скейдж" : "Սքեյջ",
+      name: lang === "eng" ? "Sqeydj" : lang === "ru" ? "Скейдж" : "Սքեյջ",
       description:
         lang === "eng"
           ? "Sqeydj strategy game."
