@@ -111,9 +111,6 @@ export const TelMekh = () => {
 
       {/* Styles */}
       <style jsx>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .telmekh-hero {
           color: #ffffff;
         }

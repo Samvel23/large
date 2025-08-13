@@ -477,9 +477,6 @@ export const AboutPage = () => {
 
       {/* Global Styles */}
       <style jsx global>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .contact-hero {
           display: flex;
           align-items: center;

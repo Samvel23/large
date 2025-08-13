@@ -114,9 +114,6 @@ export const StorePage = () => {
   return (
     <div className="container p-4">
       <style jsx>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .custom-button {
           padding: 0.6rem 1.2rem;
           border: none;

@@ -170,9 +170,6 @@ export const LoginPage = () => {
       </div>
 
       <style jsx global>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .hero {
           background-color: #2a2a2a;
         }

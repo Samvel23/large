@@ -150,11 +150,6 @@ export const NavBar = () => {
           </div>
         </div>
       </nav>
-      <style jsx>{`
-        *{
-        font-family: "Noto Sans Armenian", sans-serif;
-        }
-      `}</style>
     </>
   );
 };

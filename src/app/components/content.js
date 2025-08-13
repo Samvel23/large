@@ -155,9 +155,6 @@ export const Content = () => {
       </div>
 
       <style jsx>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .content-wrapper {
           padding: 2rem 1rem;
           max-width: 1400px;

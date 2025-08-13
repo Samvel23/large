@@ -113,9 +113,6 @@ export const Design = () => {
       </section>
 
       <style jsx global>{`
-        * {
-          font-family: "Noto Sans Armenian", sans-serif;
-        }
         .service-card {
           background: #232323;
           border-radius: 14px;

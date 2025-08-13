@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import styles from "./page.module.css";
 import { NavBar } from "./components/nav-bar";
 import { NewsPage } from "./components/news";
@@ -9,18 +10,17 @@ export default function Home() {
   const [isModalActive, setIsModalActive] = useState(false);
 
   useEffect(() => {
-    // Check if the modal was shown before
-    const hasSeenModal = localStorage.getItem("hasSeenExpoModal");
+    // Check if the modal was shown during this browser tab session
+    const hasSeenModal = sessionStorage.getItem("hasSeenExpoModal");
 
     if (!hasSeenModal) {
       setIsModalActive(true);
+      sessionStorage.setItem("hasSeenExpoModal", "true");
     }
   }, []);
 
   const closeModal = () => {
     setIsModalActive(false);
-    // Save flag so it doesn't show again
-    localStorage.setItem("hasSeenExpoModal", "true");
   };
 
   // Close modal with Escape key
@@ -37,12 +37,16 @@ export default function Home() {
       {/* Modal */}
       <div className={`modal ${isModalActive ? "is-active" : ""}`}>
         <div className="modal-background" onClick={closeModal}></div>
-        <div
-          className="modal-content"
-          style={{ maxWidth: "90%", maxHeight: "90%" }}
-        >
+        <div className="modal-content">
           <figure className="image">
-            <img src="/photos/expo.jpg" alt="Expo" />
+            <Image
+              src="/photos/expo.jpg"
+              alt="Expo"
+              width={1200}
+              height={800}
+              style={{ maxHeight: "80vh", objectFit: "contain" }}
+              priority
+            />
           </figure>
         </div>
         <button
@@ -58,8 +62,17 @@ export default function Home() {
       <NewsPage />
       <AboutPage />
 
-      <style>{`
+      <style jsx>{`
+        .modal-content {
+          max-width: 90%;
+          max-height: 90%;
+          z-index: 999; /* Ensure it's above modal background */
+          position: relative;
+        }
         .modal-content img {
+          display: block;
+          width: auto;
+          height: auto;
           max-height: 80vh;
           object-fit: contain;
         }
