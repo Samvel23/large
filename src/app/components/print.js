@@ -112,7 +112,7 @@ export default function PrintPage() {
 
   return (
     <div className="container full-page">
-      <h1 className="title has-text-centered">
+      <h1 className="title has-text-centered" styles={{color: "white"}}>
         {lang === "eng"
           ? "Print Services"
           : lang === "arm"
@@ -129,6 +129,7 @@ export default function PrintPage() {
                 activeId === type.id ? "active" : ""
               }`}
               onClick={() => handleClick(type.id)}
+              styles={{border: "none", background: "#333", color: "#fff"}}
             >
               {type.name}
             </button>
@@ -191,6 +192,7 @@ export default function PrintPage() {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           text-align: left;
           background: #333;
+          border: none;
         }
         .sidebar-btn:hover {
           transform: translateX(10px);
