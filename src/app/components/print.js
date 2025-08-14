@@ -112,7 +112,10 @@ export default function PrintPage() {
 
   return (
     <div className="container full-page">
-      <h1 className="title has-text-centered" styles={{color: "white"}}>
+      <h1
+        className="title has-text-centered has-text-white tilt"
+        styles={{ color: "white" }}
+      >
         {lang === "eng"
           ? "Print Services"
           : lang === "arm"
@@ -125,11 +128,11 @@ export default function PrintPage() {
           {printTypes.map((type) => (
             <button
               key={type.id}
-              className={`button sidebar-btn ${
+              className={`button sidebar-btn  ${
                 activeId === type.id ? "active" : ""
               }`}
               onClick={() => handleClick(type.id)}
-              styles={{border: "none", background: "#333", color: "#fff"}}
+              styles={{ border: "none", background: "#333", color: "#fff" }}
             >
               {type.name}
             </button>
@@ -193,6 +196,10 @@ export default function PrintPage() {
           text-align: left;
           background: #333;
           border: none;
+          color: #fff;
+        }
+        .tilt {
+          color: white;
         }
         .sidebar-btn:hover {
           transform: translateX(10px);
