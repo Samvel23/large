@@ -6,10 +6,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 const serviceImages = {
-  td: "/photos/3d.jpeg",
-  design: "/photos/design.jpg",
-  print: "/photos/print.jpg",
+  td: {
+    image: "/photos/3d.jpeg",
+    href: "/consturction"
+  },
+  design: {
+    image: "/photos/design.jpg",
+    href: "/construction"
+  },
+  print: {
+    image: "/photos/print.jpg",
+    href: "/print"
+  },
 };
+
 
 const translations = {
   eng: {
@@ -87,10 +97,10 @@ export const Design = () => {
                   aria-label={title}
                 >
                   <div className="card-image">
-                    <Link href="/construction">
+                    <Link href={serviceImages[key].href}>
                       <figure className="image is-1by1">
                         <Image
-                          src={serviceImages[key]}
+                          src={serviceImages[key].image}
                           alt={title}
                           width={600}
                           height={600}
