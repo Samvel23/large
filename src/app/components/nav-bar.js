@@ -130,7 +130,7 @@ export const NavBar = () => {
                 </button>
               </div>
             </div>
-            <div className="navbar-item">
+            {/* <div className="navbar-item">
               <div className="buttons">
                 <Link
                   href="/signup"
@@ -146,7 +146,7 @@ export const NavBar = () => {
                   {lang === "eng" ? "Log in" : lang === "arm" ? "Մուտք" : "Войти"}
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </nav>

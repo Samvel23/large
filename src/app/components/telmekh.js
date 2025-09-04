@@ -1,76 +1,72 @@
 "use client";
+
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
-const images = [
-  "/photos/tel1.jpg",
-  "/photos/tel2.jpg",
-  "/photos/tel3.jpg",
-  "/photos/tel4.jpg",
-];
-
 export const TelMekh = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const { lang } = useLanguage();
 
-  // Auto-slide every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // Form state
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState("");
+  const [result, setResult] = useState("");
+  const [winnerAnimation, setWinnerAnimation] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const nextImage = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prevImage = () =>
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  // Submit winner
+  const submitWinner = async () => {
+    if (!code) {
+      setResult("Please enter your code.");
+      return;
+    }
+
+    setLoading(true);
+    setResult("");
+
+    try {
+      const res = await fetch("/api/check-number", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, number: code }), // only number is required now
+      });
+      const data = await res.json();
+      setResult(data.message);
+
+      if (data.message.includes("Winner")) {
+        setWinnerAnimation(true);
+        setTimeout(() => setWinnerAnimation(false), 4000);
+      }
+    } catch {
+      setResult("❌ Server error. Try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="hero is-fullheight telmekh-hero">
       <div className="hero-body">
         <div className="container">
           <div className="columns is-vcentered is-multiline">
-            {/* Image Slider Column */}
+            {/* Static Image */}
             <div className="column is-6 fade-in-left">
-              <div className="image-slider">
+              <div className="image-static">
                 <Image
-                  src={images[currentIndex]}
-                  alt={`TelMekh image ${currentIndex + 1}`}
+                  src="/photos/tel1.jpg"
+                  alt="TelMekh image"
                   width={500}
                   height={600}
                   className="is-rounded main-img"
                   priority
                 />
-                <div className="slider-controls">
-                  <button onClick={prevImage} className="button is-small">
-                    ◀
-                  </button>
-                  <button onClick={nextImage} className="button is-small">
-                    ▶
-                  </button>
-                </div>
-                <div className="thumbnails">
-                  {images.map((img, idx) => (
-                    <Image
-                      key={idx}
-                      src={img}
-                      alt={`Thumbnail ${idx + 1}`}
-                      width={60}
-                      height={60}
-                      className={`thumbnail ${
-                        idx === currentIndex ? "active" : ""
-                      }`}
-                      onClick={() => setCurrentIndex(idx)}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
 
-            {/* Text Content with Logo */}
+            {/* Form & Info */}
             <div className="column is-6 fade-in-right">
-              <div className="telmekh-logo fade-in-logo">
+              <div className="telmekh-logo">
                 <Image
                   src="/photos/telmekh.png"
                   alt="TelMekh Logo"
@@ -79,24 +75,118 @@ export const TelMekh = () => {
                   priority
                 />
               </div>
+
               <p className="content is-size-5">
                 {lang === "eng"
-                  ? "This handcrafted wooden board features meticulously hammered nails and precision threading. When woven with thread, these nails form an intricate picture. Each piece is unique, crafted with care, and perfect for home decoration or a personal gift."
+                  ? "This handcrafted wooden board features meticulously hammered nails and precision threading. Each piece is unique, crafted with care, and perfect for home decoration or a personal gift."
                   : lang === "ru"
-                  ? "Эта деревянная доска ручной работы украшена тщательно вбитыми гвоздями и точной резьбой. В сочетании с нитями эти гвозди образуют замысловатый рисунок. Каждое изделие TelMekh уникально, изготовлено с заботой и идеально подходит для украшения дома или личного подарка."
-                  : "Այս ձեռագործ փայտե տախտակը պատրաստված է մանրակրկիտ մշակված մեխերով և ճշգրիտ թելերով։ Թելով հյուսված այս մեխերը ստեղծում են բարդ պատկեր։ Յուրաքանչյուր TelMekh եզակի է, պատրաստված խնամքով և շատ լավ նվեր ընկերոջը կամ հարազատին։"}
+                  ? "Эта деревянная доска ручной работы украшена тщательно вбитыми гвоздями и точной резьбой. Каждое изделие TelMekh уникально и идеально подходит для украшения дома или подарка."
+                  : "Այս ձեռագործ փայտե տախտակը պատրաստված է մանրակրկիտ մշակված մեխերով։ Յուրաքանչյուր TelMekh եզակի է և հիանալի նվեր է ընկերոջը կամ հարազատին։"}
               </p>
-              <ul className="content is-size-5 list-animate">
-                <li>
-                  {lang === "eng"
-                    ? "Handmade from quality wood"
+
+              {/* Winner Form */}
+              <div className="mt-6 winner-check-form card-form">
+                <h2 className="subtitle">
+                  {lang == "eng"
+                    ? "Check Your Code"
+                    : lang == "ru"
+                    ? "Проверьте свой код"
+                    : "Ստուգեք ձեր կոդը"}
+                </h2>
+                <div className="field">
+                  <input
+                    className="styled-input"
+                    type="text"
+                    placeholder={
+                      lang === "eng" ? "Name" : lang === "ru" ? "Имя" : "Անուն"
+                    }
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    className="styled-input"
+                    type="text"
+                    placeholder={
+                      lang === "eng"
+                        ? "Phone Number"
+                        : lang === "ru"
+                        ? "Номер телефона"
+                        : "Հեռախոսահամար"
+                    }
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    className="styled-input"
+                    type="text"
+                    placeholder={
+                      lang === "eng"
+                        ? "Enter your code"
+                        : lang === "ru"
+                        ? "Введите ваш код"
+                        : "Մուտքագրեք ձեր կոդը"
+                    }
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
+                </div>
+                <button
+                  className="submit-btn mt-3"
+                  onClick={submitWinner}
+                  disabled={loading}
+                >
+                  {loading
+                    ? lang === "eng"
+                      ? "Checking..."
+                      : lang === "ru"
+                      ? "Проверка..."
+                      : "Ստուգվում է..."
+                    : lang === "eng"
+                    ? "Submit"
                     : lang === "ru"
-                    ? "Изготовлено вручную из качественной древесины."
-                    : "Ձեռագործ՝ որակյալ փայտից"}
-                </li>
-              </ul>
+                    ? "Отправить"
+                    : "Ուղարկել"}
+                </button>
+
+                {loading && (
+                  <div className="loading-gif">
+                    <Image
+                      src="/photos/progress.gif"
+                      alt="Checking..."
+                      width={80}
+                      height={80}
+                    />
+                    <p>
+                      {lang === "eng"
+                        ? "Checking..."
+                        : lang === "ru"
+                        ? "Проверка..."
+                        : "Ստուգվում է..."}
+                    </p>
+                  </div>
+                )}
+
+                {result && (
+                  <p
+                    className={`mt-3 result-msg ${
+                      result.includes("Winner")
+                        ? "success-msg"
+                        : result.includes("Server") || result.includes("⚠️")
+                        ? "error-msg"
+                        : "info-msg"
+                    }`}
+                  >
+                    {result}
+                  </p>
+                )}
+              </div>
+
               <a href="https://www.instagram.com/telmekh/">
-                <button className="button is-warning is-medium pulse-btn mt-4">
+                <button className="button is-warning is-medium pulse-btn mt-5">
                   {lang === "eng"
                     ? "Visit TelMekh on Instagram"
                     : lang === "ru"
@@ -109,108 +199,119 @@ export const TelMekh = () => {
         </div>
       </div>
 
-      {/* Styles */}
+      {/* Winner animation */}
+      {winnerAnimation && (
+        <div className="winner-animation">
+          <Image
+            src="/photos/confetti.gif"
+            alt="Winner!"
+            width={400}
+            height={400}
+          />
+          <p className="winner-text">
+            {lang === "eng"
+              ? "Congratulations!"
+              : lang === "ru"
+              ? "Поздравляем!"
+              : "Շնորհավորում ենք!"}
+          </p>
+        </div>
+      )}
+
       <style jsx>{`
         .telmekh-hero {
-          color: #ffffff;
+          color: #fff;
+          padding-bottom: 100px;
         }
         .telmekh-logo {
-          margin-bottom: 1rem;
-        }
-        .fade-in-logo {
-          opacity: 0;
-          transform: translateY(-10px);
-          animation: fadeInLogo 1s ease forwards;
-          animation-delay: 0.2s;
-        }
-        @keyframes fadeInLogo {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .gradient-text {
-          background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-fill-color: transparent;
-        }
-        .image-slider {
-          position: relative;
+          margin-top: 3rem;
           text-align: center;
         }
         .main-img {
           border-radius: 24px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-          transition: opacity 1s ease-in-out;
         }
-        .slider-controls {
-          margin-top: 10px;
+
+        .card-form {
+          background: rgba(255, 255, 255, 0.05);
+          padding: 1.5rem;
+          border-radius: 16px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
-        .thumbnails {
-          margin-top: 12px;
-          display: flex;
-          justify-content: center;
-          gap: 8px;
+        .styled-input {
+          width: 100%;
+          padding: 0.8rem 1rem;
+          margin-bottom: 1rem;
+          border: none;
+          border-radius: 10px;
+          font-size: 1rem;
+          background: #222;
+          color: #fff;
+          box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
         }
-        .thumbnail {
+        .styled-input:focus {
+          outline: none;
+          background: #333;
+          box-shadow: 0 0 8px #f9a825;
+        }
+        .submit-btn {
+          width: 100%;
+          padding: 0.9rem;
+          border: none;
+          border-radius: 12px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          background: linear-gradient(135deg, #ffb300, #f57f17);
+          color: #000;
           cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(249, 168, 37, 0.5);
+        }
+        .submit-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .loading-gif {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 1rem;
+        }
+        .loading-gif p {
+          margin-top: 0.5rem;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        .result-msg {
+          padding: 0.8rem 1rem;
           border-radius: 8px;
-          border: 2px solid transparent;
-          transition: transform 0.3s, border 0.3s;
+          font-weight: 600;
+          text-align: center;
         }
-        .thumbnail:hover {
-          transform: scale(1.1);
+        .success-msg {
+          background: rgba(76, 175, 80, 0.2);
+          color: #4caf50;
         }
-        .thumbnail.active {
-          border: 2px solid #ffcc33;
+        .error-msg {
+          background: rgba(244, 67, 54, 0.2);
+          color: #f44336;
         }
-        .fade-in-left,
-        .fade-in-right {
-          opacity: 0;
-          transform: translateX(40px);
-          animation: fadeInX 1s ease forwards;
+        .info-msg {
+          background: rgba(255, 193, 7, 0.2);
+          color: #ffc107;
         }
-        .fade-in-left {
-          transform: translateX(-40px);
-          animation-delay: 0.2s;
-        }
-        .fade-in-right {
-          animation-delay: 0.4s;
-        }
-        @keyframes fadeInX {
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        .list-animate li {
-          opacity: 0;
-          transform: translateY(20px);
-          animation: listFadeIn 0.6s ease forwards;
-        }
-        .list-animate li:nth-child(1) {
-          animation-delay: 0.6s;
-        }
-        .list-animate li:nth-child(2) {
-          animation-delay: 0.8s;
-        }
-        .list-animate li:nth-child(3) {
-          animation-delay: 1s;
-        }
-        @keyframes listFadeIn {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+
         .pulse-btn {
           animation: pulse 1.5s infinite;
           box-shadow: 0 2px 16px rgba(255, 204, 51, 0.2);
           border-radius: 8px;
           font-weight: 600;
-          letter-spacing: 0.03em;
         }
         @keyframes pulse {
           0% {
@@ -223,29 +324,47 @@ export const TelMekh = () => {
             box-shadow: 0 0 0 0 rgba(255, 204, 51, 0);
           }
         }
-        .content {
-          line-height: 1.7;
-          margin-bottom: 1.5rem;
+
+        .winner-animation {
+          position: fixed;
+          top: 20%;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+          animation: pop 0.5s ease-out;
+          z-index: 2000;
+          pointer-events: none;
         }
-        .content ul {
-          list-style-type: disc;
-          padding-left: 1.5rem;
+        .winner-text {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #ffcc33;
+          text-shadow: 2px 2px 8px #000;
+          margin-top: -60px;
         }
+        @keyframes pop {
+          0% {
+            transform: scale(0) translateX(-50%);
+            opacity: 0;
+          }
+          100% {
+            transform: scale(1) translateX(-50%);
+            opacity: 1;
+          }
+        }
+
         @media (max-width: 768px) {
           .columns {
             text-align: center;
-          }
-          .content ul {
-            display: inline-block;
-            text-align: left;
-            max-width: 300px;
+            flex-direction: column;
           }
           .main-img {
             width: 90vw !important;
             height: auto !important;
           }
-          .thumbnails {
-            flex-wrap: wrap;
+          .winner-animation img {
+            width: 70vw !important;
+            height: auto !important;
           }
         }
       `}</style>

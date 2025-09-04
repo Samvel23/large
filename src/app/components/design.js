@@ -8,18 +8,17 @@ import Link from "next/link";
 const serviceImages = {
   td: {
     image: "/photos/3d.jpeg",
-    href: "/consturction"
+    href: "/construction",
   },
   design: {
     image: "/photos/design.jpg",
-    href: "/construction"
+    href: "/construction",
   },
   print: {
     image: "/photos/print.jpg",
-    href: "/print"
+    href: "/construction",
   },
 };
-
 
 const translations = {
   eng: {
