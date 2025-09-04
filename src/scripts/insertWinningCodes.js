@@ -1,7 +1,7 @@
 // src/scripts/insertWinningCodes.js
 
 // Load environment variables
-require("dotenv").config({ path: __dirname + "/../../.env.local" });
+
 
 const { dbConnect } = require("../lib/mongodb");
 const Ticket = require("../models/Ticket");
