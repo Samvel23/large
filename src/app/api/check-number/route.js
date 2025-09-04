@@ -1,9 +1,9 @@
 // src/app/api/check-number/route.js
-
-const { NextResponse } = require("next/server");
-const nodemailer = require("nodemailer");
-const { dbConnect } = require("../../../lib/mongodb");
-const Ticket = require("../../../models/Ticket");
+// src/app/api/check-number/route.js
+import { NextResponse } from "next/server";
+import { dbConnect } from "../../../lib/mongodb";
+import Ticket from "../../../models/Ticket";
+import nodemailer from "nodemailer";
 
 // Configure nodemailer (Gmail)
 const transporter = nodemailer.createTransport({

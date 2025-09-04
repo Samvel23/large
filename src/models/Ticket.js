@@ -1,13 +1,12 @@
-const { mongoose } = require("../lib/mongodb");
-const { Schema, model } = mongoose;
+// src/models/Ticket.js
+import mongoose from "mongoose";
 
-const ticketSchema = new Schema(
-  {
-    number: { type: String, required: true, unique: true },
-    isWinner: { type: Boolean, default: false },
-    checked: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);
+const TicketSchema = new mongoose.Schema({
+  number: { type: String, required: true, unique: true },
+  isWinner: { type: Boolean, default: false },
+  checked: { type: Boolean, default: false },
+});
 
-module.exports = mongoose.models.Ticket || model("Ticket", ticketSchema);
+const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", TicketSchema);
+
+export default Ticket;
