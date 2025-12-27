@@ -14,6 +14,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
 import Link from "next/link";
 
+
 export const AboutPage = () => {
   const { lang } = useLanguage();
   const [isCopied, setIsCopied] = useState(false);

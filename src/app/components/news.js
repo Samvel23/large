@@ -21,12 +21,18 @@ export const NewsPage = () => {
   if (!hydrated) return null;
 
   return (
-    <div>
+    <div className="news-page">
       {/* Mobile View */}
       {isMobile && (
         <div className="mobile-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
+              <img
+                  src="/christmas_att/hat.png"
+                  alt="Hat"
+                  className="hat-image-mobile"
+                  style={{ border: "none", boxShadow: "none"}}
+                />
               <Link href="/content">
                 <Image
                   src="/photos/SMM1.jpg"
@@ -76,6 +82,12 @@ export const NewsPage = () => {
         <div className="desktop-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
+              <img
+                  src="/christmas_att/hat.png"
+                  alt="Hat"
+                  className="hat-image"
+                  style={{ border: "none", boxShadow: "none" }}
+                />
               <Link href="/content">
                 <Image
                   src="/photos/SMM1.jpg"
@@ -110,6 +122,9 @@ export const NewsPage = () => {
       )}
 
       <style jsx>{`
+        .news-page {
+          position: relative;
+        }
         .smm-gallery {
           display: flex;
           justify-content: center;
@@ -118,6 +133,23 @@ export const NewsPage = () => {
           flex-wrap: wrap;
           padding: 2rem;
         }
+        .hat-image {
+          width: 150px;
+          height: 150px;
+          position: absolute;
+          bottom: 210px;
+          right: 220px;
+          rotate: -20deg;
+        }
+        .hat-image-mobile {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          bottom: 75px;
+          right: 75px;
+          rotate: -20deg;
+        }
+        
 
         .smm-image {
           opacity: 0;
@@ -159,7 +191,7 @@ export const NewsPage = () => {
             padding: 1rem;
             gap: 0.5rem;
           }
-          .smm-gallery :global(img) {
+          .smm-gallery :global(img:not(.hat-image-mobile)) {
             width: 100px !important;
             height: 100px !important;
           }

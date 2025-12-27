@@ -5,20 +5,19 @@ import styles from "./page.module.css";
 import { NavBar } from "./components/nav-bar";
 import { NewsPage } from "./components/news";
 import { AboutPage } from "./components/about-us";
+import Snowfall from "react-snowfall";
 
 export default function Home() {
   // Close modal with Escape key
 
   return (
     <div className={styles.page}>
-      {/* Modal */}
-
+      <Snowfall snowflakeCount={200} />
       {/* Rest of page */}
       <NavBar />
       <div style={{ height: "50px" }}></div>
       <NewsPage />
       <AboutPage />
-
       <style jsx>{`
         .modal-content {
           max-width: 90%;
