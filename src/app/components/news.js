@@ -27,12 +27,6 @@ export const NewsPage = () => {
         <div className="mobile-layout">
           <div className="smm-gallery">
             <div className="smm-image image-1 pop-up">
-              <img
-                  src="/christmas_att/hat.png"
-                  alt="Hat"
-                  className="hat-image-mobile"
-                  style={{ border: "none", boxShadow: "none"}}
-                />
               <Link href="/content">
                 <Image
                   src="/photos/SMM1.jpg"
@@ -127,7 +121,6 @@ export const NewsPage = () => {
           flex-wrap: wrap;
           padding: 2rem;
         }
-        
 
         .smm-image {
           opacity: 0;
