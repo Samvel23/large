@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { NavBar } from "./components/nav-bar";
 import { NewsPage } from "./components/news";
 import { AboutPage } from "./components/about-us";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function Home() {
   // Close modal with Escape key
@@ -16,6 +17,7 @@ export default function Home() {
       <div style={{ height: "50px" }}></div>
       <NewsPage />
       <AboutPage />
+      <SpeedInsights />
       <style jsx>{`
         .modal-content {
           max-width: 90%;
