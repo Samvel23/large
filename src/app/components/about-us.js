@@ -1,315 +1,202 @@
 "use client";
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faInstagram,
-  faWhatsapp,
-  faYoutube,
-  faTelegram,
-  faFacebook,
-  faBehance,
-  faViber,
-} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+
+import React from "react";
+import Image from "next/image";
 import { useLanguage } from "../context/LanguageContext";
-import Link from "next/link";
 
+const storePic = "/photos/storePic.jpg";
+const largeLogo = "/photos/large.png";
 
-export const AboutPage = () => {
+export const AboutUs = () => {
   const { lang } = useLanguage();
-  const [isCopied, setIsCopied] = useState(false);
+  const normalizedLang = lang === "arm" ? "hy" : lang;
 
-  const handleCopyPhoneNumber = (text) => {
-    navigator.clipboard.writeText(text);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+  const content = {
+    eng: {
+      title: "About Large-Art Studio",
+      subtitle: "Design, printing, and creativity",
+      description: "Large-Art Studio is a design studio.",
+      visionTitle: "About Us",
+      visionText:
+        "We are constantly developing and expanding. The trust of our partners comes first for us.",
+      storeTitle: "Store & Showroom",
+      storeDesc: "Our store-showroom in Yerevan, 15 Margaryan St.",
+      stats: [
+        { label: "Years Experience", val: "13+" },
+        { label: "Partners", val: "40+" },
+        { label: "Employees", val: "4" },
+        { label: "Working Hours", val: "24/7" },
+      ],
+    },
+    ru: {
+      title: "О студии Large-Art",
+      subtitle: "Дизайн, печать и креативность",
+      description: "Large-Art Studio — это дизайн-студия.",
+      visionTitle: "О нас",
+      visionText:
+        "Мы постоянно развиваемся и расширяемся. Доверие партнеров для нас на первом месте.",
+      storeTitle: "Магазин-шоурум",
+      storeDesc: "Наш магазин-шоурум в Ереване, ул. Маргаряна 15",
+      stats: [
+        { label: "Лет опыта", val: "13+" },
+        { label: "Партнеров", val: "40+" },
+        { label: "Сотрудников", val: "4" },
+        { label: "График работы", val: "24/7" },
+      ],
+    },
+    hy: {
+      title: "Large-art studio-ի մասին",
+      subtitle: "Դիզայն, տպագրություն և կրեատիվություն",
+      description: "Large-art studio-ն դիզայն ստուդիո է",
+      visionTitle: "Մեր Մասին",
+      visionText:
+        "Մենք մշտապես զարգանում և ընդլայնվում ենք։ Գործընկերների վստահությունը մեզ համար առաջին տեղում է.",
+      storeTitle: "Խանութ-Սրահ",
+      storeDesc: "Մեր խանութն-ցուցասրահը Երևանում, Մարգարյան 15",
+      stats: [
+        { label: "Տարիների Փորձ", val: "13+" },
+        { label: "Գործընկերներ", val: "40+" },
+        { label: "Աշխատակիցներ", val: "4" },
+        { label: "Աշխատանքային Գրաֆիկ", val: "24/7" },
+      ],
+    },
   };
 
-  const partners = [
-    {
-      name: "emark",
-      logo: "/photos/logo1.png",
-      href: "https://www.e-mark.am/hy/prints#",
-      description: "Official Partner",
-    },
-    {
-      name: "Yerevan City",
-      logo: "/photos/logo2.png",
-      href: "",
-      description: "Partners 1 year",
-    },
-    {
-      name: "Viridian",
-      logo: "/photos/logo3.png",
-      href: "",
-      description: "Partners 1 year",
-    },
-    {
-      name: "Rozelita-Eltaroz",
-      logo: "/photos/logo5.png",
-      href: "",
-      description: "Partners 13 years",
-    },
-    {
-      name: "Velvet",
-      logo: "/photos/logo6.png",
-      href: "",
-      description: "Partners 7 years",
-    },
-    {
-      name: "YereVibe",
-      logo: "/photos/logo4.png",
-      href: "",
-      description: "Partners 1 year",
-    },
-    {
-      name: "Murzilka",
-      logo: "/photos/logo7.png",
-      href: "",
-      description: "Partners 4 years",
-    },
-    {
-      name: "Sparapet",
-      logo: "/photos/logo8.png",
-      href: "",
-      description: "Partners 1 year",
-    },
-  ];
+  const t = content[normalizedLang] || content.eng;
 
   return (
-    <div className="about-page">
-      {/* CONTACT INFO SECTION */}
-      <section className="section py-5 has-text-centered">
-        <h2 className="title" style={{ color: "orange" }}>
-          {lang === "eng"
-            ? "Contacts"
-            : lang === "arm"
-            ? "Կոնտակտներ"
-            : "Контакты"}
-        </h2>
-        <p
-          onClick={() => handleCopyPhoneNumber("+37444533133")}
-          style={{ cursor: "pointer", color: "white", fontSize: "1.5rem" }}
-        >
-          +374 44 533 133
-          {isCopied && <span style={{ marginLeft: "10px" }}>Copied!</span>}
-        </p>
-        <div className="social-buttons mt-4">
-          {[
-            {
-              href: "https://www.instagram.com/large.art.studio/",
-              icon: faInstagram,
-            },
-            {
-              href: "https://www.youtube.com/@largeart-studio7134",
-              icon: faYoutube,
-            },
-            {
-              href: "https://www.facebook.com/largeartstudio2012",
-              icon: faFacebook,
-            },
-            {
-              href: "https://www.behance.net/gordemirkhanyan",
-              icon: faBehance,
-            },
-            { href: "https://t.me/+37444533133", icon: faTelegram },
-            { href: "https://wa.me/+37444533133", icon: faWhatsapp },
-            { href: "viber://chat?number=37444533133", icon: faViber },
-            {
-              href: "mailto:info@largeart.org",
-              icon: faEnvelope,
-              onClick: (e) => {
-                e.preventDefault();
-                navigator.clipboard.writeText("info@largeart.org");
-                alert(
-                  lang === "eng"
-                    ? "Email copied to clipboard!"
-                    : lang === "ru"
-                    ? "Электронная почта скопирована в буфер обмена!"
-                    : "Էլ. փոստը պատճենվել է!"
-                );
-                setTimeout(() => setIsCopied(false), 2000);
-              },
-            },
-          ].map(({ href, icon, onClick }, idx) => (
-            <a
-              key={idx}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button is-large square-button mx-2"
-              onClick={onClick}
-            >
-              <FontAwesomeIcon icon={icon} className="icon" />
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* PARTNERS SECTION */}
-      <section className="section py-5 has-text-centered">
-        <h2 className="title" style={{ color: "orange" }}>
-          {lang === "eng"
-            ? "Our Partners"
-            : lang === "arm"
-            ? "Մեր Գործընկերները"
-            : "Наши партнёры"}
-        </h2>
-        <div className="partners-grid">
-          {partners.map((partner, idx) => (
-            <div key={idx} className="partner-card">
-              <Link href={partner.href || "#"} target="_blank">
-                <div className="partner-logo">
-                  <img src={partner.logo} alt={partner.name} />
-                </div>
-                <div className="partner-info">
-                  <p className="partner-name">{partner.name}</p>
-                  <p className="partner-description">{partner.description}</p>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* MAP SECTION */}
-      <section className="section py-5">
-        <h2 className="title has-text-centered" style={{ color: "orange" }}>
-          {lang === "eng"
-            ? "Visit Us"
-            : lang === "arm"
-            ? "Այցելեք մեզ"
-            : "Посетите нас"}
-        </h2>
-        <div className="columns is-centered">
-          <div className="column is-10">
-            <iframe
-              title="Yandex Map"
-              width="100%"
-              height="400"
-              src="https://yandex.ru/map-widget/v1/-/CDHVnOIN?z=17"
-              allowFullScreen
-              loading="lazy"
-              className="map-iframe"
-            ></iframe>
-          </div>
-        </div>
-        <div className="copyright-wrapper">
-          <p
-            className="has-text-centered"
-            style={{ color: "white", marginTop: "1rem" }}
-          >
-            Copyright © 2025 Large Art-Studio. All Rights Reserved. Made by
-            Large Art-Studio
+    <div className="about-wrapper py-6">
+      <div className="container px-4">
+        {/* HERO HEADER */}
+        <header className="has-text-centered mb-6">
+          <h1 className="title is-1 has-text-warning has-text-weight-bold mb-3">
+            {t.title}
+          </h1>
+          <p className="subtitle is-4 has-text-grey-light is-max-desktop mx-auto">
+            {t.subtitle}
           </p>
-        </div>
-      </section>
+        </header>
 
-      {/* GLOBAL STYLES */}
+        {/* CENTERED STORE SHOWCASE FEATURE */}
+        <section className="columns is-centered mb-6">
+          <div className="column is-12-mobile is-10-tablet is-8-desktop">
+            <div className="card showcase-card">
+              <div className="card-image">
+                <figure className="image is-16by9 media-frame">
+                  <Image
+                    src={storePic}
+                    alt="Large Art Physical Store"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                  <div className="media-badge">{t.storeTitle}</div>
+                </figure>
+              </div>
+              <div className="card-content has-background-dark">
+                <h3 className="title is-4 has-text-white mb-2">
+                  {t.storeTitle}
+                </h3>
+                <p className="has-text-grey-light is-size-5">{t.storeDesc}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* DESCRIPTION & VISION SECTION */}
+        <section className="box content-box p-5 mb-6">
+          <div className="columns is-vcentered">
+            <div className="column is-7">
+              <h2 className="title is-3 has-text-dark mb-3">{t.visionTitle}</h2>
+              <p
+                className="is-size-5 has-text-grey-dark mb-4"
+                style={{ lineHeight: 1.7 }}
+              >
+                {t.description}
+              </p>
+              <blockquote className="vision-quote">"{t.visionText}"</blockquote>
+            </div>
+
+            {/* STATS METRICS GRID */}
+            <div className="column is-5">
+              <div className="columns is-multiline is-mobile">
+                {t.stats.map((stat, idx) => (
+                  <div key={idx} className="column is-6">
+                    <div className="metric-card p-4 has-text-centered">
+                      <span className="title is-3 has-text-warning-dark is-block mb-1">
+                        {stat.val}
+                      </span>
+                      <span className="heading has-text-grey-dark mb-0">
+                        {stat.label}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       <style jsx>{`
-        .partners-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 1rem;
+        .about-wrapper {
+          min-height: 100vh;
         }
-        .partner-card {
-          width: 180px;
-          background-color: #1a1a1a;
-          border-radius: 10px;
+        .showcase-card {
+          border-radius: 12px;
           overflow: hidden;
-          transition: transform 0.3s, box-shadow 0.3s;
+          border: 1px solid #333333;
+          background-color: #1a1a1a;
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
         }
-        .partner-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        .showcase-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
         }
-        .partner-logo {
-          width: 100%;
-          height: 100px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #fff;
-          padding: 8px;
+        .media-frame {
+          position: relative;
         }
-        .partner-logo img {
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
-        }
-        .partner-info {
-          padding: 8px;
-          text-align: center;
-        }
-        .partner-name {
-          color: white;
-          font-weight: bold;
-          margin: 0;
-        }
-        .partner-description {
-          color: #ccc;
+        .media-badge {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          background: rgba(0, 0, 0, 0.75);
+          backdrop-filter: blur(4px);
+          color: #ffcc33;
+          padding: 6px 16px;
+          border-radius: 20px;
           font-size: 0.85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          border: 1px solid rgba(255, 204, 51, 0.3);
+        }
+        .content-box {
+          background-color: #ffffff;
+          border-radius: 16px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .vision-quote {
+          border-left: 4px solid #ffcc33;
+          padding-left: 1rem;
+          font-style: italic;
+          color: #4a4a4a;
           margin: 0;
         }
-        .map-iframe {
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .metric-card {
+          background-color: #f9f9f9;
+          border-radius: 10px;
+          border: 1px solid #eeeeee;
         }
-        .square-button {
-          width: 50px;
-          height: 50px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #808080;
-          border: none;
-          transition: background-color 0.3s ease, transform 0.2s ease;
-          border-radius: 8px;
-        }
-        .square-button .icon {
-          font-size: 1.3rem;
-          color: #000000;
-          transition: color 0.3s ease;
-        }
-        .square-button:hover {
-          background-color: #000000;
-          transform: scale(1.1);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        .square-button:hover .icon {
-          color: #808080;
-        }
-        .social-buttons {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+        .gap-3 {
           gap: 0.75rem;
         }
-        .copyright-wrapper {
-          margin-top: 1rem;
-          padding-bottom: 5rem;
-        }
-
-        @media (max-width: 768px) {
-          .partner-card {
-            width: 140px;
-          }
-          .partner-logo {
-            height: 80px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .partner-card {
-            width: 120px;
-          }
-          .partner-logo {
-            height: 70px;
-          }
-          .partner-description {
-            font-size: 0.75rem;
-          }
+        .mx-auto {
+          margin-left: auto;
+          margin-right: auto;
         }
       `}</style>
     </div>

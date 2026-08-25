@@ -23,7 +23,7 @@ export const NavBar = () => {
     e.preventDefault();
 
     // ✅ Determine scroll distance based on screen width
-    const scrollAmount = window.innerWidth <= 768 ? 300 : 570;
+    const scrollAmount = window.innerWidth <= 768 ? 1400 : 1400;
 
     if (pathname === "/") {
       // ✅ If already on home, scroll smoothly
@@ -71,10 +71,10 @@ export const NavBar = () => {
             {/* ✅ About Us button always visible */}
             <Link className="navbar-item" href="/content">
               {lang === "eng"
-                ? "Content"
+                ? "Photo/Video"
                 : lang === "arm"
-                ? "Կոնտենտ"
-                : "Контент"}
+                ? "Ֆոտո/Վիդեո"
+                : "Фото/Видео"}
             </Link>
 
             <Link className="navbar-item" href="/design">
@@ -91,12 +91,19 @@ export const NavBar = () => {
                 ? "Գրախանութ"
                 : "Магазин"}
             </Link>
+            <Link className="navbar-item" href="/services">
+              {lang === "eng"
+                ? "Services"
+                : lang === "arm"
+                ? "Ծառայություններ"
+                : "Услуги"}
+            </Link>
             <Link className="navbar-item" onClick={handleAboutClick} href="/">
               {lang === "eng"
                 ? "Contacts"
                 : lang === "arm"
                 ? "Կոնտակտներ"
-                : "Контакты"}
+                : "Контакты"} 
             </Link>
             <Link
               className="navbar-item"

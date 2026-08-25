@@ -1,349 +1,468 @@
 "use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faTag,
+  faVideo,
+  faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
 
+const videoImages = ["/photos/video1.jpg", "/photos/video2.jpg"];
+const photoImages = [
+  "/photos/photoshoot1.jpg",
+  "/photos/photoshoot2.jpg",
+  "/photos/photoshoot3.jpg",
+  "/photos/photoshoot4.jpg",
+];
+
+const translations = {
+  eng: {
+    videoTitle: "Video Production & Editing",
+    videoDesc:
+      "Professional video production and editing services for events, commercials, and brand storytelling.",
+    photoTitle: "Photoshoot & Retouching",
+    photoDesc:
+      "High-end photography for products, events, and portraits, enhanced with expert color grading and retouching.",
+    priceBtn: "Price List",
+    alertMsg: "Price list will be available soon!",
+  },
+  ru: {
+    videoTitle: "Видеопроизводство и монтаж",
+    videoDesc:
+      "Профессиональные услуги видеопроизводства и монтажа для мероприятий, рекламных роликов и многого другого.",
+    photoTitle: "Фотосъёмка и обработка",
+    photoDesc:
+      "Профессиональная фотография для продуктов, мероприятий и портретов с глубокой ретушью и цветокоррекцией.",
+    priceBtn: "Прайс-лист",
+    alertMsg: "Прайс-лист будет доступен в ближайшее время!",
+  },
+  hy: {
+    videoTitle: "Տեսանյութերի արտադրություն և մոնտաժ",
+    videoDesc:
+      "Մասնագիտական տեսանյութերի արտադրություն և մոնտաժման ծառայություններ միջոցառումների, գովազդային տեսանյութերի համար:",
+    photoTitle: "Լուսանկարչություն և խմբագրում",
+    photoDesc:
+      "Մասնագիտական լուսանկարչություն ապրանքների, միջոցառումների և դիմանկարների համար՝ մասնագիտական վերամշակմամբ:",
+    priceBtn: "Գնացուցակ",
+    alertMsg: "Գնացուցակը շուտով հասանելի կլինի:",
+  },
+};
+
 export const Content = () => {
   const { lang } = useLanguage();
+  const normalizedLang = lang === "arm" ? "hy" : lang;
+  const t = translations[normalizedLang] || translations.eng;
+
   const [videoIndex, setVideoIndex] = useState(0);
   const [photoIndex, setPhotoIndex] = useState(0);
-
-  const videoImages = ["/photos/video1.jpg", "/photos/video2.jpg"];
-  const photoImages = [
-    "/photos/photoshoot1.jpg",
-    "/photos/photoshoot2.jpg",
-    "/photos/photoshoot3.jpg",
-    "/photos/photoshoot4.jpg",
-  ];
+  const [videoDir, setVideoDir] = useState(1);
+  const [photoDir, setPhotoDir] = useState(1);
 
   const handleNext = (type) => {
     if (type === "video") {
+      setVideoDir(1);
       setVideoIndex((prev) => (prev + 1) % videoImages.length);
     } else {
+      setPhotoDir(1);
       setPhotoIndex((prev) => (prev + 1) % photoImages.length);
     }
   };
 
   const handlePrev = (type) => {
     if (type === "video") {
+      setVideoDir(-1);
       setVideoIndex((prev) => (prev === 0 ? videoImages.length - 1 : prev - 1));
     } else {
+      setPhotoDir(-1);
       setPhotoIndex((prev) => (prev === 0 ? photoImages.length - 1 : prev - 1));
     }
   };
 
-  const handlePriceClick = () => {
-    alert("Price list will be available soon!");
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
   };
 
   return (
-    <div className="content-wrapper">
-      <div className="content-sections">
-        {/* Video Section */}
-        <div className="content-box">
-          <h2 className="section-title">
-            {lang === "eng"
-              ? "Video Production and Montage"
-              : lang === "ru"
-              ? "Видеопроизводство и монтаж"
-              : "Տեսանյութերի արտադրություն և մոնտաժ"}
-          </h2>
-          <div className="carousel">
+    <div className="content-wrapper py-8 px-4">
+      <div className="content-grid">
+        {/* VIDEO PRODUCTION CARD */}
+        <section className="showcase-card">
+          <header className="card-header">
+            <div className="icon-badge">
+              <FontAwesomeIcon icon={faVideo} />
+            </div>
+            <h2 className="section-title">{t.videoTitle}</h2>
+          </header>
+
+          <div className="carousel-frame">
             <button
-              className="nav-btn"
+              className="nav-btn prev"
               onClick={() => handlePrev("video")}
-              aria-label="Previous video"
+              aria-label="Previous video slide"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <div className="image-wrapper">
-              <Image
-                src={videoImages[videoIndex]}
-                alt={`Video ${videoIndex + 1}`}
-                width={800}
-                height={480}
-                className="gallery-image"
-              />
+
+            <div className="image-viewport">
+              <AnimatePresence custom={videoDir} initial={false} mode="wait">
+                <motion.div
+                  key={videoIndex}
+                  custom={videoDir}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="motion-wrapper"
+                >
+                  <Image
+                    src={videoImages[videoIndex]}
+                    alt={`Video slide ${videoIndex + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
+
             <button
-              className="nav-btn"
+              className="nav-btn next"
               onClick={() => handleNext("video")}
-              aria-label="Next video"
+              aria-label="Next video slide"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
-          <p style={{ color: "#fff" }}>
-            {lang === "eng"
-              ? "Professional video production and editing services for events, commercials, and more."
-              : lang === "ru"
-              ? "Профессиональные услуги видеопроизводства и монтажа для мероприятий, рекламных роликов и многого другого."
-              : "Մասնագիտական տեսանյութերի արտադրություն և մոնտաժման ծառայություններ միջոցառումների, գովազդային տեսանյութերի և այլնի համար."}
-          </p>
+
+          <div className="dots-indicator">
+            {videoImages.map((_, idx) => (
+              <span
+                key={idx}
+                className={`dot ${videoIndex === idx ? "active" : ""}`}
+                onClick={() => {
+                  setVideoDir(idx > videoIndex ? 1 : -1);
+                  setVideoIndex(idx);
+                }}
+              />
+            ))}
+          </div>
+
+          <p className="card-description">{t.videoDesc}</p>
+
           <button
-            className="price-button has-background-warning"
-            onClick={handlePriceClick}
+            className="action-price-btn"
+            onClick={() => alert(t.alertMsg)}
           >
-            {lang === "eng"
-              ? "Price List"
-              : lang === "ru"
-              ? "Прайс-лист"
-              : "Գնացուցակ"}
+            <FontAwesomeIcon icon={faTag} className="mr-2" />
+            {t.priceBtn}
           </button>
-        </div>
+        </section>
 
-        {/* Divider */}
-        <div className="separator" />
+        {/* SECTION SEPARATOR */}
+        <div className="grid-divider" />
 
-        {/* Photoshoot Section */}
-        <div className="content-box">
-          <h2 className="section-title">
-            {lang === "eng"
-              ? "Photoshoot and Editing"
-              : lang === "ru"
-              ? "Фотосъёмка и монтаж"
-              : "Լուսանկարչություն և խմբագրում"}
-          </h2>
-          <div className="carousel">
+        {/* PHOTOSHOOT CARD */}
+        <section className="showcase-card">
+          <header className="card-header">
+            <div className="icon-badge">
+              <FontAwesomeIcon icon={faCamera} />
+            </div>
+            <h2 className="section-title">{t.photoTitle}</h2>
+          </header>
+
+          <div className="carousel-frame">
             <button
-              className="nav-btn"
+              className="nav-btn prev"
               onClick={() => handlePrev("photo")}
-              aria-label="Previous photo"
+              aria-label="Previous photo slide"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <div className="image-wrapper">
-              <Image
-                src={photoImages[photoIndex]}
-                alt={`Photoshoot ${photoIndex + 1}`}
-                width={800}
-                height={480}
-                className="gallery-image"
-              />
+
+            <div className="image-viewport">
+              <AnimatePresence custom={photoDir} initial={false} mode="wait">
+                <motion.div
+                  key={photoIndex}
+                  custom={photoDir}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
+                  className="motion-wrapper"
+                >
+                  <Image
+                    src={photoImages[photoIndex]}
+                    alt={`Photoshoot slide ${photoIndex + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
+
             <button
-              className="nav-btn"
+              className="nav-btn next"
               onClick={() => handleNext("photo")}
-              aria-label="Next photo"
+              aria-label="Next photo slide"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
-          <p style={{ color: "#fff" }}>
-            {lang === "eng"
-              ? "Professional photography for products, events, and portraits, enhanced with expert editing and retouching."
-              : lang === "ru"
-              ? "Профессиональная фотография для продуктов, мероприятий и портретов с профессиональной обработкой и ретушью."
-              : "Մասնագիտական լուսանկարչություն ապրանքների, միջոցառումների և դիմանկարների համար, որը համալրված է մասնագիտական մոնտաժով և վերամշակմամբ."}
-          </p>
+
+          <div className="dots-indicator">
+            {photoImages.map((_, idx) => (
+              <span
+                key={idx}
+                className={`dot ${photoIndex === idx ? "active" : ""}`}
+                onClick={() => {
+                  setPhotoDir(idx > photoIndex ? 1 : -1);
+                  setPhotoIndex(idx);
+                }}
+              />
+            ))}
+          </div>
+
+          <p className="card-description">{t.photoDesc}</p>
+
           <button
-            className="price-button has-background-warning"
-            onClick={handlePriceClick}
+            className="action-price-btn"
+            onClick={() => alert(t.alertMsg)}
           >
-            {lang === "eng"
-              ? "Price List"
-              : lang === "ru"
-              ? "Прайс-лист"
-              : "Գնացուցակ"}
+            <FontAwesomeIcon icon={faTag} className="mr-2" />
+            {t.priceBtn}
           </button>
-        </div>
+        </section>
       </div>
 
       <style jsx>{`
         .content-wrapper {
-          padding: 2rem 1rem;
-          max-width: 1400px;
-          margin: auto;
+          max-width: 1320px;
+          margin: 0 auto;
           width: 100%;
-          box-sizing: border-box;
         }
 
-        .content-sections {
+        .content-grid {
           display: flex;
-          gap: 2rem;
           align-items: stretch;
-          flex-wrap: wrap;
+          gap: 2rem;
           justify-content: center;
         }
 
-        .content-box {
+        /* NEUTRAL GREY SURFACE PALETTE */
+        .showcase-card {
           flex: 1;
-          min-width: 320px;
-          max-width: 800px;
-          text-align: center;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
-          justify-content: space-between;
+          background: #22252a;
+          border: 1px solid #333740;
+          border-radius: 16px;
+          padding: 1.75rem;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+          transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
+        }
+
+        .showcase-card:hover {
+          border-color: #4a4f5c;
+          transform: translateY(-2px);
+          box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1.25rem;
+        }
+
+        .icon-badge {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          background: rgba(255, 204, 51, 0.12);
+          color: #ffcc33;
+          font-size: 1.1rem;
         }
 
         .section-title {
-          font-size: 1.8rem;
-          color: #fff;
+          font-size: 1.35rem;
+          color: #f1f3f5;
+          font-weight: 700;
           margin: 0;
-          font-weight: 600;
+          letter-spacing: -0.02em;
         }
 
-        /* Divider line */
-        .separator {
-          width: 4px;
-          background: #666;
-          border-radius: 2px;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        .grid-divider {
+          width: 1px;
+          background: linear-gradient(
+            180deg,
+            rgba(66, 72, 84, 0) 0%,
+            #424854 50%,
+            rgba(66, 72, 84, 0) 100%
+          );
           flex-shrink: 0;
         }
 
-        .carousel {
+        .carousel-frame {
+          position: relative;
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 0.8rem;
+          gap: 0.5rem;
+          margin-bottom: 0.75rem;
         }
 
-        .image-wrapper {
+        .image-viewport {
+          position: relative;
           width: 100%;
-          max-width: 800px;
-          aspect-ratio: 5 / 3;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          aspect-ratio: 16 / 10;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #181a1e;
+          border: 1px solid #2d3139;
+        }
+
+        .motion-wrapper {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
         }
 
         .nav-btn {
-          background: #f9a825;
-          color: white;
-          border: none;
-          padding: 0.6rem 1rem;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          background: rgba(24, 26, 30, 0.8);
+          backdrop-filter: blur(4px);
+          color: #f1f3f5;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
           cursor: pointer;
-          border-radius: 4px;
-          font-size: 1.2rem;
-          transition: background 0.3s;
-          flex-shrink: 0;
           display: flex;
           align-items: center;
           justify-content: center;
+          font-size: 0.9rem;
+          transition: all 0.2s ease;
+        }
+
+        .nav-btn.prev {
+          left: 10px;
+        }
+
+        .nav-btn.next {
+          right: 10px;
         }
 
         .nav-btn:hover {
-          background: #f57f17;
+          background: #ffcc33;
+          color: #121316;
+          border-color: #ffcc33;
         }
 
-        .gallery-image {
-          border-radius: 8px;
-          object-fit: cover;
-          width: 100%;
-          height: 100%;
-          max-width: 800px;
-          max-height: 480px;
+        .dots-indicator {
+          display: flex;
+          justify-content: center;
+          gap: 6px;
+          margin-bottom: 1.25rem;
         }
 
-        p {
-          margin: 0;
-          line-height: 1.6;
-          font-size: 1rem;
-        }
-
-        .price-button {
-          padding: 0.8rem 1.4rem;
-          font-size: 1rem;
-          color: black;
-          border: none;
-          border-radius: 6px;
+        .dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 4px;
+          background: #424854;
           cursor: pointer;
-          font-weight: bold;
-          transition: background 0.3s ease;
-          margin-top: auto;
+          transition: all 0.25s ease;
         }
 
-        @media (max-width: 1024px) {
-          .content-box {
-            max-width: 500px;
-          }
-
-          .image-wrapper {
-            max-width: 600px;
-            max-height: 360px;
-          }
-
-          .gallery-image {
-            max-width: 600px;
-            max-height: 360px;
-          }
+        .dot.active {
+          width: 24px;
+          background: #ffcc33;
         }
 
-        @media (max-width: 768px) {
-          .content-sections {
+        .card-description {
+          color: #a0a6b2;
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin: 0 0 1.5rem 0;
+          flex-grow: 1;
+        }
+
+        .action-price-btn {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #121316;
+          background: #ffcc33;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition:
+            background-color 0.2s ease,
+            transform 0.15s ease;
+        }
+
+        .action-price-btn:hover {
+          background: #e6b800;
+        }
+
+        .action-price-btn:active {
+          transform: scale(0.98);
+        }
+
+        .mr-2 {
+          margin-right: 0.5rem;
+        }
+
+        @media (max-width: 900px) {
+          .content-grid {
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
           }
 
-          .separator {
+          .grid-divider {
             width: 100%;
-            height: 4px;
-            border-radius: 2px;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-          }
-
-          .content-box {
-            min-width: 100%;
-            max-width: 100%;
-          }
-
-          .image-wrapper {
-            max-width: 100%;
-            height: auto;
-          }
-
-          .gallery-image {
-            max-width: 100%;
-            max-height: none;
-          }
-
-          .section-title {
-            font-size: 1.6rem;
-          }
-
-          .nav-btn {
-            padding: 0.5rem 0.8rem;
-            font-size: 1rem;
-          }
-
-          .price-button {
-            padding: 0.7rem 1.2rem;
-            font-size: 0.9rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .content-wrapper {
-            padding: 1.5rem 0.5rem;
-          }
-
-          .section-title {
-            font-size: 1.4rem;
-          }
-
-          .carousel {
-            gap: 0.5rem;
-          }
-
-          .nav-btn {
-            padding: 0.4rem 0.7rem;
-            font-size: 0.9rem;
-          }
-
-          p {
-            font-size: 0.9rem;
-          }
-
-          .price-button {
-            padding: 0.6rem 1rem;
-            font-size: 0.85rem;
+            height: 1px;
+            background: linear-gradient(
+              90deg,
+              rgba(66, 72, 84, 0) 0%,
+              #424854 50%,
+              rgba(66, 72, 84, 0) 100%
+            );
           }
         }
       `}</style>

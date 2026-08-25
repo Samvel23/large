@@ -1,370 +1,350 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHammer, faGem, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { useLanguage } from "../context/LanguageContext";
+
+const telmekhLogo = "/photos/telmekh.png";
+const mainProductPic = "/photos/tel1.jpg";
+
+const content = {
+  eng: {
+    badge: "Handcrafted String Art",
+    title: "TelMekh Wood & Thread Crafts",
+    description:
+      "This handcrafted wooden board features meticulously hammered nails and precision threading. Each piece is unique, crafted with care, and perfect for home decoration or a memorable personal gift.",
+    features: [
+      {
+        icon: faHammer,
+        title: "Precision Handcraft",
+        desc: "Meticulously placed nails and tension-tuned threading built to last.",
+      },
+      {
+        icon: faGem,
+        title: "Exclusive Artistry",
+        desc: "Every wooden board carries distinct grain patterns and custom thread layouts.",
+      },
+      {
+        icon: faHeart,
+        title: "Thoughtful Gifts",
+        desc: "Ideal accent pieces for modern interiors, corporate spaces, and celebrations.",
+      },
+    ],
+    cta: "Instagram",
+  },
+  ru: {
+    badge: "Ручное искусство из нитей",
+    title: "Деревянные изделия TelMekh",
+    description:
+      "Эта деревянная доска ручной работы украшена тщательно вбитыми гвоздями и точным переплетением нитей. Каждое изделие TelMekh уникально и идеально подходит для украшения дома или особенного подарка.",
+    features: [
+      {
+        icon: faHammer,
+        title: "Ручная работа",
+        desc: "Тщательно забитые гвозди и точное натяжение нитей для безупречного вида.",
+      },
+      {
+        icon: faGem,
+        title: "Эксклюзивный дизайн",
+        desc: "Уникальная текстура дерева и оригинальные узоры нитей в каждом изделии.",
+      },
+      {
+        icon: faHeart,
+        title: "Особенный подарок",
+        desc: "Идеальное решение для современного интерьера и памятных событий.",
+      },
+    ],
+    cta: "Instagram",
+  },
+  hy: {
+    badge: "Ձեռագործ Թել-Մեխ Արվեստ",
+    title: "TelMekh Փայտյա Ձեռագործ Աշխատանքներ",
+    description:
+      "Այս ձեռագործ փայտե տախտակը պատրաստված է մանրակրկիտ մշակված մեխերով և ճշգրիտ թելային հյուսվածքով։ Յուրաքանչյուր TelMekh աշխատանք եզակի է և հիանալի նվեր է ձեր հարազատներին։",
+    features: [
+      {
+        icon: faHammer,
+        title: "Մանրակրկիտ Աշխատանք",
+        desc: "Ճշգրիտ ամրացված մեխեր և բարձրորակ թելերի կատարյալ հյուսվածք։",
+      },
+      {
+        icon: faGem,
+        title: "Բացառիկ Դիզայն",
+        desc: "Յուրաքանչյուր փայտե հիմք ունի իր անկրկնելի տեքստուրան և նախշերը։",
+      },
+      {
+        icon: faHeart,
+        title: "Յուրահատուկ Նվեր",
+        desc: "Իդեալական լուծում տան ինտերիերի ձևավորման և անմոռանալի նվերների համար։",
+      },
+    ],
+  },
+  cta: "Instagram",
+};
 
 export const TelMekh = () => {
   const { lang } = useLanguage();
-
-  // Form state
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [result, setResult] = useState("");
-  const [winnerAnimation, setWinnerAnimation] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  // Submit winner
-  const submitWinner = async () => {
-    if (!code) {
-      setResult("Please enter your code.");
-      return;
-    }
-
-    setLoading(true);
-    setResult("");
-
-    try {
-      const res = await fetch("/api/check-number", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone, number: code }), // only number is required now
-      });
-      const data = await res.json();
-      setResult(data.message);
-
-      if (data.message.includes("Winner")) {
-        setWinnerAnimation(true);
-        setTimeout(() => setWinnerAnimation(false), 4000);
-      }
-    } catch {
-      setResult("❌ Server error. Try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const normalizedLang = lang === "arm" ? "hy" : lang;
+  const t = content[normalizedLang] || content.eng;
 
   return (
-    <div className="hero is-fullheight telmekh-hero">
-      <div className="hero-body">
-        <div className="container">
-          <div className="columns is-vcentered is-multiline">
-            {/* Static Image */}
-            <div className="column is-6 fade-in-left">
-              <div className="image-static">
-                <Image
-                  src="/photos/tel1.jpg"
-                  alt="TelMekh image"
-                  width={500}
-                  height={600}
-                  className="is-rounded main-img"
-                  priority
-                />
-              </div>
+    <div className="telmekh-container py-8 px-4">
+      <div className="content-wrapper">
+        <div className="main-grid">
+          {/* PRODUCT VISUAL SHOWCASE */}
+          <div className="media-column">
+            <div className="image-frame">
+              <Image
+                src={mainProductPic}
+                alt="TelMekh String Art Crafts"
+                fill
+                sizes="(max-width: 900px) 100vw, 550px"
+                style={{ objectFit: "cover" }}
+                priority
+              />
+              <div className="art-badge">{t.badge}</div>
+            </div>
+          </div>
+
+          {/* BRAND CONTENT & FEATURES */}
+          <div className="info-column">
+            <div className="logo-wrapper mb-4">
+              <Image
+                src={telmekhLogo}
+                alt="TelMekh Brand Logo"
+                width={220}
+                height={80}
+                style={{ objectFit: "contain" }}
+                priority
+              />
             </div>
 
-            {/* Form & Info */}
-            <div className="column is-6 fade-in-right">
-              <div className="telmekh-logo">
-                <Image
-                  src="/photos/telmekh.png"
-                  alt="TelMekh Logo"
-                  width={250}
-                  height={100}
-                  priority
-                />
-              </div>
+            <h1 className="brand-title mb-3">{t.title}</h1>
+            <p className="brand-description mb-6">{t.description}</p>
 
-              <p className="content is-size-5">
-                {lang === "eng"
-                  ? "This handcrafted wooden board features meticulously hammered nails and precision threading. Each piece is unique, crafted with care, and perfect for home decoration or a personal gift."
-                  : lang === "ru"
-                  ? "Эта деревянная доска ручной работы украшена тщательно вбитыми гвоздями и точной резьбой. Каждое изделие TelMekh уникально и идеально подходит для украшения дома или подарка."
-                  : "Այս ձեռագործ փայտե տախտակը պատրաստված է մանրակրկիտ մշակված մեխերով։ Յուրաքանչյուր TelMekh եզակի է և հիանալի նվեր է ընկերոջը կամ հարազատին։"}
-              </p>
-
-              {/* Winner Form */}
-              <div className="mt-6 winner-check-form card-form">
-                <h2 className="subtitle">
-                  {lang == "eng"
-                    ? "Check Your Code"
-                    : lang == "ru"
-                    ? "Проверьте свой код"
-                    : "Ստուգեք ձեր կոդը"}
-                </h2>
-                <div className="field">
-                  <input
-                    className="styled-input"
-                    type="text"
-                    placeholder={
-                      lang === "eng" ? "Name" : lang === "ru" ? "Имя" : "Անուն"
-                    }
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="field">
-                  <input
-                    className="styled-input"
-                    type="text"
-                    placeholder={
-                      lang === "eng"
-                        ? "Phone Number"
-                        : lang === "ru"
-                        ? "Номер телефона"
-                        : "Հեռախոսահամար"
-                    }
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-                <div className="field">
-                  <input
-                    className="styled-input"
-                    type="text"
-                    placeholder={
-                      lang === "eng"
-                        ? "Enter your code"
-                        : lang === "ru"
-                        ? "Введите ваш код"
-                        : "Մուտքագրեք ձեր կոդը"
-                    }
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                  />
-                </div>
-                <button
-                  className="submit-btn mt-3"
-                  onClick={submitWinner}
-                  disabled={loading}
-                >
-                  {loading
-                    ? lang === "eng"
-                      ? "Checking..."
-                      : lang === "ru"
-                      ? "Проверка..."
-                      : "Ստուգվում է..."
-                    : lang === "eng"
-                    ? "Submit"
-                    : lang === "ru"
-                    ? "Отправить"
-                    : "Ուղարկել"}
-                </button>
-
-                {loading && (
-                  <div className="loading-gif">
-                    <Image
-                      src="/photos/progress.gif"
-                      alt="Checking..."
-                      width={80}
-                      height={80}
-                    />
-                    <p>
-                      {lang === "eng"
-                        ? "Checking..."
-                        : lang === "ru"
-                        ? "Проверка..."
-                        : "Ստուգվում է..."}
-                    </p>
+            {/* CRAFTSMANSHIP HIGHLIGHTS GRID */}
+            <div className="features-grid mb-6">
+              {t.features.map((item, idx) => (
+                <div key={idx} className="feature-card">
+                  <div className="feature-icon">
+                    <FontAwesomeIcon icon={item.icon} />
                   </div>
-                )}
-
-                {result && (
-                  <p
-                    className={`mt-3 result-msg ${
-                      result.includes("Winner")
-                        ? "success-msg"
-                        : result.includes("Server") || result.includes("⚠️")
-                        ? "error-msg"
-                        : "info-msg"
-                    }`}
-                  >
-                    {result}
-                  </p>
-                )}
-              </div>
-
-              <a href="https://www.instagram.com/telmekh/">
-                <button className="button is-warning is-medium pulse-btn mt-5">
-                  {lang === "eng"
-                    ? "Visit TelMekh on Instagram"
-                    : lang === "ru"
-                    ? "Посетите TelMekh в Instagram"
-                    : "Այցելեք TelMekh-ը Instagram-ում"}
-                </button>
-              </a>
+                  <div className="feature-text">
+                    <h3 className="feature-title">{item.title}</h3>
+                    <p className="feature-desc">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
+
+            {/* INSTAGRAM CONVERSION CTA */}
+            <a
+              href="https://www.instagram.com/telmekh/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="instagram-cta-btn"
+            >
+              <FontAwesomeIcon icon={faInstagram} className="cta-icon" />
+              <span>{t.cta}</span>
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Winner animation */}
-      {winnerAnimation && (
-        <div className="winner-animation">
-          <Image
-            src="/photos/confetti.gif"
-            alt="Winner!"
-            width={400}
-            height={400}
-          />
-          <p className="winner-text">
-            {lang === "eng"
-              ? "Congratulations!"
-              : lang === "ru"
-              ? "Поздравляем!"
-              : "Շնորհավորում ենք!"}
-          </p>
-        </div>
-      )}
-
       <style jsx>{`
-        .telmekh-hero {
-          color: #fff;
-          padding-bottom: 100px;
-        }
-        .telmekh-logo {
-          margin-top: 3rem;
-          text-align: center;
-        }
-        .main-img {
-          border-radius: 24px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        .telmekh-container {
+          min-height: 80vh;
+          display: flex;
+          align-items: center;
+          padding-top: 6rem;
+          padding-bottom: 4rem;
+          justify-content: center;
         }
 
-        .card-form {
-          background: rgba(255, 255, 255, 0.05);
-          padding: 1.5rem;
-          border-radius: 16px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-        .styled-input {
+        .content-wrapper {
+          max-width: 1280px;
           width: 100%;
-          padding: 0.8rem 1rem;
-          margin-bottom: 1rem;
-          border: none;
-          border-radius: 10px;
-          font-size: 1rem;
-          background: #222;
-          color: #fff;
-          box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
-          transition: all 0.3s ease;
-        }
-        .styled-input:focus {
-          outline: none;
-          background: #333;
-          box-shadow: 0 0 8px #f9a825;
-        }
-        .submit-btn {
-          width: 100%;
-          padding: 0.9rem;
-          border: none;
-          border-radius: 12px;
-          font-size: 1.1rem;
-          font-weight: bold;
-          background: linear-gradient(135deg, #ffb300, #f57f17);
-          color: #000;
-          cursor: pointer;
-          transition: transform 0.2s, box-shadow 0.3s;
-        }
-        .submit-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(249, 168, 37, 0.5);
-        }
-        .submit-btn:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
+          margin: 0 auto;
         }
 
-        .loading-gif {
+        .main-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        .media-column {
+          width: 100%;
+        }
+
+        .image-frame {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 5;
+          border-radius: 20px;
+          overflow: hidden;
+          background: #1e2229;
+          border: 1px solid #333740;
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .art-badge {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          background: rgba(18, 19, 22, 0.85);
+          backdrop-filter: blur(8px);
+          color: #ffcc33;
+          padding: 8px 18px;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          border: 1px solid rgba(255, 204, 51, 0.3);
+        }
+
+        .info-column {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          margin-top: 1rem;
-        }
-        .loading-gif p {
-          margin-top: 0.5rem;
-          font-weight: 600;
-          color: #fff;
         }
 
-        .result-msg {
-          padding: 0.8rem 1rem;
-          border-radius: 8px;
-          font-weight: 600;
-          text-align: center;
-        }
-        .success-msg {
-          background: rgba(76, 175, 80, 0.2);
-          color: #4caf50;
-        }
-        .error-msg {
-          background: rgba(244, 67, 54, 0.2);
-          color: #f44336;
-        }
-        .info-msg {
-          background: rgba(255, 193, 7, 0.2);
-          color: #ffc107;
+        .logo-wrapper {
+          display: flex;
+          justify-content: flex-start;
         }
 
-        .pulse-btn {
-          animation: pulse 1.5s infinite;
-          box-shadow: 0 2px 16px rgba(255, 204, 51, 0.2);
-          border-radius: 8px;
-          font-weight: 600;
-        }
-        @keyframes pulse {
-          0% {
-            box-shadow: 0 0 0 0 rgba(255, 204, 51, 0.4);
-          }
-          70% {
-            box-shadow: 0 0 0 12px rgba(255, 204, 51, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(255, 204, 51, 0);
-          }
-        }
-
-        .winner-animation {
-          position: fixed;
-          top: 20%;
-          left: 50%;
-          transform: translateX(-50%);
-          text-align: center;
-          animation: pop 0.5s ease-out;
-          z-index: 2000;
-          pointer-events: none;
-        }
-        .winner-text {
+        .brand-title {
           font-size: 2rem;
-          font-weight: bold;
-          color: #ffcc33;
-          text-shadow: 2px 2px 8px #000;
-          margin-top: -60px;
-        }
-        @keyframes pop {
-          0% {
-            transform: scale(0) translateX(-50%);
-            opacity: 0;
-          }
-          100% {
-            transform: scale(1) translateX(-50%);
-            opacity: 1;
-          }
+          font-weight: 800;
+          color: #f1f3f5;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
         }
 
-        @media (max-width: 768px) {
-          .columns {
+        .brand-description {
+          font-size: 1.05rem;
+          color: #a0a6b2;
+          line-height: 1.7;
+        }
+
+        .features-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .feature-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 1.25rem;
+          background: #22252a;
+          border: 1px solid #333740;
+          padding: 1.25rem;
+          border-radius: 14px;
+          transition:
+            transform 0.2s ease,
+            border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+          transform: translateX(4px);
+          border-color: #4a4f5c;
+        }
+
+        .feature-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          border-radius: 10px;
+          background: rgba(255, 204, 51, 0.12);
+          color: #ffcc33;
+          font-size: 1.2rem;
+          flex-shrink: 0;
+        }
+
+        .feature-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+
+        .feature-title {
+          font-size: 1rem;
+          font-weight: 700;
+          color: #f1f3f5;
+          margin: 0;
+        }
+
+        .feature-desc {
+          font-size: 0.875rem;
+          color: #a0a6b2;
+          margin: 0;
+          line-height: 1.5;
+        }
+
+        .instagram-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          padding: 1rem 2rem;
+          font-size: 1rem;
+          font-weight: 700;
+          color: #121316;
+          background: linear-gradient(135deg, #ffcc33 0%, #e6b800 100%);
+          border-radius: 12px;
+          text-decoration: none;
+          box-shadow: 0 8px 24px rgba(255, 204, 51, 0.25);
+          transition: all 0.25s ease;
+          width: fit-content;
+        }
+
+        .instagram-cta-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(255, 204, 51, 0.4);
+          background: linear-gradient(135deg, #ffd65c 0%, #ffcc33 100%);
+        }
+
+        .cta-icon {
+          font-size: 1.4rem;
+        }
+
+        .mb-3 {
+          margin-bottom: 0.75rem;
+        }
+        .mb-4 {
+          margin-bottom: 1rem;
+        }
+        .mb-6 {
+          margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+          .telmekh-container {
+            padding-bottom: 4rem;
+          }
+          .main-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+          }
+
+          .logo-wrapper {
+            justify-content: center;
+          }
+
+          .brand-title,
+          .brand-description {
             text-align: center;
-            flex-direction: column;
           }
-          .main-img {
-            width: 90vw !important;
-            height: auto !important;
-          }
-          .winner-animation img {
-            width: 70vw !important;
-            height: auto !important;
+
+          .instagram-cta-btn {
+            width: 100%;
           }
         }
       `}</style>

@@ -4,8 +4,9 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { NavBar } from "./components/nav-bar";
 import { NewsPage } from "./components/news";
-import { AboutPage } from "./components/about-us";
+import { ContactPage } from "./components/contact-info";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AboutUs } from "./components/about-us";
 
 export default function Home() {
   // Close modal with Escape key
@@ -16,7 +17,8 @@ export default function Home() {
       <NavBar />
       <div style={{ height: "50px" }}></div>
       <NewsPage />
-      <AboutPage />
+      <AboutUs />
+      <ContactPage />
       <SpeedInsights />
       <style jsx>{`
         .modal-content {

@@ -9,3 +9,71 @@
 }
 
 /* Armenian text only */
+
+
+/* Enable flex propagation across Bulma columns */
+:global(.column.is-flex) {
+  display: flex !important;
+}
+
+.motion-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.editorial-card-link {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  text-decoration: none;
+  outline: none;
+}
+
+.editorial-card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  background: rgba(20, 20, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Height Normalization for Multi-Language Typography */
+.card-heading {
+  color: #ffffff;
+  font-weight: 700;
+  transition: color 0.3s ease;
+  min-height: 3.5rem; /* Reserves space for up to 2 lines of localized text */
+  display: flex;
+  align-items: flex-start;
+}
+
+.card-desc {
+  line-height: 1.6;
+  flex-grow: 1; /* Absorbs remaining vertical space */
+  min-height: 4.25rem; /* Equalizes multi-line body copy across translations */
+}
+
+.cta-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffcc33;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: auto; /* Pins CTA to the absolute bottom of card container */
+}

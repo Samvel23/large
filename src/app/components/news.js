@@ -57,7 +57,7 @@ export const NewsPage = () => {
               </Link>
             </div>
           </div>
-          <Image
+          {/* <Image
             src="/photos/shop1.jpg"
             alt="Shop"
             width={570}
@@ -67,7 +67,7 @@ export const NewsPage = () => {
               maxHeight: "100vh",
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
       )}
 
