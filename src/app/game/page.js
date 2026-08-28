@@ -1063,32 +1063,33 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
   return (
     <div className="canvas-wrapper">
       <div className="hud-bar">
-        <div className="hud-metric">
-          <span className="hud-label">{t.score}</span>
-          <span className="hud-value">{currentScore}</span>
-        </div>
-
-        <div className="hud-metric align-center">
-          <span className="hud-label">{t.level}</span>
-          <span className="hud-value text-accent">{currentLevel}</span>
-        </div>
-
-        {(levelBanner || activeBanner) && (
-          <div className="banner-stack">
-            {levelBanner && (
-              <div className="powerup-banner level-banner">{levelBanner}</div>
-            )}
-            {activeBanner && (
-              <div className="powerup-banner">{activeBanner}</div>
-            )}
+        <div className="hud-metrics">
+          <div className="hud-metric">
+            <span className="hud-label">{t.score}</span>
+            <span className="hud-value">{currentScore}</span>
           </div>
-        )}
 
-        <div className="hud-metric align-right">
-          <span className="hud-label flex-align">
-            <Trophy size={14} className="mr-1" /> {t.highScore}
-          </span>
-          <span className="hud-value text-accent">{highScore}</span>
+          <div className="hud-metric align-center">
+            <span className="hud-label">{t.level}</span>
+            <span className="hud-value text-accent">{currentLevel}</span>
+          </div>
+
+          <div className="hud-metric align-right">
+            <span className="hud-label flex-align">
+              <Trophy size={14} className="mr-1" /> {t.highScore}
+            </span>
+            <span className="hud-value text-accent">{highScore}</span>
+          </div>
+        </div>
+
+        {/* Fixed-height slot, always rendered, so a banner appearing or
+            disappearing never changes the HUD bar's size or reflows the
+            metrics above it. */}
+        <div className="banner-row">
+          {levelBanner && (
+            <div className="powerup-banner level-banner">{levelBanner}</div>
+          )}
+          {activeBanner && <div className="powerup-banner">{activeBanner}</div>}
         </div>
       </div>
 
@@ -1152,11 +1153,16 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           border-radius: 14px 14px 0 0;
           padding: 0.85rem 1.25rem;
           display: flex;
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: 0.4rem;
+          box-sizing: border-box;
+        }
+
+        .hud-metrics {
+          display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 0.5rem;
-          box-sizing: border-box;
         }
 
         .hud-metric {
@@ -1172,11 +1178,16 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           align-items: center;
         }
 
-        .banner-stack {
+        /* Always present in the layout (even with no banner text) so its
+           reserved height never causes the HUD — or anything below it — to
+           jump when a level-up or power-up banner appears/disappears. */
+        .banner-row {
+          min-height: 26px;
           display: flex;
-          flex-direction: column;
           align-items: center;
-          gap: 4px;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 6px;
         }
 
         .level-banner {
@@ -1318,9 +1329,8 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
             font-size: 1.15rem;
           }
 
-          .banner-stack {
-            order: 3;
-            flex-basis: 100%;
+          .banner-row {
+            min-height: 22px;
           }
 
           .powerup-banner {
