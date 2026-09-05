@@ -2,18 +2,31 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { Score } from "@/lib/models/Score";
 
+// Shared so GET and POST always return the leaderboard in the exact same
+// shape (including a stringified _id, which the frontend needs to
+// highlight "You" in the list).
+async function getTopScores() {
+  const topScores = await Score.find()
+    .sort({ score: -1, createdAt: 1 })
+    .limit(10)
+    .select("playerName score createdAt")
+    .lean();
+
+  return topScores.map((entry) => ({
+    ...entry,
+    _id: entry._id.toString(),
+  }));
+}
+
 export async function GET() {
   try {
     await connectToDatabase();
 
-    const leaderboard = await Score.find()
-      .sort({ score: -1, createdAt: 1 })
-      .limit(10)
-      .select("playerName score createdAt -_id")
-      .lean();
+    const leaderboard = await getTopScores();
 
     return NextResponse.json(leaderboard, { status: 200 });
   } catch (error) {
+    console.error("GET /api/scores execution failure:", error);
     return NextResponse.json(
       { error: "Failed to fetch leaderboard" },
       { status: 500 },
@@ -62,11 +75,20 @@ export async function POST(request) {
       score: sanitizedScore,
     });
 
+    // The frontend (GameOverPanel) reads `data.score._id` and
+    // `data.topScores` from this response — both are required for the
+    // leaderboard and the "You" highlight to render at all.
+    const topScores = await getTopScores();
+
     return NextResponse.json(
       {
-        playerName: newScore.playerName,
-        score: newScore.score,
-        createdAt: newScore.createdAt,
+        score: {
+          _id: newScore._id.toString(),
+          playerName: newScore.playerName,
+          score: newScore.score,
+          createdAt: newScore.createdAt,
+        },
+        topScores,
       },
       { status: 201 },
     );
