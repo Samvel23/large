@@ -9,6 +9,11 @@ import {
   Loader2,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Gift,
+  Percent,
+  Sparkles,
+  Camera,
 } from "lucide-react";
 import { NavBar } from "../components/nav-bar";
 import { useLanguage } from "../context/LanguageContext";
@@ -16,6 +21,8 @@ import { useLanguage } from "../context/LanguageContext";
 // Lucide SVG Bomb string converted to Data-URI for direct Canvas rendering
 const LUCIDE_BOMB_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="%23ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="9" fill="%232a0808"/><path d="M14.35 9.65 18 6"/><path d="m17 3 1 1" stroke="%23ffcc33"/><path d="m20 6 1 1" stroke="%23ffcc33"/></svg>`;
 const BOMB_DATA_URI = `data:image/svg+xml;charset=utf-8,${LUCIDE_BOMB_SVG}`;
+
+const INSTAGRAM_URL = "https://www.instagram.com/large.art.studio/";
 
 // Multi-language dictionary (ENG / RU / HY)
 const content = {
@@ -47,6 +54,23 @@ const content = {
     topScores: "Top 10 Scores",
     you: "You",
     noScoresYet: "No scores yet — be the first!",
+    rewardsTitle: "Score Rewards",
+    rewardsSubtitle: "Hit these milestones to unlock real prizes from the shop",
+    reward5kLabel: "5,000 pts",
+    reward5kPrize: "Toy",
+    reward10kLabel: "10,000 pts",
+    reward10kPrize: "10% Off Stationery",
+    reward15kLabel: "15,000 pts",
+    reward15kPrize: "Special Shop Gift",
+    rulesTitle: "Rules to claim your prize",
+    rule1: "Follow us on Instagram",
+    rule2: "Reach the milestone score for your prize tier",
+    rule3: "Screenshot your score the moment you reach it",
+    rule4: "Bring the screenshot, plus your Instagram follow, to the shop",
+    followInstagram: "Follow @large.art.studio",
+    milestoneReachedPrefix: "You unlocked:",
+    milestoneHint:
+      "Screenshot this screen now and bring it to the shop with your Instagram follow to claim your prize.",
   },
   ru: {
     selectTitle: "Выберите персонажа",
@@ -76,6 +100,24 @@ const content = {
     topScores: "Топ 10 результатов",
     you: "Вы",
     noScoresYet: "Пока нет результатов — будьте первым!",
+    rewardsTitle: "Награды за очки",
+    rewardsSubtitle:
+      "Достигните этих отметок, чтобы получить настоящие призы от магазина",
+    reward5kLabel: "5 000 очков",
+    reward5kPrize: "Игрушка",
+    reward10kLabel: "10 000 очков",
+    reward10kPrize: "Скидка 10% на канцтовары",
+    reward15kLabel: "15 000 очков",
+    reward15kPrize: "Особый подарок от магазина",
+    rulesTitle: "Правила получения приза",
+    rule1: "Подпишитесь на нас в Instagram",
+    rule2: "Наберите нужное количество очков для своего уровня приза",
+    rule3: "Сделайте скриншот экрана сразу после достижения результата",
+    rule4: "Принесите скриншот и подтверждение подписки в Instagram в магазин",
+    followInstagram: "Подписаться на @large.art.studio",
+    milestoneReachedPrefix: "Вы открыли приз:",
+    milestoneHint:
+      "Сделайте скриншот этого экрана и принесите его в магазин вместе с подпиской в Instagram, чтобы получить приз.",
   },
   arm: {
     selectTitle: "Ընտրեք Ձեր Կերպարը",
@@ -105,6 +147,24 @@ const content = {
     topScores: "Լավագույն 10 արդյունքները",
     you: "Դուք",
     noScoresYet: "Դեռ արդյունքներ չկան․ եղեք առաջինը!",
+    rewardsTitle: "Միավորների Մրցանակներ",
+    rewardsSubtitle:
+      "Հասեք այս շեմերին՝ խանութից իրական նվերներ ստանալու համար",
+    reward5kLabel: "5,000 միավոր",
+    reward5kPrize: "Խաղալիք",
+    reward10kLabel: "10,000 միավոր",
+    reward10kPrize: "10% զեղչ գրենական պիտույքների վրա",
+    reward15kLabel: "15,000 միավոր",
+    reward15kPrize: "Հատուկ նվեր խանութից",
+    rulesTitle: "Կանոններ՝ նվերը ստանալու համար",
+    rule1: "Հետևեք մեզ Instagram-ում",
+    rule2: "Հասեք ձեր մրցանակային մակարդակի համապատասխան միավորին",
+    rule3: "Անմիջապես սքրինշոթ արեք Ձեր արդյունքը",
+    rule4: "Բերեք սքրինշոթը և Ձեր Instagram հետևանքը խանութ",
+    followInstagram: "Հետևել @large.art.studio-ին",
+    milestoneReachedPrefix: "Դուք բացեցիք՝",
+    milestoneHint:
+      "Անմիջապես սքրինշոթ արեք այս էկրանը և բերեք խանութ Ձեր Instagram հետևանքի հետ միասին՝ նվերը ստանալու համար։",
   },
 };
 
@@ -128,8 +188,22 @@ const HIGH_SCORE_KEY = "mascot-arcade-highscore";
 const PLAYER_NAME_KEY = "mascot-arcade-playername";
 
 // Score thresholds at which the game ramps up in difficulty.
-// Index 0 = Level 1 (score 0), index 1 = Level 2 (score 150), etc.
-const LEVEL_THRESHOLDS = [0, 150, 350, 600, 900, 1300, 1800, 2400, 3200, 4200];
+// Spread across 16 levels (rather than 10) so the climb to a 15,000-point
+// run stays gradual: comfortable early on, genuinely demanding by the end,
+// but never a wall. Level 16 (14,250+) is the difficulty ceiling — beyond
+// that, difficulty stops increasing so the game stays survivable at length.
+const LEVEL_THRESHOLDS = [
+  0, 250, 600, 1050, 1600, 2250, 3000, 3850, 4800, 5850, 7000, 8250, 9600,
+  11050, 12600, 14250,
+];
+
+// Score milestones that unlock real shop prizes. Checked against a run's
+// final score on the game-over screen (highest tier reached wins).
+const REWARD_TIERS = [
+  { threshold: 15000, prizeKey: "reward15kPrize" },
+  { threshold: 10000, prizeKey: "reward10kPrize" },
+  { threshold: 5000, prizeKey: "reward5kPrize" },
+];
 
 // Number of horizontal "lanes" bombs can spawn in. Used to guarantee at
 // least one safe gap exists even when multiple bombs fall at once.
@@ -144,20 +218,23 @@ const getLevelForScore = (score) => {
 };
 
 // Derives all tunable difficulty parameters from the current level.
-// Everything scales gradually and is clamped so the game stays winnable
-// (there is always at least one open lane to dodge through).
+// Ramps more slowly than a typical bullet-hell curve: the first several
+// levels stay comfortable, and the difficulty only tightens up seriously
+// in the back half of a run. The ceiling (reached near level 16, ~14k
+// score) is kept fair on purpose — at most 3 of the 5 lanes ever fill at
+// once, so there is always real room to dodge if the player is paying
+// attention. This is what makes 15k reachable without being trivial: a
+// full, focused run is required, but a single well-timed dodge is never
+// impossible.
 const getDifficultyParams = (level) => {
-  const spawnInterval = Math.max(14, 38 - (level - 1) * 2.6);
-  const bombSpeedMin = 3.4 + (level - 1) * 0.32;
-  const bombSpeedMax = bombSpeedMin + 2.1 + (level - 1) * 0.18;
+  const spawnInterval = Math.max(17, 42 - (level - 1) * 1.6);
+  const bombSpeedMin = 2.9 + (level - 1) * 0.2;
+  const bombSpeedMax = bombSpeedMin + 1.7 + (level - 1) * 0.1;
   // How many bomb lanes can be filled at once in a single wave.
-  // Always leaves at least one of LANE_COUNT lanes free.
-  const maxSimultaneousBombs = Math.min(
-    LANE_COUNT - 1,
-    1 + Math.floor((level - 1) / 2),
-  );
+  // Capped at 3 of LANE_COUNT (5) — always at least 2 lanes free.
+  const maxSimultaneousBombs = Math.min(3, 1 + Math.floor((level - 1) / 4));
   // Chance each "extra" bomb slot (beyond the first) actually gets used.
-  const extraBombChance = Math.min(0.75, 0.25 + (level - 1) * 0.08);
+  const extraBombChance = Math.min(0.55, 0.15 + (level - 1) * 0.03);
 
   return {
     spawnInterval,
@@ -322,8 +399,71 @@ export default function MascotGamePage() {
             </div>
 
             {!nameIsValid && (
-              <p className="name-required-hint">{t.nameRequiredHint}</p>
+              <p className="name-required-hint mb-8">{t.nameRequiredHint}</p>
             )}
+
+            <div className="rewards-section">
+              <h2 className="rewards-title">
+                <Gift size={16} />
+                {t.rewardsTitle}
+              </h2>
+              <p className="rewards-subtitle">{t.rewardsSubtitle}</p>
+
+              <div className="rewards-grid">
+                <div className="reward-chip">
+                  <Gift size={16} className="reward-chip-icon" />
+                  <span className="reward-score">{t.reward5kLabel}</span>
+                  <span className="reward-prize">{t.reward5kPrize}</span>
+                </div>
+                <div className="reward-chip">
+                  <Percent size={16} className="reward-chip-icon" />
+                  <span className="reward-score">{t.reward10kLabel}</span>
+                  <span className="reward-prize">{t.reward10kPrize}</span>
+                </div>
+                <div className="reward-chip reward-chip-top">
+                  <Sparkles size={16} className="reward-chip-icon" />
+                  <span className="reward-score">{t.reward15kLabel}</span>
+                  <span className="reward-prize">{t.reward15kPrize}</span>
+                </div>
+              </div>
+
+              <details className="rules-details">
+                <summary className="rules-summary">
+                  <span>{t.rulesTitle}</span>
+                  <ChevronDown size={16} className="rules-chevron" />
+                </summary>
+                <ol className="rules-list">
+                  <li>{t.rule1}</li>
+                  <li>{t.rule2}</li>
+                  <li>{t.rule3}</li>
+                  <li>{t.rule4}</li>
+                </ol>
+              </details>
+
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="instagram-btn"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+                </svg>
+                <span>{t.followInstagram}</span>
+              </a>
+            </div>
           </div>
         )}
 
@@ -444,6 +584,179 @@ export default function MascotGamePage() {
         .card-subtitle {
           font-size: 0.95rem;
           color: var(--game-text-muted);
+        }
+
+        /* ---------- Rewards & rules panel ---------- */
+        .rewards-section {
+          background: var(--game-panel-alt);
+          border: 1px solid var(--game-border);
+          border-radius: 16px;
+          padding: 1.25rem 1.25rem 1.5rem;
+          text-align: left;
+          box-sizing: border-box;
+        }
+
+        .rewards-title {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          font-size: 1rem;
+          font-weight: 800;
+          color: var(--game-text);
+          margin: 0 0 0.3rem 0;
+        }
+
+        .rewards-title :global(svg) {
+          color: var(--game-accent);
+          flex-shrink: 0;
+        }
+
+        .rewards-subtitle {
+          font-size: 0.82rem;
+          color: var(--game-text-muted);
+          margin: 0 0 1rem 0;
+          line-height: 1.4;
+        }
+
+        .rewards-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.6rem;
+          margin-bottom: 1.15rem;
+        }
+
+        .reward-chip {
+          background: var(--game-panel);
+          border: 1px solid var(--game-border);
+          border-radius: 12px;
+          padding: 0.65rem 0.4rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          gap: 0.25rem;
+          min-width: 0;
+        }
+
+        .reward-chip-icon {
+          color: var(--game-text-muted);
+          margin-bottom: 0.1rem;
+        }
+
+        .reward-chip-top .reward-chip-icon {
+          color: var(--game-accent);
+        }
+
+        .reward-chip-top {
+          border-color: var(--game-accent);
+          background: rgba(255, 204, 51, 0.08);
+        }
+
+        .reward-score {
+          font-size: 0.7rem;
+          font-weight: 700;
+          color: var(--game-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+        }
+
+        .reward-prize {
+          font-size: 0.82rem;
+          font-weight: 800;
+          color: var(--game-accent);
+          line-height: 1.25;
+        }
+
+        /* Native <details>/<summary> disclosure — no extra state needed,
+           and it keeps the card short until someone actually wants the
+           step-by-step instructions. */
+        .rules-details {
+          margin-bottom: 1.1rem;
+          border-top: 1px dashed var(--game-border);
+          padding-top: 0.85rem;
+        }
+
+        .rules-summary {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          list-style: none;
+          cursor: pointer;
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: var(--game-text);
+        }
+
+        .rules-summary::-webkit-details-marker {
+          display: none;
+        }
+
+        .rules-summary::marker {
+          content: "";
+        }
+
+        .rules-chevron {
+          color: var(--game-text-muted);
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .rules-details[open] .rules-chevron {
+          transform: rotate(180deg);
+        }
+
+        .rules-list {
+          margin: 0.9rem 0 0 0;
+          padding-left: 1.2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        .rules-list li {
+          font-size: 0.8rem;
+          color: var(--game-text-muted);
+          line-height: 1.4;
+        }
+
+        .rules-list li::marker {
+          color: var(--game-accent);
+          font-weight: 700;
+        }
+
+        .instagram-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          width: 100%;
+          padding: 0.7rem 1rem;
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 12px;
+          background: linear-gradient(
+            135deg,
+            #f9ce34 0%,
+            #ee2a7b 55%,
+            #6228d7 100%
+          );
+          box-sizing: border-box;
+          transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+        }
+
+        .instagram-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(238, 42, 123, 0.35);
+        }
+
+        .instagram-btn:focus-visible {
+          outline: 2px solid var(--game-accent);
+          outline-offset: 2px;
         }
 
         .name-entry {
@@ -580,6 +893,58 @@ export default function MascotGamePage() {
             font-size: 0.85rem;
           }
 
+          .rewards-section {
+            padding: 1rem 1rem 1.25rem;
+            border-radius: 14px;
+          }
+
+          .rewards-title {
+            font-size: 0.92rem;
+          }
+
+          .rewards-subtitle {
+            font-size: 0.76rem;
+          }
+
+          .rewards-grid {
+            gap: 0.4rem;
+          }
+
+          .reward-chip {
+            padding: 0.55rem 0.3rem;
+            border-radius: 10px;
+          }
+
+          .reward-chip-icon {
+            width: 14px;
+            height: 14px;
+          }
+
+          .reward-score {
+            font-size: 0.62rem;
+          }
+
+          .reward-prize {
+            font-size: 0.74rem;
+          }
+
+          .rules-summary {
+            font-size: 0.8rem;
+          }
+
+          .rules-list {
+            padding-left: 1.05rem;
+          }
+
+          .rules-list li {
+            font-size: 0.75rem;
+          }
+
+          .instagram-btn {
+            font-size: 0.82rem;
+            padding: 0.65rem 0.9rem;
+          }
+
           .mascot-grid {
             gap: 0.85rem;
           }
@@ -600,6 +965,14 @@ export default function MascotGamePage() {
         }
 
         @media (max-width: 380px) {
+          .rewards-grid {
+            gap: 0.3rem;
+          }
+
+          .reward-chip {
+            padding: 0.5rem 0.25rem;
+          }
+
           .mascot-grid {
             gap: 0.6rem;
           }
@@ -616,7 +989,8 @@ export default function MascotGamePage() {
 
 // Game Over panel: auto-saves the score under the name the player already
 // gave at the start (no extra prompt), then expands in place to reveal the
-// top-10 leaderboard from the database once the save completes.
+// top-10 leaderboard from the database once the save completes. Also
+// surfaces a reward callout when the run's score cleared a prize tier.
 function GameOverPanel({
   score,
   highScore,
@@ -629,6 +1003,9 @@ function GameOverPanel({
   const [leaderboard, setLeaderboard] = useState([]);
   const [savedEntryId, setSavedEntryId] = useState(null);
   const hasFiredRef = useRef(false);
+
+  const reachedTier =
+    REWARD_TIERS.find((tier) => score >= tier.threshold) || null;
 
   const submitScore = useCallback(async () => {
     setStatus("saving");
@@ -668,6 +1045,35 @@ function GameOverPanel({
     <div className={`gameover-card${isSaved ? " expanded" : ""}`}>
       <h2 className="gameover-title mb-2">{t.gameOver}</h2>
       <p className="gameover-subtitle mb-6">{t.hitByBomb}</p>
+
+      {reachedTier && (
+        <div className="reward-earned mb-8">
+          <div className="reward-earned-badge">
+            <Gift size={20} />
+          </div>
+          <div className="reward-earned-body">
+            <p className="reward-earned-title">
+              {t.milestoneReachedPrefix}{" "}
+              <span className="reward-earned-prize">
+                {t[reachedTier.prizeKey]}
+              </span>
+            </p>
+            <p className="reward-earned-hint">
+              <Camera size={13} className="hint-icon" />
+              {t.milestoneHint}
+            </p>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="reward-earned-link"
+            >
+              <Instagram size={14} />
+              {t.followInstagram}
+            </a>
+          </div>
+        </div>
+      )}
 
       <div className="score-summary mb-8">
         <div className="score-box">
@@ -765,6 +1171,75 @@ function GameOverPanel({
         .gameover-subtitle {
           font-size: 0.95rem;
           color: var(--game-text-muted);
+        }
+
+        .reward-earned {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          text-align: left;
+          background: rgba(255, 204, 51, 0.08);
+          border: 1px solid var(--game-accent);
+          border-radius: 14px;
+          padding: 1rem 1.1rem;
+        }
+
+        .reward-earned-badge {
+          flex-shrink: 0;
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          background: rgba(255, 204, 51, 0.18);
+          color: var(--game-accent);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .reward-earned-body {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          min-width: 0;
+        }
+
+        .reward-earned-title {
+          font-size: 0.92rem;
+          font-weight: 700;
+          color: var(--game-text);
+          margin: 0;
+        }
+
+        .reward-earned-prize {
+          color: var(--game-accent);
+        }
+
+        .reward-earned-hint {
+          font-size: 0.8rem;
+          color: var(--game-text-muted);
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        .reward-earned-hint :global(.hint-icon) {
+          margin-right: 3px;
+          vertical-align: -2px;
+          flex-shrink: 0;
+        }
+
+        .reward-earned-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--game-accent);
+          text-decoration: none;
+          margin-top: 0.1rem;
+        }
+
+        .reward-earned-link:hover {
+          text-decoration: underline;
         }
 
         .score-summary {
@@ -1027,6 +1502,26 @@ function GameOverPanel({
             font-size: 0.85rem;
           }
 
+          .reward-earned {
+            padding: 0.85rem 0.9rem;
+            gap: 0.6rem;
+            border-radius: 12px;
+          }
+
+          .reward-earned-badge {
+            width: 32px;
+            height: 32px;
+          }
+
+          .reward-earned-title {
+            font-size: 0.85rem;
+          }
+
+          .reward-earned-hint,
+          .reward-earned-link {
+            font-size: 0.75rem;
+          }
+
           .score-value {
             font-size: 1.4rem;
           }
@@ -1212,6 +1707,12 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
       }
     };
 
+    // Score awarded per bomb successfully dodged (or destroyed via shield).
+    // Scales gently with level so the harder, late-game stretch near 15,000
+    // doesn't also demand an unreasonable number of dodges on top of being
+    // riskier to survive.
+    const getDodgeBonus = () => 10 + Math.floor((level - 1) / 3) * 2;
+
     const runLoop = () => {
       if (!isRunning) return;
 
@@ -1381,9 +1882,10 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
         });
 
         // Power-ups spawn independently in a lane that stayed empty this
-        // wave, so they never appear stacked on top of a bomb. They get
-        // slightly rarer at higher levels to keep the challenge climbing.
-        const powerUpChance = Math.max(0.06, 0.16 - (level - 1) * 0.01);
+        // wave, so they never appear stacked on top of a bomb. They stay
+        // reasonably common even at high levels, since surviving the
+        // toughest stretch of a run leans on grabbing them.
+        const powerUpChance = Math.max(0.08, 0.18 - (level - 1) * 0.008);
         const openLanes = laneIndices.slice(bombCount);
         if (openLanes.length > 0 && Math.random() < powerUpChance) {
           const laneIndex = openLanes[0];
@@ -1441,7 +1943,9 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           if (item.type === "bomb") {
             if (player.powerUp === "ipad") {
               items.splice(i, 1);
-              scoreCounter += 25;
+              // Shield kills are worth a bit more than a plain dodge, to
+              // reward pushing through a bomb wave instead of just outlasting it.
+              scoreCounter += getDodgeBonus() + 15;
               setCurrentScore(scoreCounter);
               continue;
             } else {
@@ -1472,7 +1976,7 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
 
         if (item.y > canvas.height + 20) {
           if (item.type === "bomb") {
-            scoreCounter += 10;
+            scoreCounter += getDodgeBonus();
             setCurrentScore(scoreCounter);
           }
           items.splice(i, 1);
