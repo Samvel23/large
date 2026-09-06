@@ -205,6 +205,14 @@ const REWARD_TIERS = [
   { threshold: 5000, prizeKey: "reward5kPrize" },
 ];
 
+// Same tiers, ascending — used during gameplay to detect the moment a
+// threshold is first crossed (walking the array bottom-up as the score
+// climbs), separately from the game-over screen's "which is the best tier
+// reached" lookup above.
+const REWARD_TIERS_ASC = [...REWARD_TIERS].sort(
+  (a, b) => a.threshold - b.threshold,
+);
+
 // Number of horizontal "lanes" bombs can spawn in. Used to guarantee at
 // least one safe gap exists even when multiple bombs fall at once.
 const LANE_COUNT = 5;
@@ -226,7 +234,15 @@ const getLevelForScore = (score) => {
 // attention. This is what makes 15k reachable without being trivial: a
 // full, focused run is required, but a single well-timed dodge is never
 // impossible.
-const getDifficultyParams = (level) => {
+//
+// `isMobile` eases all of this further. At the same score, mobile is
+// harder than desktop for two reasons that have nothing to do with skill:
+// the canvas is scaled down by CSS to fit the screen (bombs read smaller
+// and are physically harder to track), and tap-and-hold buttons react
+// slightly slower than a held keyboard key. Rather than changing the
+// scoring curve itself, mobile gets slower bombs, more breathing room
+// between spawns, and one fewer simultaneous bomb at the high end.
+const getDifficultyParams = (level, isMobile) => {
   const spawnInterval = Math.max(17, 42 - (level - 1) * 1.6);
   const bombSpeedMin = 2.9 + (level - 1) * 0.2;
   const bombSpeedMax = bombSpeedMin + 1.7 + (level - 1) * 0.1;
@@ -236,14 +252,46 @@ const getDifficultyParams = (level) => {
   // Chance each "extra" bomb slot (beyond the first) actually gets used.
   const extraBombChance = Math.min(0.55, 0.15 + (level - 1) * 0.03);
 
+  if (!isMobile) {
+    return {
+      spawnInterval,
+      bombSpeedMin,
+      bombSpeedMax,
+      maxSimultaneousBombs,
+      extraBombChance,
+    };
+  }
+
   return {
-    spawnInterval,
-    bombSpeedMin,
-    bombSpeedMax,
-    maxSimultaneousBombs,
-    extraBombChance,
+    spawnInterval: spawnInterval * 1.35,
+    bombSpeedMin: bombSpeedMin * 0.78,
+    bombSpeedMax: bombSpeedMax * 0.78,
+    maxSimultaneousBombs: Math.max(1, maxSimultaneousBombs - 1),
+    extraBombChance: extraBombChance * 0.7,
   };
 };
+
+// lucide-react removed all brand/trademark icons (Instagram, Facebook, etc.)
+// a while back, so there is no <Instagram /> to import — this hand-rolled
+// outline glyph is shared by the character-select screen and the
+// game-over reward callout instead.
+const InstagramGlyph = ({ size = 16 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+  </svg>
+);
 
 // Aspect-ratio preserving renderer grounded to bottom center
 const drawAspectFitImage = (ctx, img, boxX, boxY, boxW, boxH) => {
@@ -446,21 +494,7 @@ export default function MascotGamePage() {
                 rel="noopener noreferrer"
                 className="instagram-btn"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-                </svg>
+                <InstagramGlyph size={16} />
                 <span>{t.followInstagram}</span>
               </a>
             </div>
@@ -1068,7 +1102,7 @@ function GameOverPanel({
               rel="noopener noreferrer"
               className="reward-earned-link"
             >
-              <Instagram size={14} />
+              <InstagramGlyph size={14} />
               {t.followInstagram}
             </a>
           </div>
@@ -1581,6 +1615,8 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [activeBanner, setActiveBanner] = useState(null);
   const [levelBanner, setLevelBanner] = useState(null);
+  const [rewardBanner, setRewardBanner] = useState(null);
+  const [scoreMilestoneTier, setScoreMilestoneTier] = useState(0); // 0 = none, 1/2/3 = 5k/10k/15k
   const [isReady, setIsReady] = useState(false);
   const touchStateRef = useRef({ left: false, right: false });
 
@@ -1638,6 +1674,24 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
     let animId;
     let isRunning = true;
 
+    // Coarse-pointer (touch) devices are meaningfully harder at the same
+    // score than a mouse/keyboard desktop: the 760x460 canvas gets scaled
+    // down by CSS to fit the screen, so bombs read smaller, and tap-and-hold
+    // buttons react a touch slower than a held key. This single flag drives
+    // three separate mitigations below (difficulty params, item size, and
+    // collision forgiveness) rather than changing the scoring curve itself.
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(pointer: coarse)").matches ||
+        window.innerWidth <= 768);
+
+    // Bombs/power-ups render larger on mobile so they're easier to actually
+    // see against a scaled-down canvas — the extra collision padding below
+    // (hitPadding) keeps the bigger sprite from also meaning a bigger
+    // effective hitbox.
+    const itemSize = isMobile ? 46 : 36;
+    const hitPadding = isMobile ? 14 : 8;
+
     const keys = {
       ArrowLeft: false,
       ArrowRight: false,
@@ -1682,7 +1736,9 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
       y: canvas.height - 90,
       width: 72,
       height: 72,
-      speed: 7,
+      // Slightly snappier on mobile to help offset tap-and-hold reacting a
+      // touch slower than a held keyboard key.
+      speed: isMobile ? 8.5 : 7,
       direction: "idle",
       powerUp: null, // null | 'camera' | 'ipad'
       powerUpTimer: 0,
@@ -1694,6 +1750,10 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
     let frame = 0;
     let level = 1;
     let levelBannerTimer = 0;
+    let rewardBannerTimer = 0;
+    // Index into REWARD_TIERS_ASC of the highest prize tier crossed so far
+    // this run. -1 means no tier reached yet.
+    let rewardTierIndex = -1;
 
     // Recomputes the difficulty level from the current score, and if it just
     // increased, briefly flashes a "LEVEL UP!" banner.
@@ -1712,6 +1772,32 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
     // doesn't also demand an unreasonable number of dodges on top of being
     // riskier to survive.
     const getDodgeBonus = () => 10 + Math.floor((level - 1) / 3) * 2;
+
+    // Central score-mutation helper: applies the delta, updates the HUD
+    // state, and checks whether it just crossed a new prize threshold. On
+    // crossing, the score readout permanently recolors (via
+    // scoreMilestoneTier) for the rest of the run, and a banner announces
+    // which prize was just unlocked — so a player who hits 5,000 mid-run
+    // finds out immediately rather than only at game over.
+    const addScore = (amount) => {
+      scoreCounter += amount;
+      setCurrentScore(scoreCounter);
+
+      for (let i = rewardTierIndex + 1; i < REWARD_TIERS_ASC.length; i++) {
+        if (scoreCounter >= REWARD_TIERS_ASC[i].threshold) {
+          rewardTierIndex = i;
+          setScoreMilestoneTier(i + 1);
+          setRewardBanner(
+            `${tRef.current.milestoneReachedPrefix} ${
+              tRef.current[REWARD_TIERS_ASC[i].prizeKey]
+            }`,
+          );
+          rewardBannerTimer = 220; // ~3.6s at 60fps — longer than the level-up flash
+        } else {
+          break;
+        }
+      }
+    };
 
     const runLoop = () => {
       if (!isRunning) return;
@@ -1753,11 +1839,18 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
         Math.min(canvas.width - player.width - 10, player.x),
       );
 
-      // 3. Banner Timers (level-up flash + active power-up)
+      // 3. Banner Timers (level-up flash + reward flash + active power-up)
       if (levelBannerTimer > 0) {
         levelBannerTimer--;
         if (levelBannerTimer <= 0) {
           setLevelBanner(null);
+        }
+      }
+
+      if (rewardBannerTimer > 0) {
+        rewardBannerTimer--;
+        if (rewardBannerTimer <= 0) {
+          setRewardBanner(null);
         }
       }
 
@@ -1846,7 +1939,7 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
         bombSpeedMax,
         maxSimultaneousBombs,
         extraBombChance,
-      } = getDifficultyParams(level);
+      } = getDifficultyParams(level, isMobile);
 
       if (frame % Math.round(spawnInterval) === 0) {
         const laneMargin = 10;
@@ -1870,12 +1963,12 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
 
         const bombLanes = laneIndices.slice(0, bombCount);
         bombLanes.forEach((laneIndex) => {
-          const jitter = Math.random() * (laneWidth - 40);
+          const jitter = Math.random() * Math.max(0, laneWidth - itemSize);
           items.push({
             x: laneMargin + laneIndex * laneWidth + jitter,
             y: -40,
-            width: 36,
-            height: 36,
+            width: itemSize,
+            height: itemSize,
             type: "bomb",
             speed: bombSpeedMin + Math.random() * (bombSpeedMax - bombSpeedMin),
           });
@@ -1889,13 +1982,13 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
         const openLanes = laneIndices.slice(bombCount);
         if (openLanes.length > 0 && Math.random() < powerUpChance) {
           const laneIndex = openLanes[0];
-          const jitter = Math.random() * (laneWidth - 40);
+          const jitter = Math.random() * Math.max(0, laneWidth - itemSize);
           const type = Math.random() < 0.55 ? "camera" : "tablet";
           items.push({
             x: laneMargin + laneIndex * laneWidth + jitter,
             y: -40,
-            width: 36,
-            height: 36,
+            width: itemSize,
+            height: itemSize,
             type,
             speed: 3.0,
           });
@@ -1932,7 +2025,6 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           );
         }
 
-        const hitPadding = 8;
         const isColliding =
           player.x + hitPadding < item.x + item.width &&
           player.x + player.width - hitPadding > item.x &&
@@ -1945,8 +2037,7 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
               items.splice(i, 1);
               // Shield kills are worth a bit more than a plain dodge, to
               // reward pushing through a bomb wave instead of just outlasting it.
-              scoreCounter += getDodgeBonus() + 15;
-              setCurrentScore(scoreCounter);
+              addScore(getDodgeBonus() + 15);
               continue;
             } else {
               isRunning = false;
@@ -1958,16 +2049,14 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
             player.powerUpTimer = 300;
             player.flashTimer = 10;
             items = items.filter((it) => it.type !== "bomb");
-            scoreCounter += 150;
-            setCurrentScore(scoreCounter);
+            addScore(150);
             setActiveBanner(tRef.current.cameraPower);
             items.splice(i, 1);
             continue;
           } else if (item.type === "tablet") {
             player.powerUp = "ipad";
             player.powerUpTimer = 360;
-            scoreCounter += 100;
-            setCurrentScore(scoreCounter);
+            addScore(100);
             setActiveBanner(tRef.current.ipadPower);
             items.splice(i, 1);
             continue;
@@ -1976,8 +2065,7 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
 
         if (item.y > canvas.height + 20) {
           if (item.type === "bomb") {
-            scoreCounter += getDodgeBonus();
-            setCurrentScore(scoreCounter);
+            addScore(getDodgeBonus());
           }
           items.splice(i, 1);
         }
@@ -2012,7 +2100,13 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
         <div className="hud-metrics">
           <div className="hud-metric">
             <span className="hud-label">{t.score}</span>
-            <span className="hud-value">{currentScore}</span>
+            <span
+              className={`hud-value${
+                scoreMilestoneTier > 0 ? ` milestone-${scoreMilestoneTier}` : ""
+              }`}
+            >
+              {currentScore}
+            </span>
           </div>
 
           <div className="hud-metric align-center">
@@ -2032,6 +2126,9 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
             disappearing never changes the HUD bar's size or reflows the
             metrics above it. */}
         <div className="banner-row">
+          {rewardBanner && (
+            <div className="powerup-banner reward-banner">{rewardBanner}</div>
+          )}
           {levelBanner && (
             <div className="powerup-banner level-banner">{levelBanner}</div>
           )}
@@ -2158,6 +2255,14 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           color: var(--game-danger);
         }
 
+        .reward-banner {
+          background: rgba(255, 140, 26, 0.16);
+          border-color: #ff8c1a;
+          color: #ff8c1a;
+          font-weight: 800;
+          animation: rewardPulse 1s ease-in-out infinite;
+        }
+
         .flex-align {
           display: inline-flex;
           align-items: center;
@@ -2175,6 +2280,25 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           font-size: 1.4rem;
           font-weight: 800;
           color: var(--game-text);
+          transition: color 0.3s ease;
+        }
+
+        /* Score readout progressively recolors as prize thresholds are
+           crossed during a run — a persistent, at-a-glance reminder that a
+           prize is already secured, distinct from the momentary banner. */
+        .hud-value.milestone-1 {
+          color: #ff8c1a;
+        }
+
+        .hud-value.milestone-2 {
+          color: #ff6a00;
+          text-shadow: 0 0 8px rgba(255, 106, 0, 0.5);
+        }
+
+        .hud-value.milestone-3 {
+          color: #ff3d00;
+          text-shadow: 0 0 10px rgba(255, 61, 0, 0.6);
+          animation: milestoneGlow 1.1s ease-in-out infinite;
         }
 
         .text-accent {
@@ -2251,6 +2375,28 @@ function ArcadeCanvasEngine({ character, highScore, t, onGameOver }) {
           }
           50% {
             opacity: 0.5;
+          }
+        }
+
+        @keyframes rewardPulse {
+          0%,
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.04);
+            opacity: 0.85;
+          }
+        }
+
+        @keyframes milestoneGlow {
+          0%,
+          100% {
+            text-shadow: 0 0 6px rgba(255, 61, 0, 0.4);
+          }
+          50% {
+            text-shadow: 0 0 16px rgba(255, 61, 0, 0.9);
           }
         }
 
